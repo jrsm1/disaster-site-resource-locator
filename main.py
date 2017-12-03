@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from handlers.UserHandler import UserHandler
 from handlers.ResourceHandler import ResourceHandler
+from handlers.SupplierHandler import SupplierHandler
 
 
 app = Flask(__name__)
@@ -83,7 +84,30 @@ def getRequestCount():
 
 @app.route('/dsrl/resources/<int:rid>')
 def getResourceById(rid):
-    return ResourceHandler().getResourceById(rid)  
+    return ResourceHandler().getResourceById(rid)
+
+
+@app.route('/dsrl/suppliers')
+def getAllSuppliers():
+    if not request.args:
+        return SupplierHandler().getAllSuppliers()
+    else:
+        return SupplierHandler().searchSuppliers(request.args)
+
+
+@app.route('/dsrl/suppliers/<string:selection>')
+def getSuppliersBy(selection):
+    return SupplierHandler().getSuppliersBy(selection)
+
+
+@app.route('/dsrl/suppliers/<int:sid>')
+def getSupplierByID(sid):
+    return SupplierHandler().getSupplierByID(sid)
+
+@app.route('/dsrl/suppliers/<int:sid>/resources')
+def getResourcesBySID(sid):
+    return SupplierHandler().getResourcesBySID(sid)
+
 
 
 if __name__ == '__main__':
