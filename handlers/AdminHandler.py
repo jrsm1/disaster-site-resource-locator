@@ -58,7 +58,7 @@ class AdminHandler:
                 result = self.build_admin_dict(row)
                 result_list.append(result)
 
-        return jsonify(Anames=anames_list)
+        return jsonify(Anames=result_list)
 
     def getAdminPasswords(self):
         password_list = self.buildDummyData
