@@ -39,7 +39,7 @@ class SalesRecordHandler:
         srid_list = self.buildDummyData()
         
         if not srid_list:
-            return jsonify(Error = "No SalesRecords Found"), 404
+            return jsonify(Error = "No Sales Records Found"), 404
         else:
             result_list = []
             for row in srid_list:
@@ -55,7 +55,7 @@ class SalesRecordHandler:
             return jsonify(Error = "No Supplier Ids Found"), 404
         else:
             result_list = []
-            for row in names_list:
+            for row in sids_list:
                 result = self.build_srecord_dict(row)
                 result_list.append(result)
         return jsonify(Sids = result_list)
@@ -88,12 +88,13 @@ class SalesRecordHandler:
 
 
     def getSRBySRId(self, srid):
-        srecord1 = [1, '1', '1111', '1111']
+        srecord = [1, '1', '1111', '1111']
   
-        if not srecord1:
+        if not srecord:
             return jsonify(Error = "SalesRecord Not Found"), 404
         else:
-            srecord = self.build_srecord_dict(row)
+
+            srecord = self.build_srecord_dict(srecord)
             return jsonify(SalesRecord = srecord)
 
     def searchSalesRecords(self, args):
@@ -114,7 +115,7 @@ class SalesRecordHandler:
         elif (len(args) == 1) and earnings:
             srecord_list = self.buildDummyData()
         elif (len(args) == 1) and sales:
-            srecord_list self.buildDummyData()
+            srecord_list = self.buildDummyData()
         else:
             return jsonify(Error = "Malformed query string"), 400
 
