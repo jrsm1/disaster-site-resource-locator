@@ -21,7 +21,7 @@ class SupplierHandler:
         result['requestcount'] = row[5]
         return result
 
-    def getSuplierList(self):
+    def getSupplierList(self):
         supplier1 = [0, "Juan Vasquez", "San Juan", "7874561925", "18.465539,-66.105735"]
         supplier2 = [1, "Pedro Sanchez", "Arecibo", "7873456890", "18.444247,-66.646407"]
         supplier3 = [2, "Esteban Rivera", "Mayaguez", "7876943078", "18.201345,-67.145155"]
@@ -29,7 +29,7 @@ class SupplierHandler:
         return result
 
     def getAllSuppliers(self):
-        suppliers_list = self.getSuplierList()
+        suppliers_list = self.getSupplierList()
         result_list = []
         for row in suppliers_list:
             result = self.build_supplier_dict(row)
@@ -42,8 +42,9 @@ class SupplierHandler:
             sname = args.get("name")
             sphone = args.get("phone")
             slocation = args.get("location")
+
             if scity or sname or sphone or slocation or sid:
-                supplier_list = self.getSuplierList()
+                supplier_list = self.getSupplierList()
                 result_list = []
                 for row in supplier_list:
                     result = self.build_supplier_dict(row)
@@ -55,7 +56,7 @@ class SupplierHandler:
     def getSuppliersBy(self, selection):
         if selection == "scity" or selection == "sname" or selection == "sphone" or selection == "slocation" or \
                 selection == "sid":
-            supplier_list = self.getSuplierList()
+            supplier_list = self.getSupplierList()
             result_list = []
             for row in supplier_list:
                 result = self.build_supplier_dict(row)
@@ -70,12 +71,12 @@ class SupplierHandler:
             return jsonify(Error="Supplier Not Found"), 404
         else:
             supplierID= self.build_supplier_dict(result)
-        return jsonify(Suplier=supplierID)
+        return jsonify(Supplier = supplierID)
 
     def getResourcesBySID(self, sid):
         result = [1, 'gerber', 'baby food', '.99', 'true', '50']
         if not result:
             return jsonify(Error="Supplier Not Found"), 404
         else:
-            resources= self.build_resource_dict(result)
+            resources = self.build_resource_dict(result)
         return jsonify(resources)
