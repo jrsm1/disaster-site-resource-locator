@@ -12,6 +12,16 @@ class ResourceHandler:
         result['requestcount'] = row[5]
         return result
 
+    def build_supplier_dict(self, row):
+        result = {}
+        result['sid'] = row[0]
+        result['sname'] = row[1]
+        result['spassword'] = row[2]
+        result['scity'] = row[3]
+        result['sphone'] = row[4]
+        result['slocation'] = row[5]
+        return result
+
 
     def buildDummyData(self):
         resource_list = []
@@ -146,4 +156,15 @@ class ResourceHandler:
             result_list.append(result)
         return jsonify(Resources = result_list)
 
-#Implement getSupplierByResourceID()
+    def getSuppliersByRID(self, rid):
+        suppliers = []
+        suppliers.append([0, "Juan Vasquez", "hola123", "San Juan", "7874561925", "18.465539,-66.105735"])
+        suppliers.append([2, "Esteban Rivera", "quieneres", "Mayaguez", "7876943078", "18.201345,-67.145155"])
+        if not suppliers:
+            return jsonify(Error="Resources Not Found"), 404
+        else:
+            result_list = []
+            for row in suppliers:
+                result = self.build_supplier_dict(row)
+                result_list.append(result)
+            return jsonify(Suppliers=result_list)

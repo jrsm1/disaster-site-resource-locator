@@ -89,6 +89,10 @@ def getRequestCount():
 def getResourceById(rid):
     return ResourceHandler().getResourceById(rid)
 
+@app.route('/dsrl/resources/<int:rid>/suppliers')
+def getSuppliersByRID(rid):
+    return ResourceHandler().getSuppliersByRID(rid)
+
 #Start of Supplier
 
 

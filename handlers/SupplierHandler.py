@@ -6,9 +6,10 @@ class SupplierHandler:
         result = {}
         result['sid'] = row[0]
         result['sname'] = row[1]
-        result['scity'] = row[2]
-        result['sphone'] = row[3]
-        result['slocation'] = row[4]
+        result['spassword'] = row[2]
+        result['scity'] = row[3]
+        result['sphone'] = row[4]
+        result['slocation'] = row[5]
         return result
 
     def build_resource_dict(self, row):
@@ -22,9 +23,9 @@ class SupplierHandler:
         return result
 
     def getSupplierList(self):
-        supplier1 = [0, "Juan Vasquez", "San Juan", "7874561925", "18.465539,-66.105735"]
-        supplier2 = [1, "Pedro Sanchez", "Arecibo", "7873456890", "18.444247,-66.646407"]
-        supplier3 = [2, "Esteban Rivera", "Mayaguez", "7876943078", "18.201345,-67.145155"]
+        supplier1 = [0, "Juan Vasquez", "hola123", "San Juan", "7874561925", "18.465539,-66.105735"]
+        supplier2 = [1, "Pedro Sanchez", "12345678", "Arecibo", "7873456890", "18.444247,-66.646407"]
+        supplier3 = [2, "Esteban Rivera", "quieneres", "Mayaguez", "7876943078", "18.201345,-67.145155"]
         result = [supplier1, supplier2, supplier3]
         return result
 
@@ -55,7 +56,7 @@ class SupplierHandler:
 
     def getSuppliersBy(self, selection):
         if selection == "scity" or selection == "sname" or selection == "sphone" or selection == "slocation" or \
-                selection == "sid":
+                selection == "sid" or selection == "spassword":
             supplier_list = self.getSupplierList()
             result_list = []
             for row in supplier_list:
@@ -66,7 +67,7 @@ class SupplierHandler:
             return jsonify(Error="Malformed search string."), 400
 
     def getSupplierByID(self, sid):
-        result = [0, "Juan Vasquez", "San Juan", "7874561925", "18.465539,-66.105735"]
+        result = [2, "Esteban Rivera", "quieneres", "Mayaguez", "7876943078", "18.201345,-67.145155"]
         if not result:
             return jsonify(Error="Supplier Not Found"), 404
         else:
@@ -74,9 +75,14 @@ class SupplierHandler:
         return jsonify(Supplier = supplierID)
 
     def getResourcesBySID(self, sid):
-        result = [1, 'gerber', 'baby food', '.99', 'true', '50']
-        if not result:
+        resources = []
+        resources.append([1, 'gerber', 'baby food', '.99', 'true', '50'])
+        resources.append([3, 'diesel', 'fuel', '.97', 'true', '9999'])
+        if not resources:
             return jsonify(Error="Supplier Not Found"), 404
         else:
-            resources = self.build_resource_dict(result)
-        return jsonify(resources)
+            result_list = []
+            for row in resources:
+                result = self.build_resource_dict(row)
+                result_list.append(result)
+            return jsonify(Resources=result_list)
