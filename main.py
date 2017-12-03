@@ -164,7 +164,7 @@ def getAllSalesRecords():
 
 @app.route('/dsrl/salesrecords/srid')
 def getSRIds():
-    return SalesRecordHandler().getSRIds
+    return SalesRecordHandler().getSRIds()
 
 
 @app.route('/dsrl/salesrecords/sid')
