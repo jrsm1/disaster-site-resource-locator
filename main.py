@@ -112,7 +112,7 @@ def getAdminById(aid):
     return AdminHandler().getAdminById(aid)
 
 
-@app.route('/dsrl/admins/<int:aname>')
+@app.route('/dsrl/admins/<string:aname>')
 def getAdminByName(aname):
     return AdminHandler().getAdminByName(aname)
 
