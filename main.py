@@ -14,14 +14,6 @@ def greeting():
     return '<b>Welcome to the Resource Locator App!!!</b>'
 
 
-@app.route('/dsrl/admin')
-def getAllUsers():
-    if not request.args:
-        return UserHandler().getAllUsers()
-    else:
-        return UserHandler().searchUsers(request.args)
-
-
 @app.route('/dsrl/users/uid')
 def getUserIds():
     return UserHandler().getUserIds()
