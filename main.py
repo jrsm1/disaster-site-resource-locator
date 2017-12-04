@@ -14,17 +14,6 @@ def greeting():
     return '<b>Welcome to the Resource Locator App!!!</b>'
 
 
-#This one should be hidden...
-@app.route('/dsrl/users/passwords')
-def getUserPasswords():
-    return UserHandler().getUserPasswords()
-
-
-@app.route('/dsrl/users/<int:uid>')
-def getUserById(uid):
-    return UserHandler().getUserById(uid)                                         
-
-
 @app.route('/dsrl/resources')
 def getAllResources():
       if not request.args:
