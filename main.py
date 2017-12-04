@@ -14,20 +14,6 @@ def greeting():
     return '<b>Welcome to the Resource Locator App!!!</b>'
 
 
-@app.route('/dsrl/users/uid')
-def getUserIds():
-    return UserHandler().getUserIds()
-
-
-@app.route('/dsrl/users/role')
-def getUserRoles():
-    return UserHandler().getUserRoles()
-
-
-@app.route('/dsrl/users/uname')
-def getUserNames():
-    return UserHandler().getUserNames()
-
 #This one should be hidden...
 @app.route('/dsrl/users/passwords')
 def getUserPasswords():
