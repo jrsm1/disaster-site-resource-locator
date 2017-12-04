@@ -86,7 +86,6 @@ class SalesRecordHandler:
                 result_list.append(result)
         return jsonify(Sales = result_list)
 
-
     def getSRBySRId(self, srid):
         srecord = [1, '1', '1111', '1111']
   
@@ -123,5 +122,5 @@ class SalesRecordHandler:
         for row in srecord_list:
             result = self.build_srecord_dict(row)
             result_list.append(result)
-        return jsonify(SalesRecords = result_list)
+        return jsonify(SalesRecords=result_list)
 
