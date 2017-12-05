@@ -166,6 +166,10 @@ def getClientsByID(cid):
     return ClientHandler().getClientByID(cid)
 
 
+@app.route('/dsrl/statistics')
+def getStatistics():
+    return ResourceHandler().getRequestCount()
+
 
 if __name__ == '__main__':
     app.run()
