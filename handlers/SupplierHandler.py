@@ -56,7 +56,7 @@ class SupplierHandler:
 
     def getSuppliersBy(self, selection):
         if selection == "scity" or selection == "sname" or selection == "sphone" or selection == "slocation" or \
-                selection == "sid" or selection == "spassword":
+                selection == "sid":
             supplier_list = self.getSupplierList()
             result_list = []
             for row in supplier_list:

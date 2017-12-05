@@ -1,0 +1,70 @@
+Create Table Admin (
+	AID	bigserial	primary key, --admin id
+	AName	varchar(10)	NOT NULL,
+	APassword	varchar(20)	NOT NULL,
+)
+
+Create Table Client(
+	CID	bigserial	 primary key,
+	CName	varchar(10)	NOT NULL,
+	CPassword	varchar(20)	NOT NULL,
+	CCity	varchar(10)	NOT NULL,
+	CreditCardNum	char(16)	NOT NULL,
+)
+
+Create Table SalesRecord (
+	SRID	bigserial	primary key,
+	Sid	bigint		FOREIGN KEY REFERENCES Supplier(SID),
+	Earnings	float, --revenue from all sales
+	Sales	bigint, --amount of succesfull sales completed
+)
+
+
+Create Table Supplier (
+	SID 	bigserial	primary key, --supplier id
+	SName	varchar(10)	NOT NULL, --supplier name
+	SPassword       varchar(20)     NOT NULL FOREIGN KEY REFERENCES User(Password), 
+	SCity	varchar(10)	NOT NULL, -- supplier city where it is located
+	SPhone	char(10)	NOT NULL, --suppliers phone number
+	SLocation	varchar(20)	NOT NULL
+)
+
+Create Table Resources (
+	RID	bigserial	primary key,
+	RName	varchar(20)	NOT NULL,
+	Category	varchar(20) NOT NULL,
+	RPrice	float	NOT NULL,	
+	Available boolean NOT NULL,
+	RequestCount bigint NOT NULL,
+)
+
+Create Table CreditCard (
+	CCNum		char(16)	FOREIGN KEY REFERENCES Client(CreditCardNum),
+	CCHolder	varchar(10)	FOREIGN KEY REFERENCES Client(CName)),
+	ExpDate		date	NOT NULL,
+	Primary Key(CCNum, CCHolder)
+)
+
+Create Table Purchases (
+	PID	bigserial	primary key,
+	RID	bigint	FOREIGN KEY REFERENCES Resources(RID),
+	CID	bigint FOREIGN KEY REFERENCES Client(CID),
+	Qty	bigint NOT NULL,
+	Total	float	NOT NULL, --Cost of the the purchase
+)
+
+Create Table Reserves (
+	ReserveID     bigserial       primary key,
+        RID     bigint  FOREIGN KEY REFERENCES Resources(RID),
+        CID     bigint FOREIGN KEY REFERENCES Client(CID),
+        Qty     bigint NOT NULL
+)
+
+Create Table Supplies (
+	SID	bigint	FOREIGN KEY REFERENCES Supplier(SID),
+	RID	bigint FOREIGN KEY REFERENCES Resources(RID),
+	Stock	bigint NOT NULL
+	Primary Key(SID, RID)
+)
+
+
