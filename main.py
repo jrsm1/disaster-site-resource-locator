@@ -210,9 +210,15 @@ def getClientsBy(selection):
 def getClientsByID(cid):
     return SupplierHandler().getSupplierByID(cid)
 
+
 @app.route('/dsrl/clients/<int:cid>/card')
 def getCCByCID(cid):
     return ClientHandler().getCCByCID(cid)
+
+
+@app.route('/dsrl/statistics')
+def getStatistics():
+    return ResourceHandler().getRequestCount()
 
 if __name__ == '__main__':
     app.run()
