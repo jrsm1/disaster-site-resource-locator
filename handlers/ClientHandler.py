@@ -51,9 +51,7 @@ class ClientHandler:
                 return jsonify(Error="Malformed search string."), 400
 
     def getClientsBy(self, selection):
-        #Password and CCard maybe should be removed
-        if selection == "cpassword" or selection == "cname" or selection == "ccity" or selection == "ccard" or \
-                selection == "cid":
+        if selection == "cname" or selection == "ccity" or selection == "cid":
             client_list = self.getClientList()
             result_list = []
             for row in client_list:

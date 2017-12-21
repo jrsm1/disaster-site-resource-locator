@@ -134,14 +134,17 @@ class ResourceHandler:
             resource = self.build_resource_dict(row)
             return jsonify(Resource = resource)
 
-#TODO 
-#Finish queries
     def searchResources(self, args):
         rname = args.get("rname")
         category = args.get("category")
+        requestcount = args.get("requestcount")
         resources_list = []
 
         if (len(args) == 2) and rname and category:
+            resources_list = self.buildDummyData()
+        elif (len(args) == 2) and category and requestcount:
+            resources_list = self.buildDummyData()
+        elif (len(args) == 1) and requestcount:
             resources_list = self.buildDummyData()
         elif (len(args) == 1) and rname:
             resources_list = self.buildDummyData()

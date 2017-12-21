@@ -1,3 +1,6 @@
+#UserHandler class used in preliminary design of
+#phase 1
+
 from flask import jsonify
 
 
@@ -99,7 +102,7 @@ class UserHandler:
             user = self.build_user_dict(row)
         return jsonify(User = user)
 
-#TODO Verify and add other queries
+
     def searchUsers(self, args):
         if len(args) > 1:
             return jsonify(Error = "Malformed search string."), 400

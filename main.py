@@ -13,6 +13,7 @@ app = Flask(__name__)
 def greeting():
     return '<b>Welcome to the Resource Locator App!!!</b>'
 
+#Routes for Resource Queries
 
 @app.route('/dsrl/resources')
 def getAllResources():
@@ -61,8 +62,7 @@ def getResourceById(rid):
 def getSuppliersByRID(rid):
     return ResourceHandler().getSuppliersByRID(rid)
 
-# Start of Supplier
-
+#Routes for Supplier Queries
 
 @app.route('/dsrl/suppliers')
 def getAllSuppliers():
@@ -86,7 +86,7 @@ def getSupplierByID(sid):
 def getResourcesBySID(sid):
     return SupplierHandler().getResourcesBySID(sid)
 
-# Start of Admin
+#Routes for Admin Queries
 
 
 @app.route('/dsrl/admins')
@@ -106,27 +106,18 @@ def getAdminIds():
 def getAdminNames():
     return AdminHandler().getAdminNames()
 
-# The admin passwords should be hidden
-
-
-@app.route('/dsrl/admins/passwords')
-def getAdminPasswords():
-    return AdminHandler().getAdminPasswords()
-
 
 @app.route('/dsrl/admins/<int:aid>')
 def getAdminById(aid):
     return AdminHandler().getAdminById(aid)
 
 
-@app.route('/dsrl/admins/<int:aname>')
+@app.route('/dsrl/admins/<string:aname>')
 def getAdminByName(aname):
     return AdminHandler().getAdminByName(aname)
 
 
-# End of Admin
-
-# Start of Sales Records
+#Routes for SalesRecords Queries
 
 @app.route('/dsrl/salesrecords')
 def getAllSalesRecords():
@@ -146,11 +137,6 @@ def getSRSuppierIds():
     return SalesRecordHandler().getSRSupplierIds()
 
 
-@app.route('/dsrl/salesrecords/earnings')
-def getSREarnings():
-    return SalesRecordHandler().getSREarnings()
-
-
 @app.route('/dsrl/salesrecords/sales')
 def getSRSales():
     return SalesRecordHandler().getSRSales()
@@ -159,10 +145,8 @@ def getSRSales():
 @app.route('/dsrl/salesrecords/<int:srid>')
 def getSRBySRId(srid):
     return SalesRecordHandler().getSRBySRId(srid)
-# End of Sales Records
 
-# Start Client
-
+#Routes for Client Queries
 
 @app.route('/dsrl/clients')
 def getAllClients():
@@ -170,8 +154,6 @@ def getAllClients():
         return ClientHandler().getAllClients()
     else:
         return ClientHandler().searchClients(request.args)
-
-# cpassword and CCard maybe should be removed from the method getClientsBy
 
 
 @app.route('/dsrl/clients/<string:selection>')
@@ -181,12 +163,12 @@ def getClientsBy(selection):
 
 @app.route('/dsrl/clients/<int:cid>')
 def getClientsByID(cid):
-    return SupplierHandler().getSupplierByID(cid)
+    return ClientHandler().getClientByID(cid)
 
 
-@app.route('/dsrl/clients/<int:cid>/card')
-def getCCByCID(cid):
-    return ClientHandler().getCCByCID(cid)
+@app.route('/dsrl/statistics')
+def getStatistics():
+    return ResourceHandler().getRequestCount()
 
 
 if __name__ == '__main__':
