@@ -1,10 +1,5 @@
 from flask import Flask, request
-from handlers.ResourceHandler import ResourceHandler
-from handlers.SupplierHandler import SupplierHandler
-from handlers.AdminHandler import AdminHandler
-from handlers.SalesRecordHandler import SalesRecordHandler
-from handlers.ClientHandler import ClientHandler
-
+from handlers.* import *
 
 app = Flask(__name__)
 
@@ -13,7 +8,10 @@ app = Flask(__name__)
 def greeting():
     return '<b>Welcome to the Resource Locator App!!!</b>'
 
-#Routes for Resource Queries
+################################################
+#	Routes for Resource Queries
+###############################################
+
 
 @app.route('/dsrl/resources')
 def getAllResources():
@@ -62,7 +60,11 @@ def getResourceById(rid):
 def getSuppliersByRID(rid):
     return ResourceHandler().getSuppliersByRID(rid)
 
-#Routes for Supplier Queries
+
+#############################################
+#	Routes for Supplier Queries
+#############################################
+
 
 @app.route('/dsrl/suppliers')
 def getAllSuppliers():
@@ -86,7 +88,9 @@ def getSupplierByID(sid):
 def getResourcesBySID(sid):
     return SupplierHandler().getResourcesBySID(sid)
 
-#Routes for Admin Queries
+############################################
+#	Routes for Admin Queries
+############################################
 
 
 @app.route('/dsrl/admins')
@@ -116,8 +120,10 @@ def getAdminById(aid):
 def getAdminByName(aname):
     return AdminHandler().getAdminByName(aname)
 
+#########################################
+#	Routes for SalesRecords Queries
+#########################################
 
-#Routes for SalesRecords Queries
 
 @app.route('/dsrl/salesrecords')
 def getAllSalesRecords():
@@ -146,7 +152,11 @@ def getSRSales():
 def getSRBySRId(srid):
     return SalesRecordHandler().getSRBySRId(srid)
 
-#Routes for Client Queries
+
+############################################
+#	Routes for Client Queries
+#############################################
+
 
 @app.route('/dsrl/clients')
 def getAllClients():
@@ -169,6 +179,21 @@ def getClientsByID(cid):
 @app.route('/dsrl/statistics')
 def getStatistics():
     return ResourceHandler().getRequestCount()
+
+
+##############################################
+#	Routes for Purchase Queries
+##############################################
+
+@app.route('/purchases', methods['GET', 'POST'])
+def getAllPurchases():
+    if request.method == 'POST':
+        return PurchaseHandler().insertPurchase(request.form)
+    else:
+        if not request.args:
+            return PurchaseHandler().getAllPurchases()
+        else:
+            return PurchaseHandler().searchPurchases(request.args)
 
 
 if __name__ == '__main__':
