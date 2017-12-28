@@ -16,7 +16,7 @@ def greeting():
 @app.route('/dsrl/resources')
 def getAllResources():
         if not request.args:
-            return getAllResources()
+            return ResourceHandler.getAllResources()
         else:
             return ResourceHandler().searchResources(request.args)
 
