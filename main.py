@@ -1,5 +1,5 @@
 from flask import Flask, request
-from handlers.* import *
+from handlers import *
 
 app = Flask(__name__)
 
@@ -16,7 +16,7 @@ def greeting():
 @app.route('/dsrl/resources')
 def getAllResources():
         if not request.args:
-            return ResourceHandler().getAllResources()
+            return getAllResources()
         else:
             return ResourceHandler().searchResources(request.args)
 
@@ -185,7 +185,7 @@ def getStatistics():
 #	Routes for Purchase Queries
 ##############################################
 
-@app.route('/purchases', methods['GET', 'POST'])
+@app.route('/purchases', methods=['GET', 'POST'])
 def getAllPurchases():
     if request.method == 'POST':
         return PurchaseHandler().insertPurchase(request.form)

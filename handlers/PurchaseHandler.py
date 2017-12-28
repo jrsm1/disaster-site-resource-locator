@@ -33,7 +33,7 @@ class PurchaseHandler:
         dao = PurchaseDAO()
         purchases_list = dao.getAllPurchases()
         result_list = []
-        for row in suppliers_list:
+        for row in purchases_list:
             result = self.build_supplier_dict(row)
             result_list.append(result)
         return jsonify(Suppliers=result_list)
@@ -105,7 +105,7 @@ class PurchaseHandler:
             ccnum = form['ccnum']
             if cid and sid and rid and qty and total and ccnum:
                 dao = PurchaseDAO()
-                pid = dao.insert(pname, pcolor, pmaterial, pprice)
+                pid = dao.insert(cid, sid, rid, qty,total,ccnum)
                 result = self.build_purchase_attributes(pid, cid, sid, rid, qty, total, ccnum)
                 return jsonify(Purchase=result), 201
             else:

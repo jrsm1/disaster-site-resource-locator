@@ -28,34 +28,34 @@ class PurchaseDAO:
         return result
 
 
-     def getPurchasesByClientId(self, cid):
+    def getPurchasesByClientId(self, cid):
         cursor = self.conn.cursor()
         query = "select * from purchase where cid = %s;"
         cursor.execute(query, (cid,))
         result = []                                                                                                   
-            for row in cursor:
-                result.append(row)
-            return result
+        for row in cursor:
+            result.append(row)
+        return result
 
 
     def getPurchaseBySupplierId(self, sid):
         cursor = self.conn.cursor()
         query = "select * from purchase where sid = %s;"
-        cursor.execute(query, (cid,))
+        cursor.execute(query, (sid,))
         result = []
-            for row in cursor:
-                result.append(row)
-            return result
+        for row in cursor:
+            result.append(row)
+        return result
 
 
     def getPurchaseByResourceId(self, rid):
         cursor = self.conn.cursor()
         query = "select * from purchase where rid = %s;"
-        cursor.execute(query, (cid,))
+        cursor.execute(query, (rid,))
         result = []
-            for row in cursor:
-                result.append(row)
-            return result
+        for row in cursor:
+            result.append(row)
+        return result
 
 
     def getPurchaseByQuantity(self, qty):
@@ -63,9 +63,9 @@ class PurchaseDAO:
         query = "select * from purchase where qty = %s;"
         cursor.execute(query, (qty,))
         result = []
-            for row in cursor:
-                result.append(row)
-            return result
+        for row in cursor:
+            result.append(row)
+        return result
 
 
     def getPurchaseByTotal(self, total):
@@ -73,9 +73,9 @@ class PurchaseDAO:
         query = "select * from purchase where total = %s;"
         cursor.execute(query, (total,))
         result = []
-            for row in cursor:
-                result.append(row)
-            return result
+        for row in cursor:
+            result.append(row)
+        return result
 
 
     def getPurchaseBySupplierAndTotal(self, sid, total):
@@ -83,9 +83,9 @@ class PurchaseDAO:
         query = "select * from purchase where sid = %s and total = %s;"
         cursor.execute(query, (sid, total,))
         result = []
-            for row in cursor:
-                result.append(row)
-            return result
+        for row in cursor:
+            result.append(row)
+        return result
 
 
     def getPurchaseBySupplierAndQuantity(self, sid, qty):
@@ -93,9 +93,9 @@ class PurchaseDAO:
         query = "select * from purchase where sid = %s and qty = %s;"
         cursor.execute(query, (sid, qty,))
         result = []
-            for row in cursor:
-                result.append(row)
-            return result
+        for row in cursor:
+            result.append(row)
+        return result
 
 
     def getPurchasesByClientAndTotal(self, cid, total):
@@ -103,9 +103,9 @@ class PurchaseDAO:
         query = "select * from purchase where cid = %s and total = %s;"
         cursor.execute(query, (cid, total,))
         result = []
-            for row in cursor:
-                result.append(row)
-            return result
+        for row in cursor:
+            result.append(row)
+        return result
 
 
     def getPurchaseByClientAndQuantity(self, cid, qty):
@@ -113,9 +113,9 @@ class PurchaseDAO:
         query = "select * from purchase where cid = %s and qty = %s;"
         cursor.execute(query, (cid, qty,))
         result = []
-            for row in cursor:
-                result.append(row)
-            return result
+        for row in cursor:
+            result.append(row)
+        return result
 
 
     def getSupplierByPurchaseId(self, pid):

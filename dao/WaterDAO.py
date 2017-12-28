@@ -33,19 +33,19 @@ class WaterDAO:
         query = "select * from water where price = %s;"
         cursor.execute(query, (price,))
         result = [] 
-            for row in cursor:
-                result.append(row)
-            return result
+        for row in cursor:
+            result.append(row)
+        return result
 
 
-     def getWaterBySize(self, size):
+    def getWaterBySize(self, size):
         cursor = self.conn.cursor()
         query = "select * from water where size = %s;"
         cursor.execute(query, (size,))
         result = []                                                                                                   
-            for row in cursor:
-                result.append(row)
-            return result
+        for row in cursor:
+            result.append(row)
+        return result
 
 
     def getWaterByPriceAndSize(self, price, size):
@@ -53,9 +53,9 @@ class WaterDAO:
         query = "select * from water where price = %s and size = %s;"
         cursor.execute(query, (price, size,))
         result = []
-            for row in cursor:
-                result.append(row)
-            return result
+        for row in cursor:
+            result.append(row)
+        return result
 
 
     def getPurchaseByWaterId(self, rid):
@@ -63,9 +63,9 @@ class WaterDAO:
         query = "select pid, cid, sid, rid, qty, total, ccnum from purchase natural inner join water where rid = %s;"
         cursor.execute(query, (rid,))
         result = []
-            for row in cursor:
-                result.append(row)
-            return result
+        for row in cursor:
+            result.append(row)
+        return result
 
 
     def insert(self, price, size):

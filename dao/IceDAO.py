@@ -33,9 +33,9 @@ class IceDAO:
         query = "select * from ice where price = %s;"
         cursor.execute(query, (price,))
         result = [] 
-            for row in cursor:
-                result.append(row)
-            return result
+        for row in cursor:
+             result.append(row)
+        return result
 
 
     def getIceBySize(self, size):
@@ -43,9 +43,9 @@ class IceDAO:
         query = "select * from ice where size = %s;"
         cursor.execute(query, (size,))
         result = []                                                                                                   
-            for row in cursor:
-                result.append(row)
-            return result
+        for row in cursor:
+            result.append(row)
+        return result
 
 
     def getIceByPriceAndSize(self, price, size):
@@ -53,9 +53,9 @@ class IceDAO:
         query = "select * from ice where price = %s and size = %s;"
         cursor.execute(query, (price, size,))
         result = []
-            for row in cursor:
-                result.append(row)
-            return result
+        for row in cursor:
+            result.append(row)
+        return result
 
 
     def getPurchaseByIceId(self, rid):
@@ -63,9 +63,9 @@ class IceDAO:
         query = "select pid, cid, sid, rid, qty, total, ccnum from purchase natural inner join ice where rid = %s;"
         cursor.execute(query, (rid,))
         result = []
-            for row in cursor:
-                result.append(row)
-            return result
+        for row in cursor:
+            result.append(row)
+        return result
 
 
     def insert(self, price, size):
