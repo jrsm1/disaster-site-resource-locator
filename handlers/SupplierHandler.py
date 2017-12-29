@@ -122,10 +122,10 @@ class SupplierHandler:
             saddress = form['address']
             sphone = form['phone']
             sregion = form['region']
-            if sname and saddress and sphone and sregion:
+            if sname and saddress and sphone and sregion and spassword:
                 dao = SupplierDAO()
                 sid = dao.Insert(sname, spassword, saddress, sphone, sregion)
-                result = self.build_supplier_attributes(sid, sname, saddress, sphone, sregion)
+                result = self.build_supplier_attributes(sid, sname, spassword, saddress, sphone, sregion)
                 return jsonify(Supplier = result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
