@@ -13,10 +13,11 @@ class SupplierHandler:
         result['saddress'] = row[5]
         return result
 
-    def build_supplier_attributes(self, sid, sname, saddress, sphone, sregion):
+    def build_supplier_attributes(self, sid, sname, spassword, saddress, sphone, sregion):
         result = {}
         result['sid'] = sid
         result['name'] = sname
+        result['password']=spassword
         result['address'] = saddress
         result['phone'] = sphone
         result['region'] = sregion
@@ -113,16 +114,17 @@ class SupplierHandler:
             return jsonify(Resources=result_list)
 
     def insertSupplier(self, form):
-        if len(form) != 4:
+        if len(form) != 5:
             return jsonify(Error = "Malformed POST request"), 400
         else:
             sname = form['name']
+            spassword = form['password']
             saddress = form['address']
             sphone = form['phone']
             sregion = form['region']
             if sname and saddress and sphone and sregion:
                 dao = SupplierDAO()
-                sid = dao.Insert(sname, saddress, sphone, sregion)
+                sid = dao.Insert(sname, spassword, saddress, sphone, sregion)
                 result = self.build_supplier_attributes(sid, sname, saddress, sphone, sregion)
                 return jsonify(Supplier = result), 201
             else:
