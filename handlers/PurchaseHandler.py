@@ -36,7 +36,7 @@ class PurchaseHandler:
         for row in purchases_list:
             result = self.build_supplier_dict(row)
             result_list.append(result)
-        return jsonify(Suppliers=result_list)
+        return jsonify(Purchases=result_list)
 
 
     def getPurchaseById(self, pid):
