@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 from handlers import *
 
 app = Flask(__name__)
@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def greeting():
-    return '<b>Welcome to the Resource Locator App!!!</b>'
+    return render_template('index.html')
 
 ################################################
 #	Routes for Resource Queries
