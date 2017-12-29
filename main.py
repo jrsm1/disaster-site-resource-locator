@@ -66,12 +66,15 @@ def getSuppliersByRID(rid):
 #############################################
 
 
-@app.route('/dsrl/suppliers')
+@app.route('/dsrl/suppliers', methods=['GET', 'POST'])
 def getAllSuppliers():
-    if not request.args:
-        return SupplierHandler().getAllSuppliers()
+    if request.method == 'POST':
+        return SupplierHandler().insertSupplier(request.form)
     else:
-        return SupplierHandler().searchSuppliers(request.args)
+        if not request.args:
+            return SupplierHandler().getAllSuppliers()
+        else:
+            return SupplierHandler().searchSuppliers(request.args)
 
 
 @app.route('/dsrl/suppliers/<string:selection>')

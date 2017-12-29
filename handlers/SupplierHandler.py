@@ -1,4 +1,5 @@
 from flask import jsonify
+from dao.SupplierDAO import SupplierDAO
 
 
 class SupplierHandler:
@@ -7,9 +8,18 @@ class SupplierHandler:
         result['sid'] = row[0]
         result['sname'] = row[1]
         result['spassword'] = row[2]
-        result['scity'] = row[3]
+        result['sregion'] = row[3]
         result['sphone'] = row[4]
-        result['slocation'] = row[5]
+        result['saddress'] = row[5]
+        return result
+
+    def build_supplier_attributes(self, sid, sname, saddress, sphone, sregion):
+        result = {}
+        result['sid'] = sid
+        result['name'] = sname
+        result['address'] = saddress
+        result['phone'] = sphone
+        result['region'] = sregion
         return result
 
     def build_resource_dict(self, row):
@@ -23,14 +33,15 @@ class SupplierHandler:
         return result
 
     def getSupplierList(self):
-        supplier1 = [0, "Juan Vasquez", "hola123", "San Juan", "7874561925", "18.465539,-66.105735"]
-        supplier2 = [1, "Pedro Sanchez", "12345678", "Arecibo", "7873456890", "18.444247,-66.646407"]
-        supplier3 = [2, "Esteban Rivera", "quieneres", "Mayaguez", "7876943078", "18.201345,-67.145155"]
+        supplier1 = [0, "Juan Vasquez", "hola123", "San Juan", "7874561925", "Calle 18 P30 Vista Azul Arecibo PR"]
+        supplier2 = [1, "Pedro Sanchez", "12345678", "Arecibo", "7873456890", "Calle 18 P30 Vista Azul Arecibo PR"]
+        supplier3 = [2, "Esteban Rivera", "quieneres", "Mayaguez", "7876943078","Calle 18 P30 Vista Azul Arecibo PR"]
         result = [supplier1, supplier2, supplier3]
         return result
 
     def getAllSuppliers(self):
-        suppliers_list = self.getSupplierList()
+        dao = SupplierDAO()
+        suppliers_list = dao.getAllSuppliers()
         result_list = []
         for row in suppliers_list:
             result = self.build_supplier_dict(row)
@@ -38,21 +49,34 @@ class SupplierHandler:
         return jsonify(Suppliers=result_list)
 
     def searchSuppliers(self, args):
-            scity = args.get("city")
+            if len(args) > 4:
+                return jsonify(Error="Malformed search string."), 400
+            saddress = args.get("address")
             sid = args.get("id")
             sname = args.get("name")
             sphone = args.get("phone")
-            slocation = args.get("location")
-
-            if scity or sname or sphone or slocation or sid:
-                supplier_list = self.getSupplierList()
-                result_list = []
-                for row in supplier_list:
-                    result = self.build_supplier_dict(row)
-                    result_list.append(result)
-                return jsonify(Suppliers=result_list)
+            sregion = args.get("region")
+            dao = SupplierDAO()
+            supplier_list = []
+            if len(args) == 2 and sname and sregion:
+                supplier_list = dao.getSupplierByNameRegion(sname, sregion)
+            elif len(args) == 1 and sid:
+                supplier_list= dao.getSupplierByID(sid)
+            elif len(args) == 1 and sname:
+                supplier_list = dao.getSupplierByName(sname)
+            elif len(args) == 1 and saddress:
+                supplier_list = dao.getSupplierByAddress(saddress)
+            elif len(args) == 1 and sphone:
+                supplier_list = dao.getSupplierByPhone(sphone)
+            elif len(args) == 1 and sregion:
+                supplier_list = dao.getSupplierByRegion(sregion)
             else:
-                return jsonify(Error="Malformed search string."), 400
+                return jsonify(Error="Malformed query string"), 400
+            result_list = []
+            for row in supplier_list:
+                result = self.build_supplier_dict(row)
+                result_list.append(result)
+            return jsonify(Suppliers=result_list)
 
     def getSuppliersBy(self, selection):
         if selection == "scity" or selection == "sname" or selection == "sphone" or selection == "slocation" or \
@@ -67,13 +91,14 @@ class SupplierHandler:
             return jsonify(Error="Malformed search string."), 400
 
     def getSupplierByID(self, sid):
-        result = [2, "Esteban Rivera", "quieneres", "Mayaguez", "7876943078", "18.201345,-67.145155"]
-        if not result:
+        dao = SupplierDAO()
+        row = dao.getSupplierByID(sid)
+        if not row:
             return jsonify(Error="Supplier Not Found"), 404
         else:
-            supplierID= self.build_supplier_dict(result)
+            supplierID = self.build_supplier_dict(row)
         return jsonify(Supplier = supplierID)
-
+    #TODO
     def getResourcesBySID(self, sid):
         resources = []
         resources.append([1, 'gerber', 'baby food', '.99', 'true', '50'])
@@ -86,3 +111,20 @@ class SupplierHandler:
                 result = self.build_resource_dict(row)
                 result_list.append(result)
             return jsonify(Resources=result_list)
+
+    def insertSupplier(self, form):
+        if len(form) != 4:
+            return jsonify(Error = "Malformed POST request"), 400
+        else:
+            sname = form['name']
+            saddress = form['address']
+            sphone = form['phone']
+            sregion = form['region']
+            if sname and saddress and sphone and sregion:
+                dao = SupplierDAO()
+                sid = dao.Insert(sname, saddress, sphone, sregion)
+                result = self.build_supplier_attributes(sid, sname, saddress, sphone, sregion)
+                return jsonify(Supplier = result), 201
+            else:
+                return jsonify(Error="Unexpected attributes in POST request"), 400
+
