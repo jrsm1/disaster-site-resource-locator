@@ -13,50 +13,50 @@ def greeting():
 ###############################################
 
 
-@app.route('/dsrl/resources')
+@app.route('/resources')
 def getAllResources():
         if not request.args:
-            return ResourceHandler.getAllResources()
+            return ResourceHandler().getAllResources()
         else:
             return ResourceHandler().searchResources(request.args)
 
 
-@app.route('/dsrl/resources/rid')
+@app.route('/resources/rid')
 def getResourceIds():
     return ResourceHandler().getResourceIds()
 
 
-@app.route('/dsrl/resources/rname')
+@app.route('/resources/rname')
 def getResourceNames():
     return ResourceHandler().getResourceNames()
 
 
-@app.route('/dsrl/resources/categories')
+@app.route('/resources/categories')
 def getResourceCategories():
     return ResourceHandler().getResourceCategories()
 
 
-@app.route('/dsrl/resources/prices')
+@app.route('/resources/prices')
 def getResourcePrices():
     return ResourceHandler().getResourcePrices()
 
 
-@app.route('/dsrl/resources/available')
+@app.route('/resources/available')
 def getAvailableResources():
     return ResourceHandler().getAvailableResources()
 
 
-@app.route('/dsrl/resources/requestcount')
+@app.route('/resources/requestcount')
 def getRequestCount():
     return ResourceHandler().getRequestCount()
 
 
-@app.route('/dsrl/resources/<int:rid>')
+@app.route('/resources/<int:rid>')
 def getResourceById(rid):
     return ResourceHandler().getResourceById(rid)
 
 
-@app.route('/dsrl/resources/<int:rid>/suppliers')
+@app.route('/resources/<int:rid>/suppliers')
 def getSuppliersByRID(rid):
     return ResourceHandler().getSuppliersByRID(rid)
 
@@ -66,7 +66,7 @@ def getSuppliersByRID(rid):
 #############################################
 
 
-@app.route('/dsrl/suppliers', methods=['GET', 'POST'])
+@app.route('/suppliers', methods=['GET', 'POST'])
 def getAllSuppliers():
     if request.method == 'POST':
         return SupplierHandler().insertSupplier(request.form)
@@ -77,17 +77,17 @@ def getAllSuppliers():
             return SupplierHandler().searchSuppliers(request.args)
 
 
-@app.route('/dsrl/suppliers/<string:selection>')
+@app.route('/suppliers/<string:selection>')
 def getSuppliersBy(selection):
     return SupplierHandler().getSuppliersBy(selection)
 
 
-@app.route('/dsrl/suppliers/<int:sid>')
+@app.route('/suppliers/<int:sid>')
 def getSupplierByID(sid):
     return SupplierHandler().getSupplierByID(sid)
 
 
-@app.route('/dsrl/suppliers/<int:sid>/resources')
+@app.route('/suppliers/<int:sid>/resources')
 def getResourcesBySID(sid):
     return SupplierHandler().getResourcesBySID(sid)
 
@@ -96,7 +96,7 @@ def getResourcesBySID(sid):
 ############################################
 
 
-@app.route('/dsrl/admins')
+@app.route('/admins')
 def getAllAdmins():
     if not request.args:
         return AdminHandler().getAllAdmins()
@@ -104,22 +104,22 @@ def getAllAdmins():
         return AdminHandler().searchAdmins(request.args)
 
 
-@app.route('/dsrl/admins/aid')
+@app.route('/admins/aid')
 def getAdminIds():
     return AdminHandler().getAdminIds()
 
 
-@app.route('/dsrl/admins/aname')
+@app.route('/admins/aname')
 def getAdminNames():
     return AdminHandler().getAdminNames()
 
 
-@app.route('/dsrl/admins/<int:aid>')
+@app.route('/admins/<int:aid>')
 def getAdminById(aid):
     return AdminHandler().getAdminById(aid)
 
 
-@app.route('/dsrl/admins/<string:aname>')
+@app.route('/admins/<string:aname>')
 def getAdminByName(aname):
     return AdminHandler().getAdminByName(aname)
 
@@ -128,7 +128,7 @@ def getAdminByName(aname):
 #########################################
 
 
-@app.route('/dsrl/salesrecords')
+@app.route('/salesrecords')
 def getAllSalesRecords():
     if not request.args:
         return SalesRecordHandler().getAllSalesRecords()
@@ -136,22 +136,22 @@ def getAllSalesRecords():
         return SalesRecordHandler().searchSalesRecords(request.args)
 
 
-@app.route('/dsrl/salesrecords/srid')
+@app.route('/salesrecords/srid')
 def getSRIds():
     return SalesRecordHandler().getSRIds()
 
 
-@app.route('/dsrl/salesrecords/sid')
+@app.route('/salesrecords/sid')
 def getSRSuppierIds():
     return SalesRecordHandler().getSRSupplierIds()
 
 
-@app.route('/dsrl/salesrecords/sales')
+@app.route('/salesrecords/sales')
 def getSRSales():
     return SalesRecordHandler().getSRSales()
 
 
-@app.route('/dsrl/salesrecords/<int:srid>')
+@app.route('/salesrecords/<int:srid>')
 def getSRBySRId(srid):
     return SalesRecordHandler().getSRBySRId(srid)
 
@@ -161,7 +161,7 @@ def getSRBySRId(srid):
 #############################################
 
 
-@app.route('/dsrl/clients')
+@app.route('/clients')
 def getAllClients():
     if not request.args:
         return ClientHandler().getAllClients()
@@ -169,17 +169,17 @@ def getAllClients():
         return ClientHandler().searchClients(request.args)
 
 
-@app.route('/dsrl/clients/<string:selection>')
+@app.route('/clients/<string:selection>')
 def getClientsBy(selection):
     return ClientHandler().getClientsBy(selection)
 
 
-@app.route('/dsrl/clients/<int:cid>')
+@app.route('/clients/<int:cid>')
 def getClientsByID(cid):
     return ClientHandler().getClientByID(cid)
 
 
-@app.route('/dsrl/statistics')
+@app.route('/statistics')
 def getStatistics():
     return ResourceHandler().getRequestCount()
 
