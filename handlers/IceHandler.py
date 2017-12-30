@@ -43,6 +43,34 @@ class IceHandler:
         return jsonify(Ice = ice)
 
 
+    def getIceByPrice(self, price):
+
+        dao = IceDAO()
+        price_list = dao.getIceByPrice(price)
+        if not price_list:
+            return jsonify(Error = "No price found"), 404
+        else:
+            result_list = []
+            for row in price_list:
+                result = self.build_ice_dict(row)
+                result_list.append(result)
+        return jsonify(Ice = result_list)
+
+
+    def getIceBySize(self, size):
+
+        dao = IceDAO()
+        size_list = dao.getIceBySize(size)
+        if not size_list:
+            return jsonify(Error = "No size found"), 404
+        else:
+            result_list = []
+            for row in size_list:
+                result = self.build_ice_dict(row)
+                result_list.append(result)
+        return jsonify(Ice = result_list)
+
+
     def searchIce(self, args):
         if len(args) > 3:
             return jsonify(Error = "Malformed search string."), 400
@@ -71,15 +99,16 @@ class IceHandler:
 
 
     def insertIce(self, form):
-        if len(form) != 2:
+        if len(form) != 3:
             return jsonify(Error = "Malformed POST request"), 400
         else:
+            rid = form['rid']
             price = form['price']
             size = form['size']
-            if price and size:
+            if rid and price and size:
                 dao = IceDAO()
-                rid = dao.insert(price, size)
-                result = self.build_ice_attributes(price, size)
+                dao.insert(rid, price, size)
+                result = self.build_ice_attributes(rid, price, size)
                 return jsonify(Ice = result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400

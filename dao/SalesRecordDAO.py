@@ -1,7 +1,7 @@
 from config.dbconfig import pg_config
 import psycopg2
 
-class WaterDAO:
+class SalesRecordDAO:
     def __init__(self):
 
         connection_url = "dbname=%s user=%s host=%s password=%s" % (pg_config['dbname'],
@@ -10,9 +10,9 @@ class WaterDAO:
                                                             pg_config['passwd'])
         self.conn = psycopg2._connect(connection_url)
 
-    def getAllWater(self):
+    def getAllSalesRecord(self):
         cursor = self.conn.cursor()
-        query = "select * from water;"
+        query = "select * from salesrecord;"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -20,58 +20,48 @@ class WaterDAO:
         return result
 
 
-    def getWaterById(self, rid):
+    def getSalesRecordById(self, sid):
         cursor = self.conn.cursor()
-        query = "select * from water where rid = %s;"
-        cursor.execute(query, (rid,))
+        query = "select * from salesrecord where sid = %s;"
+        cursor.execute(query, (sid,))
         result = cursor.fetchone()
         return result
 
 
-    def getWaterByPrice(self, price):
+    def getSalesRecordByEarnings(self, earnings):
         cursor = self.conn.cursor()
-        query = "select * from water where price = %s;"
-        cursor.execute(query, (price,))
+        query = "select * from salesrecord where earnings = %s;"
+        cursor.execute(query, (earnings,))
         result = [] 
         for row in cursor:
             result.append(row)
         return result
 
 
-    def getWaterBySize(self, size):
+    def getSalesRecordBySales(self, sales):
         cursor = self.conn.cursor()
-        query = "select * from water where size = %s;"
-        cursor.execute(query, (size,))
+        query = "select * from salesrecord where sales = %s;"
+        cursor.execute(query, (sales,))
         result = []                                                                                                   
         for row in cursor:
             result.append(row)
         return result
 
 
-    def getWaterByPriceAndSize(self, price, size):
+    def getSalesRecordByEarningsAndSales(self, earnings, sales):
         cursor = self.conn.cursor()
-        query = "select * from water where price = %s and size = %s;"
-        cursor.execute(query, (price, size,))
+        query = "select * from salesrecord where earnings = %s and sales = %s;"
+        cursor.execute(query, (earnings, sales,))
         result = []
         for row in cursor:
             result.append(row)
         return result
 
 
-    def getPurchaseByWaterId(self, rid):
+    def insert(self, sid, earnings, sales):
         cursor = self.conn.cursor()
-        query = "select pid, cid, sid, rid, qty, total, ccnum from purchase natural inner join water where rid = %s;"
-        cursor.execute(query, (rid,))
-        result = []
-        for row in cursor:
-            result.append(row)
-        return result
-
-
-    def insert(self, rid, price, size):
-        cursor = self.conn.cursor()
-        query = "insert into water values (%s, %s, %s) returning rid;"
-        cursor.execute(query, (rid, price, size,))
+        query = "insert into salesrecord values (%s, %s, %s) returning sid;"
+        cursor.execute(query, (sid, earnings, sales,))
         rid = cursor.fetchone()[0]
         self.conn.commit()
-        return rid
+        return sid

@@ -68,10 +68,10 @@ class IceDAO:
         return result
 
 
-    def insert(self, price, size):
+    def insert(self, rid, price, size):
         cursor = self.conn.cursor()
-        query = "insert into ice(price, size) values (%s, %s) returning rid;"
-        cursor.execute(query, (price, size,))
+        query = "insert into ice values (%s, %s, %s) returning rid;"
+        cursor.execute(query, (rid, price, size,))
         rid = cursor.fetchone()[0]
         self.conn.commit()
         return rid

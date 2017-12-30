@@ -1,69 +1,50 @@
 from flask import jsonify
+from dao.SalesRecordDAO import SalesRecordDAO
 
 class SalesRecordHandler:
    
     def build_srecord_dict(self, row):
         result = {}
-        result['srid'] = row[0]
-        result['sid'] = row[1]
-        result['earnings'] = row[2]
-        result['sales'] = row[3]
+        result['sid'] = row[0]
+        result['earnings'] = row[1]
+        result['sales'] = row[2]
         return result
 
 
-    def buildDummyData(self):
-        srecord_list = []
-        srecord1 = [1, '1', '1111', '1111']
-        srecord2 = [2, '2', '2222', '2222']
-        srecord3 = [3, '3', '3333', '3333']
-        srecord4 = [4, '4', '4444', '4444']
-
-        srecord_list.append(srecord1)
-        srecord_list.append(srecord2)
-        srecord_list.append(srecord3)
-        srecord_list.append(srecord4)
-        return srecord_list  
-
+    def build_srecord_attributes(self, sid, earnings, sales):
+        result = {}
+        result['sid'] = sid
+        result['earnings'] = earnings
+        result['sales'] = sales
+        return result
 
     def getAllSalesRecords(self):
-        srecords_list = self.buildDummyData()
 
+        dao = SalesRecordDAO()
+        srecord_list = dao.getAllSalesRecord()
         result_list = []
-        for row in srecords_list:
+        for row in srecord_list:
             result = self.build_srecord_dict(row)
             result_list.append(result)
         return jsonify(SRecords = result_list)
 
 
-    def getSRIds(self):
-        srid_list = self.buildDummyData()
-        
-        if not srid_list:
-            return jsonify(Error = "No Sales Records Found"), 404
+    def getSalesRecordById(self, sid):
+       
+        dao = SalesRecordDAO()
+        row = dao.getSalesRecordById(sid)
+        if not row:
+            return jsonify(Error = "No SalesRecord Found"), 404
         else:
-            result_list = []
-            for row in srid_list:
-                result = self.build_srecord_dict(row)
-                result_list.append(result)
-        return jsonify(SRIds = result_list)
+            srecord = self.build_srecord_dict(row)
+        return jsonify(SRecord = srecord)
 
 
-    def getSRSupplierIds(self):
-        sids_list = self.buildDummyData()
-        
-        if not sids_list:
-            return jsonify(Error = "No Supplier Ids Found"), 404
-        else:
-            result_list = []
-            for row in sids_list:
-                result = self.build_srecord_dict(row)
-                result_list.append(result)
-        return jsonify(Sids = result_list)
+    def getSalesRecordByEarnings(self, earnings):
+       
+        dao = SalesRecordDAO()
+        earnings_list = dao.getSalesRecordByEarnings(earnings)
 
-
-    def getSREarnings(self):
-        earnings_list = self.buildDummyData()
-        
         if not earnings_list:
             return jsonify(Error = "No Earnings Found"), 404
         else:
@@ -74,9 +55,11 @@ class SalesRecordHandler:
         return jsonify(Earnings = result_list)
 
 
-    def getSRSales(self):
-        sales_list = self.buildDummyData()
-        
+    def getSalesRecordBySales(self, sales):
+       
+        dao = SalesRecordDAO()
+        sales_list = dao.getSalesRecordBySales(sales)
+ 
         if not sales_list:
             return jsonify(Error = "No Sales Found"), 404
         else:
@@ -86,35 +69,23 @@ class SalesRecordHandler:
                 result_list.append(result)
         return jsonify(Sales = result_list)
 
-    def getSRBySRId(self, srid):
-        srecord = [1, '1', '1111', '1111']
-  
-        if not srecord:
-            return jsonify(Error = "SalesRecord Not Found"), 404
-        else:
-
-            srecord = self.build_srecord_dict(srecord)
-            return jsonify(SalesRecord = srecord)
 
     def searchSalesRecords(self, args):
         sid = args.get("sid")
         earnings = args.get("earnings")
         sales = args.get("sales")
+
+        dao = SalesRecordDAO()
         srecord_list = []
 
-        if (len(args) == 2) and sid and earnings:
-            srecord_list = self.buildDummyData()
-        elif (len(args) == 2) and sid and sales:
-            srecord_list = self.buildDummyData()
-        elif (len(args) == 2) and earnings and sales:
-            srecord_list = self.buildDummyData()
+        if (len(args) == 2) and earnings and sales:
+            srecord_list = dao.getSalesRecordByEarningsAndSales(earnings, sales)
         elif (len(args) == 1) and sid:
-            srecord_list = self.buildDummyData()
-
+            srecord_list = dao.getSalesRecordById(sid)
         elif (len(args) == 1) and earnings:
-            srecord_list = self.buildDummyData()
+            srecord_list = dao.getSalesRecordByEarnings(earnings)
         elif (len(args) == 1) and sales:
-            srecord_list = self.buildDummyData()
+            srecord_list = dao.getSalesRecordBySales(sales)
         else:
             return jsonify(Error = "Malformed query string"), 400
 
@@ -124,3 +95,18 @@ class SalesRecordHandler:
             result_list.append(result)
         return jsonify(SalesRecords=result_list)
 
+
+    def insertSalesRecord(self, form):
+        if len(form) != 3:
+            return jsonify(Error = "Malformed POST request"), 400
+        else:
+            sid = form['sid']
+            earnings = form['earnings']
+            sales = form['sales']
+            if sid and earnings and sales:
+                dao = SalesRecordDAO()
+                dao.insert(sid, earnings, sales)
+                result = self.build_srecord_attributes(sid, earnings, sales)
+                return jsonify(SalesRecord = result), 201
+            else:
+                return jsonify(Error="Unexpected attributes in POST request"), 400

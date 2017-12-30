@@ -128,32 +128,30 @@ def getAdminByName(aname):
 #########################################
 
 
-@app.route('/salesrecords')
+@app.route('/salesrecords', methods=['GET', 'POST'])
 def getAllSalesRecords():
-    if not request.args:
-        return SalesRecordHandler().getAllSalesRecords()
+    if request.method == 'POST':
+        return SalesRecordHandler().insertSalesRecord(request.form)
     else:
-        return SalesRecordHandler().searchSalesRecords(request.args)
+        if not request.args:
+            return SalesRecordHandler().getAllSalesRecords()
+        else:
+            return SalesRecordHandler().searchSalesRecords(request.args)
 
 
-@app.route('/salesrecords/srid')
-def getSRIds():
-    return SalesRecordHandler().getSRIds()
+@app.route('/salesrecords/sid/<int:sid>')
+def getSRSuppierIds(sid):
+    return SalesRecordHandler().getSalesRecordById(sid)
 
 
-@app.route('/salesrecords/sid')
-def getSRSuppierIds():
-    return SalesRecordHandler().getSRSupplierIds()
+@app.route('/salesrecords/earnings/<float:earnings>')
+def getSREarnings(earnings):
+    return SalesRecordHandler().getSalesRecordByEarnings(earnings)
 
 
-@app.route('/salesrecords/sales')
-def getSRSales():
-    return SalesRecordHandler().getSRSales()
-
-
-@app.route('/salesrecords/<int:srid>')
-def getSRBySRId(srid):
-    return SalesRecordHandler().getSRBySRId(srid)
+@app.route('/salesrecords/sales/<int:sales>')
+def getSRSales(sales):
+    return SalesRecordHandler().getSalesRecordBySales(sales)
 
 
 ############################################
@@ -198,6 +196,7 @@ def getAllPurchases():
         else:
             return PurchaseHandler().searchPurchases(request.args)
 
+#TODO Add Purchase Routes
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
