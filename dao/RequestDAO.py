@@ -80,6 +80,6 @@ class RequestDAO:
         cursor = self.conn.cursor()
         query = "insert into request(cid, rid, qty) values (%s, %s, %s) returning requestid;"
         cursor.execute(query, (cid, rid, qty,))
-        pid = cursor.fetchone()[0]
+        requestid = cursor.fetchone()[0]
         self.conn.commit()
         return requestid

@@ -15,7 +15,7 @@ class RequestHandler:
 
     def build_request_attributes(self, requestid, cid, rid, qty):
         result = {}
-        result['requestid'] = pid
+        result['requestid'] = requestid
         result['cid'] = cid
         result['rid'] = rid
         result['qty'] = qty
