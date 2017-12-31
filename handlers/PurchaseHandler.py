@@ -31,12 +31,12 @@ class PurchaseHandler:
     def getAllPurchases(self):
 
         dao = PurchaseDAO()
-        purchases_list = dao.getAllPurchases()
+        purchase_list = dao.getAllPurchases()
         result_list = []
-        for row in purchases_list:
-            result = self.build_supplier_dict(row)
+        for row in purchase_list:
+            result = self.build_purchase_dict(row)
             result_list.append(result)
-        return jsonify(Purchases=result_list)
+        return jsonify(Purchase=result_list)
 
 
     def getPurchaseById(self, pid):
@@ -49,6 +49,81 @@ class PurchaseHandler:
         else:
             purchase = self.build_purchase_dict(row)
         return jsonify(Purchase = purchase)
+
+
+    def getPurchaseByClientId(self, cid):
+       
+        dao = PurchaseDAO()
+        purchase_list = dao.getPurchaseByClientId(cid)
+
+        if not purchase_list:
+            return jsonify(Error = "No Purchase Found"), 404
+        else:
+            result_list = []
+            for row in purchase_list:
+                result = self.build_purchase_dict(row)
+                result_list.append(result)
+        return jsonify(Purchase = result_list)
+
+
+    def getPurchaseBySupplierId(self, sid):
+       
+        dao = PurchaseDAO()
+        purchase_list = dao.getPurchaseBySupplierId(sid)
+
+        if not purchase_list:
+            return jsonify(Error = "No Purchase Found"), 404
+        else:
+            result_list = []
+            for row in purchase_list:
+                result = self.build_purchase_dict(row)
+                result_list.append(result)
+        return jsonify(Purchase = result_list)
+
+
+    def getPurchaseByResourceId(self, rid):
+       
+        dao = PurchaseDAO()
+        purchase_list = dao.getPurchaseByResourceId(rid)
+
+        if not purchase_list:
+            return jsonify(Error = "No Purchase Found"), 404
+        else:
+            result_list = []
+            for row in purchase_list:
+                result = self.build_purchase_dict(row)
+                result_list.append(result)
+        return jsonify(Purchase = result_list)
+
+
+    def getPurchaseByQuantity(self, qty):
+       
+        dao = PurchaseDAO()
+        purchase_list = dao.getPurchaseByQuantity(qty)
+
+        if not purchase_list:
+            return jsonify(Error = "No Purchase Found"), 404
+        else:
+            result_list = []
+            for row in purchase_list:
+                result = self.build_purchase_dict(row)
+                result_list.append(result)
+        return jsonify(Purchase = result_list)
+
+
+    def getPurchaseByTotal(self, total):
+       
+        dao = PurchaseDAO()
+        purchase_list = dao.getPurchaseByTotal(total)
+
+        if not purchase_list:
+            return jsonify(Error = "No Purchase Found"), 404
+        else:
+            result_list = []
+            for row in purchase_list:
+                result = self.build_purchase_dict(row)
+                result_list.append(result)
+        return jsonify(Purchase = result_list)
 
 
     def searchPurchases(self, args):

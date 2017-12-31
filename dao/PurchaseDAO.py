@@ -28,7 +28,7 @@ class PurchaseDAO:
         return result
 
 
-    def getPurchasesByClientId(self, cid):
+    def getPurchaseByClientId(self, cid):
         cursor = self.conn.cursor()
         query = "select * from purchase where cid = %s;"
         cursor.execute(query, (cid,))

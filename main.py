@@ -26,31 +26,6 @@ def getResourceIds():
     return ResourceHandler().getResourceIds()
 
 
-@app.route('/resources/rname')
-def getResourceNames():
-    return ResourceHandler().getResourceNames()
-
-
-@app.route('/resources/categories')
-def getResourceCategories():
-    return ResourceHandler().getResourceCategories()
-
-
-@app.route('/resources/prices')
-def getResourcePrices():
-    return ResourceHandler().getResourcePrices()
-
-
-@app.route('/resources/available')
-def getAvailableResources():
-    return ResourceHandler().getAvailableResources()
-
-
-@app.route('/resources/requestcount')
-def getRequestCount():
-    return ResourceHandler().getRequestCount()
-
-
 @app.route('/resources/<int:rid>')
 def getResourceById(rid):
     return ResourceHandler().getResourceById(rid)
@@ -90,6 +65,7 @@ def getSupplierByID(sid):
 @app.route('/suppliers/<int:sid>/resources')
 def getResourcesBySID(sid):
     return SupplierHandler().getResourcesBySID(sid)
+
 
 ############################################
 #	Routes for Admin Queries
@@ -139,18 +115,25 @@ def getAllSalesRecords():
             return SalesRecordHandler().searchSalesRecords(request.args)
 
 
-@app.route('/salesrecords/sid/<int:sid>')
-def getSRSuppierIds(sid):
-    return SalesRecordHandler().getSalesRecordById(sid)
+@app.route('/salesrecords/sid/<int:sid>', methods=['GET', 'PUT', 'DELETE'])
+def getSalesRecordBySuppierIds(sid):
+    if request.method == 'GET':
+        return SalesRecordHandler().getSalesRecordById(sid)
+    elif request.method == 'PUT':
+        pass
+    elif request.method == 'DELETE':
+        pass
+    else:
+        return jsonify(Error="Method not allowed."), 405
 
 
 @app.route('/salesrecords/earnings/<float:earnings>')
-def getSREarnings(earnings):
+def getSalesRecordByEarnings(earnings):
     return SalesRecordHandler().getSalesRecordByEarnings(earnings)
 
 
 @app.route('/salesrecords/sales/<int:sales>')
-def getSRSales(sales):
+def getSalesRecordBySales(sales):
     return SalesRecordHandler().getSalesRecordBySales(sales)
 
 
@@ -177,11 +160,6 @@ def getClientsByID(cid):
     return ClientHandler().getClientByID(cid)
 
 
-@app.route('/statistics')
-def getStatistics():
-    return ResourceHandler().getRequestCount()
-
-
 ##############################################
 #	Routes for Purchase Queries
 ##############################################
@@ -196,7 +174,43 @@ def getAllPurchases():
         else:
             return PurchaseHandler().searchPurchases(request.args)
 
-#TODO Add Purchase Routes
+
+@app.route('/purchase/pid/<int:pid>', methods=['GET','PUT','DELETE'])
+def getPurchaseById(pid):
+    if request.method == 'GET':
+        return PurchaseHandler().getPurchaseById(pid)
+    elif request.method == 'PUT':
+        pass
+    elif request.method == 'DELETE':
+        pass
+    else:
+        return jsonify(Error="Method not allowed."), 405
+
+
+@app.route('/purchase/cid/<int:cid>')
+def getPurchaseByClientId(cid):
+    return PurchaseHandler().getPurchaseByClientId(cid)
+
+
+@app.route('/purchase/sid/<int:sid>')
+def getPurchaseBySupplierId(sid):
+    return PurchaseHandler().getPurchaseBySupplierId(sid)
+
+
+@app.route('/purchase/rid/<int:rid>')
+def getPurchaseByResourceId(rid):
+    return PurchaseHandler().getPurchaseByResourceId(rid)
+
+
+@app.route('/purchase/qty/<int:qty>')
+def getPurchaseByQuantity(qty):
+    return PurchaseHandler().getPurchaseByQuantity(qty)
+
+
+@app.route('/purchase/total/<float:total>')
+def getPurchaseByTotal(total):
+    return PurchaseHandler().getPurchaseByTotal(total)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
