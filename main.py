@@ -211,5 +211,255 @@ def getPurchaseByTotal(total):
     return PurchaseHandler().getPurchaseByTotal(total)
 
 
+##############################################
+#	Routes for Water Queries
+##############################################
+@app.route('/water', methods=['GET', 'POST'])
+def getAllWater():
+    if request.method == 'POST':
+        return WaterHandler().insertWater(request.form)
+    else:
+        if not request.args:
+            return WaterHandler().getAllWater()
+        else:
+            return WaterHandler().searchWater(request.args)
+
+
+@app.route('/water/rid/<int:rid>', methods=['GET','PUT','DELETE'])
+def getWaterById(rid):
+    if request.method == 'GET':
+        return WaterHandler().getWaterById(rid)
+    elif request.method == 'PUT':
+        pass
+    elif request.method == 'DELETE':
+        pass
+    else:
+        return jsonify(Error="Method not allowed."), 405
+
+
+@app.route('/water/price/<float:price>')
+def getWaterByPrice(price):
+    return WaterHandler().getWaterByPrice(price)
+
+
+@app.route('/water/bsize/<string:bsize>')
+def getWaterByBottleSize(bsize):
+    return WaterHandler().getWaterByBottleSize(bsize)
+
+
+##############################################
+#	Routes for Ice Queries
+##############################################
+@app.route('/ice', methods=['GET', 'POST'])
+def getAllIce():
+    if request.method == 'POST':
+        return IceHandler().insertIce(request.form)
+    else:
+        if not request.args:
+            return IceHandler().getAllIce()
+        else:
+            return IceHandler().searchIce(request.args)
+
+
+@app.route('/ice/rid/<int:rid>', methods=['GET','PUT','DELETE'])
+def getIceById(rid):
+    if request.method == 'GET':
+        return IceHandler().getIceById(rid)
+    elif request.method == 'PUT':
+        pass
+    elif request.method == 'DELETE':
+        pass
+    else:
+        return jsonify(Error="Method not allowed."), 405
+
+
+@app.route('/ice/price/<float:price>')
+def getIceByPrice(price):
+    return IceHandler().getIceByPrice(price)
+
+
+@app.route('/ice/bsize/<string:bsize>')
+def getIceByBagSize(bsize):
+    return IceHandler().getIceByBagSize(bsize)
+
+
+##############################################
+#	Routes for Tools Queries
+##############################################
+
+@app.route('/tools', methods=['GET', 'POST'])
+def getAllTools():
+    if request.method == 'POST':
+        return ToolsHandler().insertTools(request.form)
+    else:
+        if not request.args:
+            return ToolsHandler().getAllTools()
+        else:
+            return ToolsHandler().searchTools(request.args)
+
+
+@app.route('/tools/rid/<int:rid>', methods=['GET','PUT','DELETE'])
+def getToolsById(rid):
+    if request.method == 'GET':
+        return ToolsHandler().getToolsById(rid)
+    elif request.method == 'PUT':
+        pass
+    elif request.method == 'DELETE':
+        pass
+    else:
+        return jsonify(Error="Method not allowed."), 405
+
+
+@app.route('/tools/name/<string:name>')
+def getToolsByName(name):
+    return ToolsHandler().getToolsByName(name)
+
+
+@app.route('/tools/brand/<string:brand>')
+def getToolsByBrand(brand):
+    return ToolsHandler().getToolsByBrand(brand)
+
+
+@app.route('/tools/price/<float:price>')
+def getToolsByPrice(price):
+    return ToolsHandler().getToolsByPrice(price)
+
+
+##############################################
+#	Routes for Fuel Queries
+##############################################
+
+@app.route('/fuel', methods=['GET', 'POST'])
+def getAllFuel():
+    if request.method == 'POST':
+        return FuelHandler().insertFuel(request.form)
+    else:
+        if not request.args:
+            return FuelHandler().getAllFuel()
+        else:
+            return FuelHandler().searchFuel(request.args)
+
+
+@app.route('/fuel/rid/<int:rid>', methods=['GET','PUT','DELETE'])
+def getFuelById(rid):
+    if request.method == 'GET':
+        return FuelHandler().getFuelById(rid)
+    elif request.method == 'PUT':
+        pass
+    elif request.method == 'DELETE':
+        pass
+    else:
+        return jsonify(Error="Method not allowed."), 405
+
+
+@app.route('/fuel/type/<string:ftype>')
+def getFuelByType(ftype):
+    return FuelHandler().getFuelByType(ftype)
+
+
+@app.route('/fuel/price/<float:price>')
+def getFuelByPrice(price):
+    return FuelHandler().getFuelByPrice(price)
+
+
+@app.route('/fuel/csize/<int:csize>')
+def getFuelByContainerSize(csize):
+    return FuelHandler().getFuelByContainerSize(csize)
+
+
+##############################################
+#	Routes for Food Queries
+##############################################
+
+@app.route('/food', methods=['GET', 'POST'])
+def getAllFood():
+    if request.method == 'POST':
+        return FoodHandler().insertFood(request.form)
+    else:
+        if not request.args:
+            return FoodHandler().getAllFood()
+        else:
+            return FoodHandler().searchFood(request.args)
+
+
+@app.route('/food/rid/<int:rid>', methods=['GET','PUT','DELETE'])
+def getFoodById(rid):
+    if request.method == 'GET':
+        return FoodHandler().getFoodById(rid)
+    elif request.method == 'PUT':
+        pass
+    elif request.method == 'DELETE':
+        pass
+    else:
+        return jsonify(Error="Method not allowed."), 405
+
+
+@app.route('/food/price/<float:price>')
+def getFoodByPrice(price):
+    return FoodHandler().getFoodByPrice(price)
+
+
+@app.route('/food/type/<string:ftype>')
+def getFoodByType(ftype):
+    return FoodHandler().getFoodByType(ftype)
+
+
+@app.route('/purchase/expdate/<date:expdate>')
+def getFoodByExpDate(expdate):
+    return FoodHandler().getFoodByExpDate(expdate)
+
+
+##############################################
+#	Routes for Clothes Queries
+##############################################
+
+@app.route('/clothes', methods=['GET', 'POST'])
+def getAllClothes():
+    if request.method == 'POST':
+        return ClothesHandler().insertClothes(request.form)
+    else:
+        if not request.args:
+            return ClothesHandler().getAllClothes()
+        else:
+            return ClothesHandler().searchClothes(request.args)
+
+
+@app.route('/clothes/rid/<int:rid>', methods=['GET','PUT','DELETE'])
+def getClothesById(rid):
+    if request.method == 'GET':
+        return ClothesHandler().getClothesById(rid)
+    elif request.method == 'PUT':
+        pass
+    elif request.method == 'DELETE':
+        pass
+    else:
+        return jsonify(Error="Method not allowed."), 405
+
+
+@app.route('/clothes/price/<float:price>')
+def getClothesByPrice(price):
+    return ClothesHandler().getClothesByPrice(price)
+
+
+@app.route('/clothes/color/<string:color>')
+def getClothesByColor(color):
+    return ClothesHandler().getClothesByColor(color)
+
+
+@app.route('/clothes/size/<string:size>')
+def getClothesBySize(size):
+    return ClothesHandler().getClothesBySize(size)
+
+
+@app.route('/clothes/gender/<string:gender>')
+def getClothesByGender(gender):
+    return ClothesHandler().getClothesByGender(gender)
+
+
+@app.route('/clothes/piece/<string:piece>')
+def getClothesByPiece(piece):
+    return ClothesHandler().getClothesByPiece(piece)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

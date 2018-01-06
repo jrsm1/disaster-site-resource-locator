@@ -8,15 +8,15 @@ class IceHandler:
         result = {}
         result['rid'] = row[0]
         result['price'] = row[1]
-        result['size'] = row[2]
+        result['bsize'] = row[2]
         return result
 
 
-    def build_ice_attributes(self, rid, price, size):
+    def build_ice_attributes(self, rid, price, bsize):
         result = {}
         result['rid'] = rid
         result['price'] = price
-        result['size'] = size
+        result['bsize'] = bsize
         return result
 
 
@@ -57,10 +57,10 @@ class IceHandler:
         return jsonify(Ice = result_list)
 
 
-    def getIceBySize(self, size):
+    def getIceByBagSize(self, bsize):
 
         dao = IceDAO()
-        size_list = dao.getIceBySize(size)
+        size_list = dao.getIceByBagSize(bsize)
         if not size_list:
             return jsonify(Error = "No size found"), 404
         else:
@@ -77,18 +77,18 @@ class IceHandler:
         else:
             rid = args.get("rid")
             price = args.get("price")
-            size = args.get("size")
+            bsize = args.get("bsize")
 
             dao = IceDAO()
             ice_list = []
-            if (len(args) == 2) and price and size:
-                ice_list = dao.getIceByPriceAndSize(price, size)
+            if (len(args) == 2) and price and bsize:
+                ice_list = dao.getIceByPriceAndBagSize(price, bsize)
             elif (len(args) == 1) and rid:
                 ice_list = dao.getIceById(rid)
             elif (len(args) == 1) and price:
                 ice_list = dao.getIceByPrice(price)
-            elif (len(args) == 1) and size:
-                ice_list = dao.getIceBySize(size)
+            elif (len(args) == 1) and bsize:
+                ice_list = dao.getIceByBagSize(bsize)
             else:
                 return jsonify(Error = "Malformed query string"), 400
             result_list = []
@@ -104,11 +104,11 @@ class IceHandler:
         else:
             rid = form['rid']
             price = form['price']
-            size = form['size']
-            if rid and price and size:
+            bsize = form['bsize']
+            if rid and price and bsize:
                 dao = IceDAO()
-                dao.insert(rid, price, size)
-                result = self.build_ice_attributes(rid, price, size)
+                dao.insert(rid, price, bsize)
+                result = self.build_ice_attributes(rid, price, bsize)
                 return jsonify(Ice = result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
