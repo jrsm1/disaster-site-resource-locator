@@ -38,20 +38,20 @@ class WaterDAO:
         return result
 
 
-    def getWaterBySize(self, size):
+    def getWaterByBottleSize(self, bsize):
         cursor = self.conn.cursor()
-        query = "select * from water where size = %s;"
-        cursor.execute(query, (size,))
+        query = "select * from water where bsize = %s;"
+        cursor.execute(query, (bsize,))
         result = []                                                                                                   
         for row in cursor:
             result.append(row)
         return result
 
 
-    def getWaterByPriceAndSize(self, price, size):
+    def getWaterByPriceAndBottleSize(self, price, bsize):
         cursor = self.conn.cursor()
-        query = "select * from water where price = %s and size = %s;"
-        cursor.execute(query, (price, size,))
+        query = "select * from water where price = %s and bsize = %s;"
+        cursor.execute(query, (price, bsize,))
         result = []
         for row in cursor:
             result.append(row)
@@ -68,10 +68,10 @@ class WaterDAO:
         return result
 
 
-    def insert(self, rid, price, size):
+    def insert(self, rid, price, bsize):
         cursor = self.conn.cursor()
         query = "insert into water values (%s, %s, %s) returning rid;"
-        cursor.execute(query, (rid, price, size,))
+        cursor.execute(query, (rid, price, bsize,))
         rid = cursor.fetchone()[0]
         self.conn.commit()
         return rid
