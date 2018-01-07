@@ -8,3 +8,9 @@ from .SalesRecordHandler import SalesRecordHandler
 from .SupplierHandler import SupplierHandler
 from .UserHandler import UserHandler
 from .WaterHandler import WaterHandler
+from .GeneratorHandler import GeneratorHandler
+from .FuelHandler import FuelHandler
+from .FoodHandler import FoodHandler
+from .ToolsHandler import ToolsHandler
+from .BatteryHandler import BatteryHandler
+from .ClothesHandler import ClothesHandler

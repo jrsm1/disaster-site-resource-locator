@@ -461,5 +461,73 @@ def getClothesByPiece(piece):
     return ClothesHandler().getClothesByPiece(piece)
 
 
+##############################################
+#	Routes for Generator Queries
+##############################################
+@app.route('/generator', methods=['GET', 'POST'])
+def getAllGenerator():
+    if request.method == 'POST':
+        GeneratorHandler().insertGenerator(request.form)
+    else:
+        if not request.args:
+            return GeneratorHandler().getAllGenerator()
+        else:
+            return GeneratorHandler().searchGenerator(request.args)
+
+
+@app.route('/generator/<int:rid>')
+def getGeneratorById(rid):
+    return GeneratorHandler().getGeneratorById(rid)
+
+
+@app.route("/generator/price/<float:price>")
+def getGeneratorByPrice(price):
+    return GeneratorHandler().getGeneratorByPrice(price)
+
+
+@app.route("/generator/brand/<string:brand>")
+def getGeneratorByBrand(brand):
+    return GeneratorHandler().getGeneratorByBrand(brand)
+
+
+@app.route("/generator/fueltype/<string:fueltype")
+def getGeneratorByFuelType(fueltype):
+    return GeneratorHandler().getGeneratorByFuelType(fueltype)
+
+
+##############################################
+#	Routes for Battery Queries
+##############################################
+@app.route('/battery', methods=['GET', 'POST'])
+def getAllBattery():
+    if request.method == 'POST':
+        BatteryHandler().insertBattery(request.form)
+    else:
+        if not request.args:
+            return BatteryHandler().getAllBattery()
+        else:
+            return BatteryHandler().searchBattery(request.args)
+
+
+@app.route('/battery/<int:rid>')
+def getBatteryById(rid):
+    return BatteryHandler().getBatteryById(rid)
+
+
+@app.route("/battery/price/<float:price>")
+def getBatteryByPrice(price):
+    return BatteryHandler().getBatteryByPrice(price)
+
+
+@app.route("/battery/voltage/<int:voltage>")
+def getBatteryByVoltage(voltage):
+    return BatteryHandler().getBatteryByVoltage(voltage)
+
+
+@app.route("/battery/type/<string:btype")
+def getBatteryByType(btype):
+    return BatteryHandler().getBatteryByType(btype)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
