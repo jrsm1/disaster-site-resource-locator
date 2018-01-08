@@ -103,8 +103,8 @@ class SupplierHandler:
     #TODO
     def getResourcesBySID(self, sid):
         resources = []
-        resources.append([1, 'gerber', 'baby food', '.99', 'true', '50'])
-        resources.append([3, 'diesel', 'fuel', '.97', 'true', '9999'])
+        dao = SupplierDAO()
+        dao.getResourcesBySID(sid)
         if not resources:
             return jsonify(Error="Supplier Not Found"), 404
         else:
