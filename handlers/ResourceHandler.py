@@ -5,11 +5,7 @@ class ResourceHandler:
     def build_resource_dict(self, row):
         result = {}
         result['rid'] = row[0]
-        result['rname'] = row[1]
-        result['category'] = row[2]
-        result['rprice'] = row[3]
-        result['available'] = row[4]
-        result['requestcount'] = row[5]
+        result['sid'] = row[1]
         return result
 
     def build_supplier_dict(self, row):
@@ -23,135 +19,9 @@ class ResourceHandler:
         return result
 
 
-    def buildDummyData(self):
-        resource_list = []
-        resource1 = [1, 'gerber', 'baby food', '.99', 'true', '50']
-        resource2 = [2, 'dasani', 'water', '1.50', 'false', '200']
-        resource3 = [3, 'diesel', 'fuel', '.97', 'true', '9999']
-        resource4 = [4, 'syringe', 'medical devices', '.65', 'true', '777']
-
-        resource_list.append(resource1)
-        resource_list.append(resource2)
-        resource_list.append(resource3)
-        resource_list.append(resource4)
-        return resource_list  
-
-
     def getAllResources(self):
-        resource_list = self.buildDummyData()
-
-        result_list = []
-        for row in resource_list:
-            result = self.build_resource_dict(row)
-            result_list.append(result)
-        return jsonify(Resources = result_list)
-
-
-    def getResourceIds(self):
-        id_list = self.buildDummyData()
-        
-        if not id_list:
-            return jsonify(Error = "No Resources Found"), 404
-        else:
-            result_list = []
-            for row in id_list:
-                result = self.build_resource_dict(row)
-                result_list.append(result)
-        return jsonify(Ids = result_list)
-
-
-    def getResourceNames(self):
-        names_list = self.buildDummyData()
-        
-        if not names_list:
-            return jsonify(Error = "No Resource Names Found"), 404
-        else:
-            result_list = []
-            for row in names_list:
-                result = self.build_resource_dict(row)
-                result_list.append(result)
-        return jsonify(Ids = result_list)
-
-
-    def getResourceCategories(self):
-        categories_list = self.buildDummyData()
-        
-        if not categories_list:
-            return jsonify(Error = "No Categories Found"), 404
-        else:
-            result_list = []
-            for row in categories_list:
-                result = self.build_resource_dict(row)
-                result_list.append(result)
-        return jsonify(Categories = result_list)
-
-
-    def getResourcePrices(self):
-        price_list = self.buildDummyData()
-        
-        if not price_list:
-            return jsonify(Error = "No Prices Found"), 404
-        else:
-            result_list = []
-            for row in price_list:
-                result = self.build_resource_dict(row)
-                result_list.append(result)
-        return jsonify(Prices = result_list)
-
-
-    def getAvailableResources(self):
-        available_list = self.buildDummyData()
-        
-        if not available_list:
-            return jsonify(Error = "No Available Resources Found"), 404
-        else:
-            result_list = []
-            for row in available_list:
-                result = self.build_resource_dict(row)
-                result_list.append(result)
-        return jsonify(Available = result_list)
-
-
-    def getRequestCount(self):
-        request_list = self.buildDummyData()
-        
-        if not request_list:
-            return jsonify(Error = "No Requests Found"), 404
-        else:
-            result_list = []
-            for row in request_list:
-                result = self.build_resource_dict(row)
-                result_list.append(result)
-        return jsonify(Requests = result_list)
-
-
-    def getResourceById(self, rid):
-        row = [1, 'gerber', 'baby food', '.99', 'true', '50']
-
-        if not row:
-            return jsonify(Error = "Resource Not Found"), 404
-        else:
-            resource = self.build_resource_dict(row)
-            return jsonify(Resource = resource)
-
-    def searchResources(self, args):
-        rname = args.get("rname")
-        category = args.get("category")
-        requestcount = args.get("requestcount")
-        resources_list = []
-
-        if (len(args) == 2) and rname and category:
-            resources_list = self.buildDummyData()
-        elif (len(args) == 2) and category and requestcount:
-            resources_list = self.buildDummyData()
-        elif (len(args) == 1) and requestcount:
-            resources_list = self.buildDummyData()
-        elif (len(args) == 1) and rname:
-            resources_list = self.buildDummyData()
-        elif (len(args) == 1) and category:
-            resources_list = self.buildDummyData()
-        else:
-            return jsonify(Error = "Malformed query string"), 400
+        dao = ResourcesDAO()
+        resources_list = dao.getAllResources()
 
         result_list = []
         for row in resources_list:
@@ -159,15 +29,80 @@ class ResourceHandler:
             result_list.append(result)
         return jsonify(Resources = result_list)
 
-    def getSuppliersByRID(self, rid):
-        suppliers = []
-        suppliers.append([0, "Juan Vasquez", "hola123", "San Juan", "7874561925", "18.465539,-66.105735"])
-        suppliers.append([2, "Esteban Rivera", "quieneres", "Mayaguez", "7876943078", "18.201345,-67.145155"])
-        if not suppliers:
-            return jsonify(Error="Resources Not Found"), 404
+
+    def getResourcesById(self, rid):
+        dao = ResourcesDAO()
+        row = dao.getResourcesById(rid)
+
+        if not row:
+            return jsonify(Error = "Resource Not Found"), 404
+        else:
+            resource = self.build_resource_dict(row)
+            return jsonify(Resource = resource)
+
+
+    def getResourcesBySupplierId(self, sid):
+        dao = ResourcesDAO()
+        resources_list = dao.getResourcesBySupplierId(sid)
+
+        if not row:
+            return jsonify(Error = "Resource Not Found"), 404
+        else:
+            resource = self.build_resource_dict(row)
+            return jsonify(Resource = resource)
+
+
+    def getSuppliersByResourcesId(self, rid):
+        dao = ResourcesDAO()
+        resources_list = dao.getSupplierByResourcesId(rid)
+
+        suppliers_list = []
+
+        if not suppliers_list:
+            return jsonify(Error="Suppliers Not Found"), 404
         else:
             result_list = []
-            for row in suppliers:
+            for row in suppliers_list:
                 result = self.build_supplier_dict(row)
                 result_list.append(result)
             return jsonify(Suppliers=result_list)
+
+
+    def searchResources(self, args):
+        if len(args) > 2:
+            return jsonify(Error = "Malformed search string."), 400
+        else:
+            rid = args.get("rid")
+            sid = args.get("sid")
+
+            dao = ResourcesDAO()
+            resources_list = []
+
+            if (len(args) == 1) and rid:
+                resources_list = dao.getResourcesById(rid)
+            elif (len(args) == 1) and sid:
+                resources_list = dao.getResourcesBySupplierId(sid)
+            else:
+                return jsonify(Error = "Malformed query string"), 400
+
+        result_list = []
+        for row in resources_list:
+            result = self.build_resource_dict(row)
+            result_list.append(result)
+        return jsonify(Resources = result_list)
+
+
+    def insertResources(self, form):
+        if len(form) != 1:
+            return jsonify(Error = "Malformed POST request"), 400
+        else:
+            
+            sid = form['sid']
+            if sid:
+                dao = ResourcesDAO()
+                rid = dao.insert(sid)
+                result = self.build_resources_attributes(rid, sid)
+                return jsonify(Purchase=result), 201
+            else:
+                return jsonify(Error="Unexpected attributes in POST request"), 400
+

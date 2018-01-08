@@ -88,5 +88,69 @@ Create Table Ice (
 )
 
 
+Create Table Food (
+	RID	bigint	REFERENCES	Resources(RID)	unique,
+	Price	float	NOT NULL,
+	Ftype	varchar(10)	NOT NULL,
+	Expdate	date	NOT NULL
+)
+
+Create Table FirstAid (
+	RID	bigint	REFERENCES	Resources(RID)	unique,
+	Brand	varchar(20)	NOT NULL,
+	Price	float	NOT NULL,
+	Medcondition	varchar(20)	NOT NULL
+)
+
+
+Create Table Clothes (
+	RID	bigint	REFERENCES	Resources(RID)	unique,
+	Price	float	NOT NULL,
+	Color	varchar(10)	NOT NULL,
+	Size	varchar(5)	NOT NULL,
+	Gender	char(1)	NOT NULL,
+	Piece	varchar(10)	NOT NULL
+)
+
+
+Create Table Tools (
+	RID	bigint	REFERENCES	Resources(RID)	unique,
+	Name	varchar(20)	NOT NULL,
+	Brand	varchar(20)	NOT NULL,
+	Price	float	NOT NULL
+)
+
+
+Create Table Fuel (
+	RID	bigint	REFERENCES	Resources(RID)	unique,
+	Ftype	varchar(10)	NOT NULL,
+	Price	float	NOT NULL,
+	ContainerSize	integer	NOT NULL
+)
+
+
+Create Table Battery (
+	RID	bigint	REFERENCES	Resources(RID)	unique,
+	Price	float	NOT NULL,
+	Voltage	float	NOT NULL,
+	btype	varchar(5)	NOT NULL
+)
+
+
+Create Table Generator (
+	RID	bigint	REFERENCES	Resources(RID)	unique,
+	Price	float	NOT NULL,
+	Ftype	varchar(10)	NOT NULL,
+	PowerRating	integer	NOT NULL
+)
+
+
+Create Table HeavyEquip (
+	RID	bigint	REFERENCES	Resources(RID)	unique,
+	Make	varchar(20)	NOT NULL,
+	Condition	varchar(20)	NOT NULL,
+	Function	varchar(20)	NOT NULL,
+	Price	float	NOT NULL
+)
 
 

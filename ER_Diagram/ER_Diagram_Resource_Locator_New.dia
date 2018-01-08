@@ -1496,7 +1496,7 @@
             <dia:string>#condition#</dia:string>
           </dia:attribute>
           <dia:attribute name="type">
-            <dia:string>#varchar(10)#</dia:string>
+            <dia:string>#varchar(20)#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>##</dia:string>
@@ -1816,7 +1816,7 @@
             <dia:string>#name#</dia:string>
           </dia:attribute>
           <dia:attribute name="type">
-            <dia:string>#varchar(10)#</dia:string>
+            <dia:string>#varchar(20)#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>##</dia:string>
@@ -1836,7 +1836,7 @@
             <dia:string>#brand#</dia:string>
           </dia:attribute>
           <dia:attribute name="type">
-            <dia:string>#varchar(10)#</dia:string>
+            <dia:string>#varchar(20)#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>##</dia:string>
@@ -2396,7 +2396,7 @@
             <dia:string>#brand#</dia:string>
           </dia:attribute>
           <dia:attribute name="type">
-            <dia:string>#varchar(10)#</dia:string>
+            <dia:string>#varchar(20)#</dia:string>
           </dia:attribute>
           <dia:attribute name="comment">
             <dia:string>##</dia:string>
@@ -2875,7 +2875,7 @@
         <dia:real val="0.10000000000000001"/>
       </dia:attribute>
       <dia:attribute name="name">
-        <dia:string>#Clothing#</dia:string>
+        <dia:string>#Clothes#</dia:string>
       </dia:attribute>
       <dia:attribute name="comment">
         <dia:string>##</dia:string>

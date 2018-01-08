@@ -12,27 +12,30 @@ def greeting():
 ###############################################
 
 
-@app.route('/resources')
+@app.route('/resources', methods=['GET', 'POST'])
 def getAllResources():
+    if request.method == 'POST':
+        return ResourceHandler().insertResources(request.form)
+    else:
         if not request.args:
             return ResourceHandler().getAllResources()
         else:
             return ResourceHandler().searchResources(request.args)
 
 
-@app.route('/resources/rid')
-def getResourceIds():
-    return ResourceHandler().getResourceIds()
-
-
-@app.route('/resources/<int:rid>')
+@app.route('/resources/rid/<int:rid>')
 def getResourceById(rid):
-    return ResourceHandler().getResourceById(rid)
+    return ResourceHandler().getResourcesById(rid)
 
 
-@app.route('/resources/<int:rid>/suppliers')
-def getSuppliersByRID(rid):
-    return ResourceHandler().getSuppliersByRID(rid)
+@app.route('/resources/sid/<int:sid>')
+def getResourcesBySupplierId(rid):
+    return ResourceHandler().getResourcesBySupplierId(sid)
+
+
+@app.route('/resources/<int:rid>/supplier')
+def getSupplierByResourcesId(rid):
+    return ResourceHandler().getSupplierByResourcesId(rid)
 
 
 #############################################
