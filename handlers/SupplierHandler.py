@@ -80,9 +80,10 @@ class SupplierHandler:
             return jsonify(Suppliers=result_list)
 
     def getSuppliersBy(self, selection):
-        if selection == "scity" or selection == "sname" or selection == "sphone" or selection == "slocation" or \
+        if selection == "sregion" or selection == "sname" or selection == "sphone" or selection == "saddress" or \
                 selection == "sid":
-            supplier_list = self.getSupplierList()
+            dao = SupplierDAO()
+            supplier_list = dao.getSupplierBy(selection)
             result_list = []
             for row in supplier_list:
                 result = self.build_supplier_dict(row)
