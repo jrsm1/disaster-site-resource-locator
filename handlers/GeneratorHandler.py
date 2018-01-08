@@ -82,6 +82,18 @@ class GeneratorHandler:
                 result_list.append(result)
         return jsonify(Generator=result_list)
 
+    def getGeneratorByPowerRating(self, powerrating):
+        dao = GeneratorDAO()
+        power_list = dao.getGeneratorByPowerRating(powerrating)
+        if not power_list:
+            return jsonify(Error="No generator found"), 404
+        else:
+            result_list = []
+            for row in power_list:
+                result = self.build_generator_dict(row)
+                result_list.append(result)
+        return jsonify(Generator=result_list)
+
     def searchGenerator(self, args):
         if len(args) > 5:
             return jsonify(Error = "Malformed search string."), 400

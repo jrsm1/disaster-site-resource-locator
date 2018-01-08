@@ -495,6 +495,11 @@ def getGeneratorByFuelType(fueltype):
     return GeneratorHandler().getGeneratorByFuelType(fueltype)
 
 
+@app.route("/generator/power/<int:powerrating")
+def getGeneratorByPowerRating(powerrating):
+    return GeneratorHandler().getGeneratorByPowerRating(powerrating)
+
+
 ##############################################
 #	Routes for Battery Queries
 ##############################################

@@ -2,7 +2,7 @@ from flask import jsonify
 from dao.FirstAidDAO import FirstAidDAO
 
 
-class GeneratorHandler:
+class FirstAidHandler:
 
     def build_aid_dict(self, row):
         result = {}
