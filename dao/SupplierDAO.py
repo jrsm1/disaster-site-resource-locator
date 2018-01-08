@@ -74,3 +74,21 @@ class SupplierDAO:
         sid = cursor.fetchone()[0]
         self.conn.commit()
         return sid
+
+    def getSupplierBy(self, selection):
+        cursor = self.conn.cursor()
+        query = "select %s from supplier;"
+        cursor.execute(query, (selection,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getResourcesBySID(self, sid):
+        cursor = self.conn.cursor()
+        query = "select * from Resources where sid = %s;"
+        cursor.execute(query, (sid,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
