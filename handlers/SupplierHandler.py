@@ -1,6 +1,6 @@
 from flask import jsonify
 from dao.SupplierDAO import SupplierDAO
-
+from dao.SalesRecordDAO import SalesRecordDAO
 
 class SupplierHandler:
     def build_supplier_dict(self, row):
@@ -126,6 +126,7 @@ class SupplierHandler:
             if sname and saddress and sphone and sregion and spassword:
                 dao = SupplierDAO()
                 sid = dao.Insert(sname, spassword, saddress, sphone, sregion)
+                SalesRecordDAO().insert(sid, 0, 0)
                 result = self.build_supplier_attributes(sid, sname, spassword, saddress, sphone, sregion)
                 return jsonify(Supplier = result), 201
             else:
