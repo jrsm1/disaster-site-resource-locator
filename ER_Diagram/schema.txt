@@ -4,67 +4,89 @@ Create Table Admin (
 	APassword	varchar(20)	NOT NULL,
 )
 
+
 Create Table Client(
 	CID	bigserial	 primary key,
-	CName	varchar(10)	NOT NULL,
+	CName	varchar(20)	NOT NULL,
 	CPassword	varchar(20)	NOT NULL,
-	CCity	varchar(10)	NOT NULL,
-	CreditCardNum	char(16)	NOT NULL,
+	Region	varchar(20)	NOT NULL,
+	CAddress	char(20)	NOT NULL,
 )
 
+
+Create Table CreditCard (
+	CID	bigint	REFERENCES Client(CID),
+	CCNum		char(16)	NOT NULL,
+	ExpDate		date	NOT NULL,
+	Climit	float	NOT NULL,
+	CCV	char(3)
+)
+
+
 Create Table SalesRecord (
-	SRID	bigserial	primary key,
-	Sid	bigint		FOREIGN KEY REFERENCES Supplier(SID),
-	Earnings	float, --revenue from all sales
-	Sales	bigint, --amount of succesfull sales completed
+	Sid	bigint		REFERENCES Supplier(SID)	unique,
+	Earnings	float	NOT NULL, --revenue from all sales
+	Sales	bigint	NOT NULL --amount of succesfull sales completed
 )
 
 
 Create Table Supplier (
 	SID 	bigserial	primary key, --supplier id
-	SName	varchar(10)	NOT NULL, --supplier name
+	SName	varchar(20)	NOT NULL, --supplier name
 	SPassword       varchar(20)     NOT NULL FOREIGN KEY REFERENCES User(Password), 
-	SCity	varchar(10)	NOT NULL, -- supplier city where it is located
+	Region	varchar(20)	NOT NULL, -- supplier city where it is located
 	SPhone	char(10)	NOT NULL, --suppliers phone number
-	SLocation	varchar(20)	NOT NULL
+	SAddress	varchar(20)	NOT NULL
 )
+
 
 Create Table Resources (
 	RID	bigserial	primary key,
-	RName	varchar(20)	NOT NULL,
-	Category	varchar(20) NOT NULL,
-	RPrice	float	NOT NULL,	
-	Available boolean NOT NULL,
-	RequestCount bigint NOT NULL,
+	SID	bigint	REFERENCES Supplier(SID)
 )
 
-Create Table CreditCard (
-	CCNum		char(16)	FOREIGN KEY REFERENCES Client(CreditCardNum),
-	CCHolder	varchar(10)	FOREIGN KEY REFERENCES Client(CName)),
-	ExpDate		date	NOT NULL,
-	Primary Key(CCNum, CCHolder)
-)
 
 Create Table Purchases (
 	PID	bigserial	primary key,
-	RID	bigint	FOREIGN KEY REFERENCES Resources(RID),
-	CID	bigint FOREIGN KEY REFERENCES Client(CID),
+	CID	bigint	REFERENCES Client(CID),
+	SID	bigint	REFERENCES Supplier(SID),
+	RID	bigint	REFERENCES	Resources(RID),
 	Qty	bigint NOT NULL,
 	Total	float	NOT NULL, --Cost of the the purchase
+	CCNum	char(16)	NOT NULL
 )
 
-Create Table Reserves (
-	ReserveID     bigserial       primary key,
-        RID     bigint  FOREIGN KEY REFERENCES Resources(RID),
-        CID     bigint FOREIGN KEY REFERENCES Client(CID),
+
+Create Table Request (
+	RequestID     bigserial       primary key,
+        CID     bigint REFERENCES	Client(CID),
+	RID     bigint  REFERENCES	Resources(RID),
         Qty     bigint NOT NULL
 )
 
-Create Table Supplies (
-	SID	bigint	FOREIGN KEY REFERENCES Supplier(SID),
-	RID	bigint FOREIGN KEY REFERENCES Resources(RID),
-	Stock	bigint NOT NULL
-	Primary Key(SID, RID)
+
+Create Table Reservation (
+	ReservationID	bigserial	primary key,
+	CID	bigint	REFERENCES	Client(CID),
+	SID	bigint	REFERENCEs	Supplier(SID),
+	RID	bigint	REFERENCES	Resources(RID),
+	Qty	bigint	NOT NULL
 )
+
+
+Create Table Water (
+	RID	bigint	REFERENCES	Resources(RID)	unique,
+	Price	float	NOT NULL,
+	BottleSize	varchar(10)	NOT NULL
+)
+
+
+Create Table Ice (
+	RID	bigint REFERENCES	Resources(RID)	unique,
+	Price	float	NOT NULL,
+	BagSize	varchar(10)	NOT NULL
+)
+
+
 
 
