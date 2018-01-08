@@ -43,6 +43,7 @@ Create Table Supplier (
 Create Table Resources (
 	RID	bigserial	primary key,
 	SID	bigint	REFERENCES Supplier(SID)
+	Qty	bigint	NOT NULL
 )
 
 

@@ -38,6 +38,16 @@ class ResourcesDAO:
         return result
 
 
+    def getResourcesByQuantity(self, qty):
+        cursor = self.conn.cursor()
+        query = "select * from resources where qty = %s;"
+        cursor.execute(query, (qty,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+
     def getSupplierByResourcesId(self, rid):
         cursor = self.conn.cursor()
         query = "select * from resources natural inner join supplier where rid = %s;"
@@ -48,10 +58,10 @@ class ResourcesDAO:
         return result
 
 
-    def insert(self, sid):
+    def insert(self, sid, qty):
         cursor = self.conn.cursor()
-        query = "insert into resources(sid) values (%s) returning rid;"
-        cursor.execute(query, (sid,))
+        query = "insert into resources(sid, qty) values (%s, %s) returning rid;"
+        cursor.execute(query, (sid, qty,))
         rid = cursor.fetchone()[0]
         self.conn.commit()
         return rid

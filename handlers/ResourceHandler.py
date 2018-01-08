@@ -45,11 +45,24 @@ class ResourceHandler:
         dao = ResourcesDAO()
         resources_list = dao.getResourcesBySupplierId(sid)
 
-        if not row:
+        if not resources_list:
             return jsonify(Error = "Resource Not Found"), 404
         else:
             resource = self.build_resource_dict(row)
             return jsonify(Resource = resource)
+
+
+    def getResourcesByQuantity(self, qty):
+        dao = ResourceDAO()
+        resource_list = dao.getResourceByQuantity(qty)
+        if not resource_list:
+            return jsonify(Error = "No Resource found"), 404
+        else:
+            result_list = []
+            for row in resource_list:
+                result = self.build_resource_dict(row)
+                result_list.append(result)
+        return jsonify(Resources = result_list)
 
 
     def getSuppliersByResourcesId(self, rid):
@@ -74,6 +87,7 @@ class ResourceHandler:
         else:
             rid = args.get("rid")
             sid = args.get("sid")
+            qty = args.get("qty")
 
             dao = ResourcesDAO()
             resources_list = []
@@ -82,6 +96,8 @@ class ResourceHandler:
                 resources_list = dao.getResourcesById(rid)
             elif (len(args) == 1) and sid:
                 resources_list = dao.getResourcesBySupplierId(sid)
+            elif (len(args) == 1) and qty:
+                resources_list = dao.getResourcesByQuantity(qty)
             else:
                 return jsonify(Error = "Malformed query string"), 400
 
@@ -93,16 +109,17 @@ class ResourceHandler:
 
 
     def insertResources(self, form):
-        if len(form) != 1:
+        if len(form) != 2:
             return jsonify(Error = "Malformed POST request"), 400
         else:
             
             sid = form['sid']
-            if sid:
+            qty = form['qty']
+            if sid and qty:
                 dao = ResourcesDAO()
-                rid = dao.insert(sid)
-                result = self.build_resources_attributes(rid, sid)
-                return jsonify(Purchase=result), 201
+                rid = dao.insert(sid, qty)
+                result = self.build_resources_attributes(rid, sid, qty)
+                return jsonify(Resources=result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
 

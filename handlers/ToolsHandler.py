@@ -1,5 +1,6 @@
 from flask import jsonify
 from dao.ToolsDAO import ToolsDAO
+from dao.ResourcesDAO import ResourcesDAO
 
 
 class ToolsHandler:
@@ -117,14 +118,16 @@ class ToolsHandler:
 
 
     def insertTools(self, form):
-        if len(form) != 4:
+        if len(form) != 5:
             return jsonify(Error = "Malformed POST request"), 400
         else:
-            rid = form['rid']
+            sid = form['sid']
+            qty = form['qty']
             name = form['name']
             brand = form['brand']
             price = form['price']
-            if rid and name and brand and price:
+            if sid and qty and name and brand and price:
+                rid = ResourcesDAO().insert(sid, qty)
                 dao = ToolsDAO()
                 dao.insert(rid, name, brand, price)
                 result = self.build_tools_attributes(rid, name, brand, price)

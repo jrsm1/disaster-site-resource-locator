@@ -1,6 +1,6 @@
 from flask import jsonify
 from dao.FuelDAO import FuelDAO
-
+from ResourcesDAO import ResourcesDAO
 
 class FuelHandler:
 
@@ -115,14 +115,16 @@ class FuelHandler:
 
 
     def insertFuel(self, form):
-        if len(form) != 4:
+        if len(form) != 5:
             return jsonify(Error = "Malformed POST request"), 400
         else:
-            rid = form['rid']
+            sid = form['sid']
+            qty = form['qty']
             ftype = form['ftype']
             price = form['price']
             csize = form['csize']
-            if rid and ftype and price and csize:
+            if sid and qty and ftype and price and csize:
+                rid = ResourcesDAO().insert(sid, qty)
                 dao = FuelDAO()
                 dao.insert(rid, ftype, price, csize)
                 result = self.build_fuel_attributes(rid, ftype, price, csize)

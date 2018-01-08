@@ -1,5 +1,6 @@
 from flask import jsonify
 from dao.ClothesDAO import ClothesDAO
+from dao.ResourcesDAO import ResourcesDAO
 
 
 class ClothesHandler:
@@ -153,17 +154,19 @@ class ClothesHandler:
 
 
     def insertClothes(self, form):
-        if len(form) != 6:
+        if len(form) != 7:
             return jsonify(Error = "Malformed POST request"), 400
         else:
-            rid = form['rid']
+            sid = form['sid']
+            qty = form['qty']
             price = form['price']
             color = form['color']
             size = form['size']
             gender = form['gender']
             piece = form['piece']
 
-            if rid and price and color and size and gender and piece:
+            if sid and qty and price and color and size and gender and piece:
+                rid = ResourceDAO().insert(sid,qty)
                 dao = ClothesDAO()
                 dao.insert(rid, price, color, size, gender, piece)
                 result = self.build_clothes_attributes(rid, price, color, size, gender, piece)

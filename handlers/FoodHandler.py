@@ -1,5 +1,6 @@
 from flask import jsonify
 from dao.FoodDAO import FoodDAO
+from dao.ResourcesDAO import ResourcesDAO
 
 
 class FoodHandler:
@@ -116,14 +117,16 @@ class FoodHandler:
 
 
     def insertFood(self, form):
-        if len(form) != 4:
+        if len(form) != 5:
             return jsonify(Error = "Malformed POST request"), 400
         else:
-            rid = form['rid']
+            sid = form['sid']
+            qty = form['qty']
             price = form['price']
             ftype = form['ftype']
             expdate = form['expdate']
-            if rid and price and ftype and expdate:
+            if sid and qty and price and ftype and expdate:
+                rid = ResourcesDAO().insert(sid,qty)
                 dao = FoodDAO()
                 dao.insert(rid, price, ftype, expdate)
                 result = self.build_food_attributes(rid, price, ftype, expdate)

@@ -1,5 +1,6 @@
 from flask import jsonify
 from dao.IceDAO import IceDAO
+from dao.ResourceDAO import ResourceDAO
 
 
 class IceHandler:
@@ -99,13 +100,15 @@ class IceHandler:
 
 
     def insertIce(self, form):
-        if len(form) != 3:
+        if len(form) != 4:
             return jsonify(Error = "Malformed POST request"), 400
         else:
-            rid = form['rid']
+            sid = form['sid']
+            qty = form['qty']
             price = form['price']
             bsize = form['bsize']
-            if rid and price and bsize:
+            if sid and qty and price and bsize:
+                rid = ResourceDAO().insert(sid, qty)
                 dao = IceDAO()
                 dao.insert(rid, price, bsize)
                 result = self.build_ice_attributes(rid, price, bsize)
