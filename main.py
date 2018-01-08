@@ -533,13 +533,79 @@ def getBatteryByVoltage(voltage):
 def getBatteryByType(btype):
     return BatteryHandler().getBatteryByType(btype)
 
+
 ##############################################
 #	Routes for FirstAid Queries
 ##############################################
+@app.route('/firstaid', methods=['GET', 'POST'])
+def getAllAid():
+    if request.method == 'POST':
+        FirstAidHandler().insertAid(request.form)
+    else:
+        if not request.args:
+            return FirstAidHandler().getAllAid()
+        else:
+            return FirstAidHandler().searchAid(request.args)
+
+
+@app.route('/firstaid/<int:rid>')
+def getAidById(rid):
+    return FirstAidHandler().getAidById(rid)
+
+
+@app.route("/firstaid/price/<float:price>")
+def getAidByPrice(price):
+    return FirstAidHandler().getAidByPrice(price)
+
+
+@app.route("/firstaid/brand/<string:brand>")
+def getAidByBrand(brand):
+    return FirstAidHandler().getAidByBrand(brand)
+
+
+@app.route("/firstaid/type/<string:condition")
+def getAidByMedCondition(condition):
+    return FirstAidHandler().getAidByMedCondition(condition)
+
 
 ##############################################
 #	Routes for HeavyEquipment Queries
 ##############################################
+@app.route('/heavyequipment', methods=['GET', 'POST'])
+def getAllEquip():
+    if request.method == 'POST':
+        HeavyEquipHandler().insertEquip(request.form)
+    else:
+        if not request.args:
+            return HeavyEquipHandler().getAllEquip()
+        else:
+            return HeavyEquipHandler().searchEquip(request.args)
+
+
+@app.route('/heavyequip/<int:rid>')
+def getEquipById(rid):
+    return HeavyEquipHandler().getEquipById(rid)
+
+
+@app.route("/heavyequip/price/<float:price>")
+def getEquipByPrice(price):
+    return HeavyEquipHandler().getEquipByPrice(price)
+
+
+@app.route("/generator/make/<string:make>")
+def getEquipByMake(make):
+    return HeavyEquipHandler().getEquipByMake(make)
+
+
+@app.route("/generator/fueltype/<string:condition")
+def getEquipByCondition(condition):
+    return HeavyEquipHandler().getEquipByCondition(condition)
+
+
+@app.route("/generator/power/<string:equipfunction")
+def getEquipByFunction(equipfunction):
+    return HeavyEquipHandler().getEquipByFunction(equipfunction)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

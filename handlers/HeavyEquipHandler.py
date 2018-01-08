@@ -137,7 +137,7 @@ class HeavyEquipHandler:
             elif (len(args) == 1) and condition:
                 equip_list = dao.getEquipByCondition(condition)
             elif (len(args) == 1) and equipfunction:
-                equip_list = dao.getEquiprByFunction(equipfunction)
+                equip_list = dao.getEquipByFunction(equipfunction)
             else:
                 return jsonify(Error = "Malformed query string"), 400
             result_list = []
@@ -146,7 +146,7 @@ class HeavyEquipHandler:
                 result_list.append(result)
             return jsonify(HeavyEquip=result_list)
 
-    def insertGenerator(self, form):
+    def insertEquip(self, form):
         if len(form) != 4:
             return jsonify(Error="Malformed POST request"), 400
         else:

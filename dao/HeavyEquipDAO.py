@@ -54,7 +54,7 @@ class HeavyEquipDAO:
             result.append(row)
         return result
 
-    def getEquipByFuelType(self, equipfunction):
+    def getEquipByFunction(self, equipfunction):
         cursor = self.conn.cursor()
         query = "select * from HeavyEquip where function = %s;"
         cursor.execute(query, (equipfunction,))

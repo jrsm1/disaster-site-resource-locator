@@ -115,7 +115,7 @@ class FirstAidHandler:
                 result_list.append(result)
             return jsonify(FirstAid=result_list)
 
-    def insertGenerator(self, form):
+    def insertAid(self, form):
         if len(form) != 3:
             return jsonify(Error="Malformed POST request"), 400
         else:
