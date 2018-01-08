@@ -162,10 +162,10 @@ class GeneratorDAO:
             result.append(row)
         return result
 
-    def insert(self, price, brand, fueltype, powerrating):
+    def insert(self, rid, price, brand, fueltype, powerrating):
         cursor = self.conn.cursor()
-        query = "insert into generator(price, brand, fueltype, powerrating) values (%s, %s, %s, %s) returning rid;"
-        cursor.execute(query, (price, brand, fueltype, powerrating,))
+        query = "insert into generator(rid, price, brand, fueltype, powerrating) values (%s, %s, %s, %s, %s) returning rid;"
+        cursor.execute(query, (rid, price, brand, fueltype, powerrating,))
         rid = cursor.fetchone()[0]
         self.conn.commit()
         return rid

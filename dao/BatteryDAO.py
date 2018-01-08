@@ -93,10 +93,10 @@ class BatteryDAO:
             result.append(row)
         return result
 
-    def insert(self, price, voltage, btype):
+    def insert(self, rid, price, voltage, btype):
         cursor = self.conn.cursor()
-        query = "insert into battery(price, voltage, type) values (%s, %s, %s) returning rid;"
-        cursor.execute(query, (price, voltage, btype,))
+        query = "insert into battery(rid, price, voltage, type) values (%s, %s, %s, %s) returning rid;"
+        cursor.execute(query, (rid, price, voltage, btype,))
         rid = cursor.fetchone()[0]
         self.conn.commit()
         return rid

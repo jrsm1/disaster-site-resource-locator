@@ -16,3 +16,4 @@ from .BatteryHandler import BatteryHandler
 from .ClothesHandler import ClothesHandler
 from .HeavyEquipHandler import HeavyEquipHandler
 from .FirstAidHandler import FirstAidHandler
+from .ResourceHandler import ResourceHandler

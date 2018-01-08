@@ -162,10 +162,10 @@ class HeavyEquipDAO:
             result.append(row)
         return result
 
-    def insert(self, price, make, condition, equipfunction):
+    def insert(self, rid, price, make, condition, equipfunction):
         cursor = self.conn.cursor()
-        query = "insert into HeavyEquip(price, make, condition, function) values (%s, %s, %s, %s) returning rid;"
-        cursor.execute(query, (price, make, condition, equipfunction,))
+        query = "insert into HeavyEquip(rid, price, make, condition, function) values (%s, %s, %s, %s, %s) returning rid;"
+        cursor.execute(query, (rid, price, make, condition, equipfunction,))
         rid = cursor.fetchone()[0]
         self.conn.commit()
         return rid

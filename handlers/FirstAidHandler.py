@@ -1,6 +1,6 @@
 from flask import jsonify
 from dao.FirstAidDAO import FirstAidDAO
-
+from dao.ResourcesDAO import ResourcesDAO
 
 class FirstAidHandler:
 
@@ -116,15 +116,18 @@ class FirstAidHandler:
             return jsonify(FirstAid=result_list)
 
     def insertAid(self, form):
-        if len(form) != 3:
+        if len(form) != 5:
             return jsonify(Error="Malformed POST request"), 400
         else:
+            sid = form["sid"]
+            quantity = form["quantity"]
             price = form['price']
             brand = form['brand']
             medcondition = form['condition']
-            if price and brand and medcondition:
+            if sid and quantity and price and brand and medcondition:
                 dao = FirstAidDAO()
-                rid = dao.insert(price, brand, medcondition)
+                rid = ResourcesDAO().insert(sid, quantity)
+                rid = dao.insert(rid, price, brand, medcondition)
                 result = self.build_aid_attributes(rid, price, brand, medcondition)
                 return jsonify(FirstAid=result), 201
             else:

@@ -1,6 +1,6 @@
 from flask import jsonify
 from dao.HeavyEquipDAO import HeavyEquipDAO
-
+from dao.ResourcesDAO import ResourcesDAO
 
 class HeavyEquipHandler:
 
@@ -147,16 +147,19 @@ class HeavyEquipHandler:
             return jsonify(HeavyEquip=result_list)
 
     def insertEquip(self, form):
-        if len(form) != 4:
+        if len(form) != 6:
             return jsonify(Error="Malformed POST request"), 400
         else:
+            sid = form["sid"]
+            quantity = form["quantity"]
             price = form['price']
             make = form['make']
             condition = form['condition']
             equipfunction = form["function"]
-            if price and make and condition and equipfunction:
+            if sid and quantity and price and make and condition and equipfunction:
                 dao = HeavyEquipDAO()
-                rid = dao.insert(price, make, condition, equipfunction)
+                rid = ResourcesDAO().insert(sid, quantity)
+                rid = dao.insert(rid, price, make, condition, equipfunction)
                 result = self.build_equip_attributes(rid, price, make, condition, equipfunction)
                 return jsonify(HeavyEquip=result), 201
             else:

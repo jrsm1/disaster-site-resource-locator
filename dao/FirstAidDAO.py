@@ -90,10 +90,10 @@ class FirstAidDAO:
             result.append(row)
         return result
 
-    def insert(self, price, brand, medcondition):
+    def insert(self, rid, price, brand, medcondition):
         cursor = self.conn.cursor()
-        query = "insert into FirstAid(price, brand, medcondition) values (%s, %s, %s, %s) returning rid;"
-        cursor.execute(query, (price, brand, medcondition))
+        query = "insert into FirstAid(rid, price, brand, medcondition) values (%s, %s, %s, %s, %s) returning rid;"
+        cursor.execute(query, (rid, price, brand, medcondition))
         rid = cursor.fetchone()[0]
         self.conn.commit()
         return rid

@@ -1,6 +1,6 @@
 from flask import jsonify
 from dao.GeneratorDAO import GeneratorDAO
-
+from dao.ResourcesDAO import ResourcesDAO
 
 class GeneratorHandler:
 
@@ -147,16 +147,19 @@ class GeneratorHandler:
             return jsonify(Generator=result_list)
 
     def insertGenerator(self, form):
-        if len(form) != 4:
+        if len(form) != 6:
             return jsonify(Error="Malformed POST request"), 400
         else:
+            sid = form["sid"]
+            quantity = form["quantity"]
             price = form['price']
             brand = form['brand']
             fueltype = form['fueltype']
             powerrating = form["powerrating"]
-            if price and brand and fueltype and powerrating:
+            if sid and quantity and price and brand and fueltype and powerrating:
                 dao = GeneratorDAO()
-                rid = dao.insert(price, brand, fueltype, powerrating)
+                rid = ResourcesDAO().insert(sid, quantity)
+                rid = dao.insert(rid, price, brand, fueltype, powerrating)
                 result = self.build_generator_attributes(rid, price, brand, fueltype, powerrating)
                 return jsonify(Generator=result), 201
             else:

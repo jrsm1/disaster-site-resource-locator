@@ -1,6 +1,6 @@
 from flask import jsonify
 from dao.BatteryDAO import BatteryDAO
-
+from dao.ResourcesDAO import ResourcesDAO
 
 class BatteryHandler:
 
@@ -118,15 +118,18 @@ class BatteryHandler:
 
 
     def insertBattery(self, form):
-        if len(form) != 3:
+        if len(form) != 5:
             return jsonify(Error="Malformed POST request"), 400
         else:
+            sid = form["sid"]
+            quantity = form["quantity"]
             price = form['price']
             voltage = form['voltage']
             btype = form['type']
-            if price and voltage and btype:
+            if sid and quantity and price and voltage and btype:
                 dao = BatteryDAO()
-                rid = dao.insert(price, voltage, btype)
+                rid = ResourcesDAO().insert(sid, quantity)
+                rid = dao.insert(rid, price, voltage, btype)
                 result = self.build_battery_attributes(rid, price, voltage, btype)
                 return jsonify(Battery = result), 201
             else:
