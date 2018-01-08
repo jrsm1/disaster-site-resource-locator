@@ -528,6 +528,13 @@ def getBatteryByVoltage(voltage):
 def getBatteryByType(btype):
     return BatteryHandler().getBatteryByType(btype)
 
+##############################################
+#	Routes for FirstAid Queries
+##############################################
+
+##############################################
+#	Routes for HeavyEquipment Queries
+##############################################
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

@@ -42,7 +42,7 @@ class GeneratorHandler:
             return jsonify(Error="Generator Not Found"), 404
         else:
             generator = self.build_generator_dict(row)
-        return jsonify(Battery=generator)
+        return jsonify(Generator=generator)
 
 
     def getGeneratorByPrice(self, price):
@@ -62,7 +62,7 @@ class GeneratorHandler:
         dao = GeneratorDAO()
         brand_list = dao.getGeneratorByBrand(brand)
         if not brand_list:
-            return jsonify(Error = "No voltage found"), 404
+            return jsonify(Error = "No Brand found"), 404
         else:
             result_list = []
             for row in brand_list:
@@ -72,7 +72,7 @@ class GeneratorHandler:
 
     def getGeneratorByFuelType(self, fueltype):
         dao = GeneratorDAO()
-        fueltype_list = dao.getBatteryByType(fueltype)
+        fueltype_list = dao.getGeneratorByFuelType(fueltype)
         if not fueltype_list:
             return jsonify(Error="No type found"), 404
         else:
