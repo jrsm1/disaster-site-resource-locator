@@ -1,6 +1,6 @@
 Create Table Admin (
 	AID	bigserial	primary key, --admin id
-	AName	varchar(10)	NOT NULL,
+	AName	varchar(20)	NOT NULL,
 	APassword	varchar(20)	NOT NULL,
 )
 

@@ -496,7 +496,7 @@ def getClothesSuppliers():
 @app.route('/generator', methods=['GET', 'POST'])
 def getAllGenerator():
     if request.method == 'POST':
-        GeneratorHandler().insertGenerator(request.form)
+        return GeneratorHandler().insertGenerator(request.form)
     else:
         if not request.args:
             return GeneratorHandler().getAllGenerator()
@@ -540,7 +540,7 @@ def getGeneratorSuppliers():
 @app.route('/battery', methods=['GET', 'POST'])
 def getAllBattery():
     if request.method == 'POST':
-        BatteryHandler().insertBattery(request.form)
+        return BatteryHandler().insertBattery(request.form)
     else:
         if not request.args:
             return BatteryHandler().getAllBattery()
@@ -579,7 +579,7 @@ def getBatterySuppliers():
 @app.route('/firstaid', methods=['GET', 'POST'])
 def getAllAid():
     if request.method == 'POST':
-        FirstAidHandler().insertAid(request.form)
+        return FirstAidHandler().insertAid(request.form)
     else:
         if not request.args:
             return FirstAidHandler().getAllAid()
@@ -618,7 +618,7 @@ def getFirstAidSuppliers():
 @app.route('/heavyequipment', methods=['GET', 'POST'])
 def getAllEquip():
     if request.method == 'POST':
-        HeavyEquipHandler().insertEquip(request.form)
+        return HeavyEquipHandler().insertEquip(request.form)
     else:
         if not request.args:
             return HeavyEquipHandler().getAllEquip()
@@ -662,7 +662,7 @@ def getEquipSuppliers():
 @app.route("/request")
 def getRequestAll():
     if request.method == 'POST':
-        RequestHandler().insertRequest(request.form)
+        return RequestHandler().insertRequest(request.form)
     else:
         if not request.args:
             return RequestHandler().getAllRequest()
