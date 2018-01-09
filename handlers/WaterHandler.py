@@ -12,6 +12,15 @@ class WaterHandler:
         result['bsize'] = row[2]
         return result
 
+    def build_supplier_dict(self, row):
+        result = {}
+        result['sid'] = row[0]
+        result['sname'] = row[1]
+        result['spassword'] = row[2]
+        result['sregion'] = row[3]
+        result['sphone'] = row[4]
+        result['saddress'] = row[5]
+        return result
 
     def build_water_attributes(self, rid, price, bsize):
         result = {}
@@ -114,3 +123,15 @@ class WaterHandler:
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
 
+
+    def getWaterSuppliers(self):
+        dao = WaterDAO()
+        suppliers_list = dao.getWaterSuppliers()
+        if not suppliers_list:
+            return jsonify(Error = "No Suppliers found"), 404
+        else:
+            result_list = []
+            for row in suppliers_list:
+                result = self.build_supplier_dict(row)
+                result_list.append(result)
+        return jsonify(Suppliers = result_list)

@@ -251,6 +251,11 @@ def getWaterByPrice(price):
     return WaterHandler().getWaterByPrice(price)
 
 
+@app.route('/water/suppliers')
+def getWaterSuppliers():
+    return WaterHandler().getWaterSuppliers()
+
+
 @app.route('/water/bsize/<string:bsize>')
 def getWaterByBottleSize(bsize):
     return WaterHandler().getWaterByBottleSize(bsize)
