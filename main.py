@@ -616,5 +616,24 @@ def getEquipByFunction(equipfunction):
     return HeavyEquipHandler().getEquipByFunction(equipfunction)
 
 
+##############################################
+#	Routes for Request Queries
+##############################################
+@app.route("/request")
+def getRequestAll():
+    if request.method == 'POST':
+        RequestHandler().insertRequest(request.form)
+    else:
+        if not request.args:
+            return RequestHandler().getAllRequest()
+        else:
+            return RequestHandler().searchRequest(request.args)
+
+
+@app.route("/request/<int:reqid>")
+def getRequestById(reqid):
+    return RequestHandler().getRequestById(reqid)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
