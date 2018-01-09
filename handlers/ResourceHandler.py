@@ -131,7 +131,7 @@ class ResourceHandler:
             if sid and qty:
                 dao = ResourcesDAO()
                 rid = dao.insert(sid, qty)
-                result = self.build_resources_attributes(rid, sid, qty)
+                result = self.build_resource_attributes(rid, sid, qty)
                 return jsonify(Resources=result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
