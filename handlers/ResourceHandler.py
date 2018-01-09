@@ -52,18 +52,22 @@ class ResourceHandler:
 
     def getResourcesBySupplierId(self, sid):
         dao = ResourcesDAO()
-        resources_list = dao.getResourcesBySupplierId(sid)
+        resource_list = dao.getResourcesBySupplierId(sid)
 
-        if not resources_list:
-            return jsonify(Error = "Resource Not Found"), 404
+        if not resource_list:
+            return jsonify(Error = "No Resource found"), 404
         else:
-            resource = self.build_resource_dict(row)
-            return jsonify(Resource = resource)
+            result_list = []
+            for row in resource_list:
+                result = self.build_resource_dict(row)
+                result_list.append(result)
+        return jsonify(Resources = result_list)
 
 
     def getResourcesByQuantity(self, qty):
-        dao = ResourceDAO()
-        resource_list = dao.getResourceByQuantity(qty)
+        dao = ResourcesDAO()
+        resource_list = dao.getResourcesByQuantity(qty)
+
         if not resource_list:
             return jsonify(Error = "No Resource found"), 404
         else:

@@ -20,7 +20,7 @@ class ResourcesDAO:
         return result
 
 
-    def getResourcesByID(self, rid):
+    def getResourcesById(self, rid):
         cursor = self.conn.cursor()
         query = "select * from resources where rid = %s;"
         cursor.execute(query, (rid,))
