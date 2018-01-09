@@ -12,8 +12,8 @@ class AdminHandler:
     def build_admin_attributes(self, aid, aname, apassword):
         result = {}
         result['aid'] = aid
-        result['name'] = aname
-        result['password'] = apassword
+        result['aname'] = aname
+        result['apassword'] = apassword
         return result
 
     def getAllAdmins(self):
@@ -119,7 +119,7 @@ class AdminHandler:
                 dao = AdminDAO()
                 aid = dao.insert(aname, apassword)
                 result = self.build_admin_attributes(aid, aname, apassword)
-                return jsonify(Supplier=result), 201
+                return jsonify(Admin=result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
 
