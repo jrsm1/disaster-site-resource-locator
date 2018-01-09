@@ -14,8 +14,8 @@ class ClientHandler:
     def build_client_attributes(self, cid, cname, cpassword, address, region):
         result = {}
         result['cid'] = cid
-        result['name'] = cname
-        result['password'] = cpassword
+        result['cname'] = cname
+        result['cpassword'] = cpassword
         result['address'] = address
         result['region'] = region
         return result

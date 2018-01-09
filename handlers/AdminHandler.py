@@ -11,7 +11,7 @@ class AdminHandler:
 
     def build_admin_attributes(self, aid, aname, apassword):
         result = {}
-        result['sid'] = aid
+        result['aid'] = aid
         result['name'] = aname
         result['password'] = apassword
         return result
