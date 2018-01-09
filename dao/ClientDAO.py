@@ -64,9 +64,9 @@ class ClientDAO:
         cursor = self.conn.cursor()
         query = "insert into client(cname, cpassword, address, region) values (%s, %s, %s, %s) returning cid;"
         cursor.execute(query, (cname, cpassword, address, region))
-        sid = cursor.fetchone()[0]
+        cid = cursor.fetchone()[0]
         self.conn.commit()
-        return sid
+        return cid
 
     def getClientBy(self, selection):
         cursor = self.conn.cursor()
