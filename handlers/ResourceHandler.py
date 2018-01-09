@@ -78,7 +78,7 @@ class ResourceHandler:
         return jsonify(Resources = result_list)
 
 
-    def getSuppliersByResourcesId(self, rid):
+    def getSupplierByResourcesId(self, rid):
         dao = ResourcesDAO()
         resources_list = dao.getSupplierByResourcesId(rid)
 
