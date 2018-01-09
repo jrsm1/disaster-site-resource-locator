@@ -381,6 +381,11 @@ def getFuelByContainerSize(csize):
     return FuelHandler().getFuelByContainerSize(csize)
 
 
+@app.route('/fuel/suppliers')
+def getFuelSuppliers():
+    return FuelHandler().getFuelSuppliers()
+
+
 ##############################################
 #	Routes for Food Queries
 ##############################################

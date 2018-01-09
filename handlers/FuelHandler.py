@@ -21,6 +21,16 @@ class FuelHandler:
         result['csize'] = csize
         return result
 
+    def build_supplierfuel_dict(self, row):
+        result = {}
+        result['rid'] = row[0]
+        result['sid'] = row[1]
+        result['sname'] = row[2]
+        result['saddress'] = row[3]
+        result['sphone'] = row[4]
+        result['sregion'] = row[5]
+        return result
+
 
     def getAllFuel(self):
 
@@ -132,3 +142,15 @@ class FuelHandler:
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
 
+
+    def getFuelSuppliers(self):
+        dao = FuelDAO()
+        suppliers_list = dao.getFuelSuppliers()
+        if not suppliers_list:
+            return jsonify(Error = "No Suppliers found"), 404
+        else:
+            result_list = []
+            for row in suppliers_list:
+                result = self.build_supplierfuel_dict(row)
+                result_list.append(result)
+        return jsonify(Suppliers = result_list)
