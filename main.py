@@ -297,6 +297,11 @@ def getIceByBagSize(bsize):
     return IceHandler().getIceByBagSize(bsize)
 
 
+@app.route('/ice/suppliers')
+def getIceSuppliers():
+    return IceHandler().getIceSuppliers()
+
+
 ##############################################
 #	Routes for Tools Queries
 ##############################################
@@ -337,6 +342,12 @@ def getToolsByBrand(brand):
 @app.route('/tools/price/<float:price>')
 def getToolsByPrice(price):
     return ToolsHandler().getToolsByPrice(price)
+
+
+@app.route('/tools/suppliers')
+def getToolsSuppliers():
+    return ToolsHandler().getToolsSuppliers()
+
 
 
 ##############################################

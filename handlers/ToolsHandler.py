@@ -22,6 +22,15 @@ class ToolsHandler:
         result['price'] = price
         return result
 
+    def build_suppliertools_dict(self, row):
+        result = {}
+        result['rid'] = row[0]
+        result['sid'] = row[1]
+        result['sname'] = row[2]
+        result['saddress'] = row[3]
+        result['sphone'] = row[4]
+        result['sregion'] = row[5]
+        return result
 
     def getAllTools(self):
 
@@ -134,4 +143,17 @@ class ToolsHandler:
                 return jsonify(Tools = result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
+
+
+    def getToolsSuppliers(self):
+        dao = ToolsDAO()
+        suppliers_list = dao.getToolsSuppliers()
+        if not suppliers_list:
+            return jsonify(Error = "No Suppliers found"), 404
+        else:
+            result_list = []
+            for row in suppliers_list:
+                result = self.build_suppliertools_dict(row)
+                result_list.append(result)
+        return jsonify(Suppliers = result_list)
 
