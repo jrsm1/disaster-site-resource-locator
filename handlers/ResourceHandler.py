@@ -1,4 +1,5 @@
 from flask import jsonify
+from dao.ResourcesDAO import ResourcesDAO
 
 class ResourceHandler:
    
@@ -6,6 +7,7 @@ class ResourceHandler:
         result = {}
         result['rid'] = row[0]
         result['sid'] = row[1]
+        result['qty'] = row[2]
         return result
 
     def build_supplier_dict(self, row):
@@ -18,6 +20,13 @@ class ResourceHandler:
         result['slocation'] = row[5]
         return result
 
+
+    def build_resource_attributes(self, rid, sid, qty):
+        result = {}
+        result['rid'] = rid
+        result['sid'] = sid
+        result['qty'] = qty
+        return result
 
     def getAllResources(self):
         dao = ResourcesDAO()
