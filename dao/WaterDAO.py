@@ -12,7 +12,7 @@ class WaterDAO:
 
     def getAllWater(self):
         cursor = self.conn.cursor()
-        query = "select * from water;"
+        query = "select * from water order by brand;"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -22,7 +22,7 @@ class WaterDAO:
 
     def getWaterById(self, rid):
         cursor = self.conn.cursor()
-        query = "select * from water where rid = %s;"
+        query = "select * from water where rid = %s order by brand;"
         cursor.execute(query, (rid,))
         result = cursor.fetchone()
         return result
@@ -30,7 +30,7 @@ class WaterDAO:
 
     def getWaterByPrice(self, price):
         cursor = self.conn.cursor()
-        query = "select * from water where price = %s;"
+        query = "select * from water where price = %s order by brand;"
         cursor.execute(query, (price,))
         result = [] 
         for row in cursor:
@@ -40,8 +40,18 @@ class WaterDAO:
 
     def getWaterByBottleSize(self, bsize):
         cursor = self.conn.cursor()
-        query = "select * from water where bottlesize = %s;"
+        query = "select * from water where bottlesize = %s order by brand;"
         cursor.execute(query, (bsize,))
+        result = []                                                                                                   
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getWaterByBrand(self, brand):
+        cursor = self.conn.cursor()
+        query = "select * from water where brand = %s order by brand;"
+        cursor.execute(query, (brand,))
         result = []                                                                                                   
         for row in cursor:
             result.append(row)
@@ -50,7 +60,7 @@ class WaterDAO:
 
     def getWaterByPriceAndBottleSize(self, price, bsize):
         cursor = self.conn.cursor()
-        query = "select * from water where price = %s and bottlesize = %s;"
+        query = "select * from water where price = %s and bottlesize = %s order by brand;"
         cursor.execute(query, (price, bsize,))
         result = []
         for row in cursor:
@@ -68,10 +78,10 @@ class WaterDAO:
         return result
 
 
-    def insert(self, rid, price, bsize):
+    def insert(self, rid, price, bsize, brand):
         cursor = self.conn.cursor()
-        query = "insert into water values (%s, %s, %s) returning rid;"
-        cursor.execute(query, (rid, price, bsize,))
+        query = "insert into water values (%s, %s, %s, %s) returning rid;"
+        cursor.execute(query, (rid, price, bsize, brand,))
         rid = cursor.fetchone()[0]
         self.conn.commit()
         return rid

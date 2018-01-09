@@ -10,6 +10,7 @@ class WaterHandler:
         result['rid'] = row[0]
         result['price'] = row[1]
         result['bottlesize'] = row[2]
+        result['brand'] = row[3]
         return result
 
     def build_supplier_dict(self, row):
@@ -38,6 +39,7 @@ class WaterHandler:
         result['rid'] = rid
         result['price'] = price
         result['bottlesize'] = bsize
+        result['brand'] = brand
         return result
 
 
@@ -90,13 +92,28 @@ class WaterHandler:
         return jsonify(Water = result_list)
 
 
+    def getWaterByBrand(self, brand):
+
+        dao = WaterDAO()
+        size_list = dao.getWaterByBrand(brand)
+        if not size_list:
+            return jsonify(Error = "No brand found"), 404
+        else:
+            result_list = []
+            for row in size_list:
+                result = self.build_water_dict(row)
+                result_list.append(result)
+        return jsonify(Water = result_list)
+
+
     def searchWater(self, args):
-        if len(args) > 3:
+        if len(args) > 4:
             return jsonify(Error = "Malformed search string."), 400
         else:
             rid = args.get("rid")
             price = args.get("price")
             bsize = args.get("bsize")
+            brand = args.get("brand")
 
             dao = WaterDAO()
             water_list = []
@@ -108,6 +125,8 @@ class WaterHandler:
                 water_list = dao.getWaterByPrice(price)
             elif (len(args) == 1) and bsize:
                 water_list = dao.getWaterByBottleSize(bsize)
+            elif (len(args) == 1) and brand:
+                water_list = dao.getWaterByBrand(brand)
             else:
                 return jsonify(Error = "Malformed query string"), 400
             result_list = []
@@ -118,18 +137,19 @@ class WaterHandler:
 
 
     def insertWater(self, form):
-        if len(form) != 4:
+        if len(form) != 5:
             return jsonify(Error = "Malformed POST request"), 400
         else:
             sid = form['sid']
             qty = form['qty']
             price = form['price']
             bsize = form['bsize']
-            if sid and qty and price and bsize:
+            brand = form['brand']
+            if sid and qty and price and bsize and brand:
                 rid = ResourcesDAO().insert(sid, qty)
                 dao = WaterDAO()
-                dao.insert(rid, price, bsize)
-                result = self.build_water_attributes(rid, price, bsize)
+                dao.insert(rid, price, bsize, brand)
+                result = self.build_water_attributes(rid, price, bsize, brand)
                 return jsonify(Water = result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
