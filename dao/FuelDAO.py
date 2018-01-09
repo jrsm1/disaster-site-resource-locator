@@ -50,7 +50,7 @@ class FuelDAO:
 
     def getFuelByContainerSize(self, csize):
         cursor = self.conn.cursor()
-        query = "select * from fuel where csize = %s;"
+        query = "select * from fuel where containersize = %s;"
         cursor.execute(query, (csize,))
         result = []                                                                                                   
         for row in cursor:

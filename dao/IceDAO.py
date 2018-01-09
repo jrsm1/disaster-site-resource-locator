@@ -40,7 +40,7 @@ class IceDAO:
 
     def getIceByBagSize(self, bsize):
         cursor = self.conn.cursor()
-        query = "select * from ice where bsize = %s;"
+        query = "select * from ice where bagsize = %s;"
         cursor.execute(query, (bsize,))
         result = []                                                                                                   
         for row in cursor:
@@ -50,7 +50,7 @@ class IceDAO:
 
     def getIceByPriceAndBagSize(self, price, bsize):
         cursor = self.conn.cursor()
-        query = "select * from ice where price = %s and bsize = %s;"
+        query = "select * from ice where price = %s and bagsize = %s;"
         cursor.execute(query, (price, bsize,))
         result = []
         for row in cursor:

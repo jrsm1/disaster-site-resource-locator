@@ -601,17 +601,17 @@ def getEquipByPrice(price):
     return HeavyEquipHandler().getEquipByPrice(price)
 
 
-@app.route("/generator/make/<string:make>")
+@app.route("/heavyequip/make/<string:make>")
 def getEquipByMake(make):
     return HeavyEquipHandler().getEquipByMake(make)
 
 
-@app.route("/generator/fueltype/<string:condition>")
+@app.route("/heavyequip/condition/<string:condition>")
 def getEquipByCondition(condition):
     return HeavyEquipHandler().getEquipByCondition(condition)
 
 
-@app.route("/generator/power/<string:equipfunction>")
+@app.route("/heavyequip/function/<string:equipfunction>")
 def getEquipByFunction(equipfunction):
     return HeavyEquipHandler().getEquipByFunction(equipfunction)
 

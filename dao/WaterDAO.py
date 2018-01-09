@@ -40,7 +40,7 @@ class WaterDAO:
 
     def getWaterByBottleSize(self, bsize):
         cursor = self.conn.cursor()
-        query = "select * from water where bsize = %s;"
+        query = "select * from water where bottlesize = %s;"
         cursor.execute(query, (bsize,))
         result = []                                                                                                   
         for row in cursor:
@@ -50,7 +50,7 @@ class WaterDAO:
 
     def getWaterByPriceAndBottleSize(self, price, bsize):
         cursor = self.conn.cursor()
-        query = "select * from water where price = %s and bsize = %s;"
+        query = "select * from water where price = %s and bottlesize = %s;"
         cursor.execute(query, (price, bsize,))
         result = []
         for row in cursor:

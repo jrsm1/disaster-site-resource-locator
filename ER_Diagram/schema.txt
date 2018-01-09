@@ -141,6 +141,7 @@ Create Table Battery (
 Create Table Generator (
 	RID	bigint	REFERENCES	Resources(RID)	unique,
 	Price	float	NOT NULL,
+	Brand	varchar(20)	NOT NULL,
 	Ftype	varchar(10)	NOT NULL,
 	PowerRating	integer	NOT NULL
 )
