@@ -29,7 +29,7 @@ def getResourceById(rid):
 
 
 @app.route('/resources/sid/<int:sid>')
-def getResourcesBySupplierId(rid):
+def getResourcesBySupplierId(sid):
     return ResourceHandler().getResourcesBySupplierId(sid)
 
 
@@ -74,12 +74,15 @@ def getResourcesBySID(sid):
 ############################################
 
 
-@app.route('/admins')
+@app.route('/admins', methods=['GET', 'POST'])
 def getAllAdmins():
-    if not request.args:
-        return AdminHandler().getAllAdmins()
+    if request.method == 'POST':
+        return AdminHandler().insertAdmin(request.form)
     else:
-        return AdminHandler().searchAdmins(request.args)
+        if not request.args:
+            return AdminHandler().getAllAdmins()
+        else:
+            return AdminHandler().searchAdmins(request.args)
 
 
 @app.route('/admins/aid')
