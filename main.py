@@ -659,7 +659,7 @@ def getEquipSuppliers():
 ##############################################
 #	Routes for Request Queries
 ##############################################
-@app.route("/request")
+@app.route("/request", methods=['GET', 'POST'])
 def getRequestAll():
     if request.method == 'POST':
         return RequestHandler().insertRequest(request.form)
