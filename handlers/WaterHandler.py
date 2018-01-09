@@ -9,7 +9,7 @@ class WaterHandler:
         result = {}
         result['rid'] = row[0]
         result['price'] = row[1]
-        result['bsize'] = row[2]
+        result['bottlesize'] = row[2]
         return result
 
     def build_supplier_dict(self, row):
@@ -26,7 +26,7 @@ class WaterHandler:
         result = {}
         result['rid'] = rid
         result['price'] = price
-        result['bsize'] = bsize
+        result['bottlesize'] = bsize
         return result
 
 
