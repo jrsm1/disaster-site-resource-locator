@@ -529,6 +529,11 @@ def getGeneratorByPowerRating(powerrating):
     return GeneratorHandler().getGeneratorByPowerRating(powerrating)
 
 
+@app.route('/generator/suppliers')
+def getGeneratorSuppliers():
+    return GeneratorHandler().getGeneratorSuppliers()
+
+
 ##############################################
 #	Routes for Battery Queries
 ##############################################
