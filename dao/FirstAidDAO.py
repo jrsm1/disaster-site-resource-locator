@@ -13,7 +13,7 @@ class FirstAidDAO:
 
     def getAllAid(self):
         cursor = self.conn.cursor()
-        query = "select * from FirstAid;"
+        query = "select * from FirstAid order by brand;"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -22,14 +22,14 @@ class FirstAidDAO:
 
     def getAidById(self, rid):
         cursor = self.conn.cursor()
-        query = "select * from FirstAid where rid = %s;"
+        query = "select * from FirstAid where rid = %s order by brand;"
         cursor.execute(query, (rid,))
         result = cursor.fetchone()
         return result
 
     def getAidByPrice(self, price):
         cursor = self.conn.cursor()
-        query = "select * from FirstAid where price = %s;"
+        query = "select * from FirstAid where price = %s order by brand;"
         cursor.execute(query, (price,))
         result = []
         for row in cursor:
@@ -38,7 +38,7 @@ class FirstAidDAO:
 
     def getAidByBrand(self, brand):
         cursor = self.conn.cursor()
-        query = "select * from FirstAid where brand = %s;"
+        query = "select * from FirstAid where brand = %s order by brand;"
         cursor.execute(query, (brand,))
         result = []
         for row in cursor:
@@ -47,7 +47,7 @@ class FirstAidDAO:
 
     def getAidByMedCondition(self, medcondition):
         cursor = self.conn.cursor()
-        query = "select * from FirstAid where medcondition = %s;"
+        query = "select * from FirstAid where medcondition = %s order by brand;"
         cursor.execute(query, (medcondition,))
         result = []
         for row in cursor:
@@ -56,7 +56,7 @@ class FirstAidDAO:
 
     def getAidByPriceAndBrand(self, price, brand):
         cursor = self.conn.cursor()
-        query = "select * from FirstAid where price = %s and brand = %s;"
+        query = "select * from FirstAid where price = %s and brand = %s order by brand;"
         cursor.execute(query, (price, brand,))
         result = []
         for row in cursor:
@@ -65,7 +65,7 @@ class FirstAidDAO:
 
     def getAidByMedConditionAndBrand(self, medcondition, brand):
         cursor = self.conn.cursor()
-        query = "select * from FirstAid where medcondition = %s and brand = %s;"
+        query = "select * from FirstAid where medcondition = %s and brand = %s order by brand;"
         cursor.execute(query, (medcondition, brand,))
         result = []
         for row in cursor:
@@ -74,7 +74,7 @@ class FirstAidDAO:
 
     def getAidByPriceAndMedCondition(self, price, medcondition):
         cursor = self.conn.cursor()
-        query = "select * from FirstAid where price = %s and medcondition = %s;"
+        query = "select * from FirstAid where price = %s and medcondition = %s order by brand;"
         cursor.execute(query, (price, medcondition,))
         result = []
         for row in cursor:
@@ -83,7 +83,7 @@ class FirstAidDAO:
 
     def getAidByPriceBrandAndMedCondition(self, price, brand, medcondition):
         cursor = self.conn.cursor()
-        query = "select * from FirstAid where price = %s and brand = %s and medcondition = %s;"
+        query = "select * from FirstAid where price = %s and brand = %s and medcondition = %s order by brand;"
         cursor.execute(query, (price, brand, medcondition,))
         result = []
         for row in cursor:

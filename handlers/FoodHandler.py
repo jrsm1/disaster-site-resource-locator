@@ -11,16 +11,19 @@ class FoodHandler:
         result['price'] = row[1]
         result['ftype'] = row[2]
         result['expdate'] = row[3]
+        result['fname'] = row[4]
         return result
 
 
-    def build_food_attributes(self, rid, price, ftype, expdate):
+    def build_food_attributes(self, rid, price, ftype, expdate, fname):
         result = {}
         result['rid'] = rid
         result['price'] = price
         result['ftype'] = ftype
         result['expdate'] = expdate
+        result['fname'] = fname
         return result
+
 
     def build_supplierfood_dict(self, row):
         result = {}
@@ -96,15 +99,29 @@ class FoodHandler:
         return jsonify(Food = result_list)
 
 
+    def getFoodByName(self, fname):
+
+        dao = FoodDAO()
+        food_list = dao.getFoodByName(fname)
+        if not food_list:
+            return jsonify(Error = "No Food found"), 404
+        else:
+            result_list = []
+            for row in food_list:
+                result = self.build_food_dict(row)
+                result_list.append(result)
+        return jsonify(Food = result_list)
+
 
     def searchFood(self, args):
-        if len(args) > 4:
+        if len(args) > 5:
             return jsonify(Error = "Malformed search string."), 400
         else:
             rid = args.get("rid")
             price = args.get("price")
             ftype = args.get("ftype")
             expdate = args.get("expdate")
+            fname = args.get("fname")
 
             dao = FoodDAO()
             food_list = []
@@ -116,6 +133,8 @@ class FoodHandler:
                 food_list = dao.getFoodByType(ftype)
             elif (len(args) == 1) and expdate:
                 food_list = dao.getFoodByExpDate(expdate)
+            elif (len(args) == 1) and fname:
+                food_list = dao.getFoodByName(fname)
             else:
                 return jsonify(Error = "Malformed query string"), 400
             result_list = []
@@ -134,11 +153,12 @@ class FoodHandler:
             price = form['price']
             ftype = form['ftype']
             expdate = form['expdate']
-            if sid and qty and price and ftype and expdate:
+            fname = form['fname']
+            if sid and qty and price and ftype and expdate and fname:
                 rid = ResourcesDAO().insert(sid,qty)
                 dao = FoodDAO()
-                dao.insert(rid, price, ftype, expdate)
-                result = self.build_food_attributes(rid, price, ftype, expdate)
+                dao.insert(rid, price, ftype, expdate, fname)
+                result = self.build_food_attributes(rid, price, ftype, expdate, fname)
                 return jsonify(Food = result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400

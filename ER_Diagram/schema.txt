@@ -78,7 +78,8 @@ Create Table Reservation (
 Create Table Water (
 	RID	bigint	REFERENCES	Resources(RID)	unique,
 	Price	float	NOT NULL,
-	BottleSize	varchar(10)	NOT NULL
+	BottleSize	varchar(10)	NOT NULL,
+	Brand	varchar(20)	NOT NULL
 )
 
 
@@ -93,7 +94,8 @@ Create Table Food (
 	RID	bigint	REFERENCES	Resources(RID)	unique,
 	Price	float	NOT NULL,
 	Ftype	varchar(10)	NOT NULL,
-	Expdate	date	NOT NULL
+	Expdate	date	NOT NULL,
+	Fname	varchar(20)	NOT NULL
 )
 
 Create Table FirstAid (
