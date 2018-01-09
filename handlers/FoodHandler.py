@@ -145,7 +145,7 @@ class FoodHandler:
 
 
     def insertFood(self, form):
-        if len(form) != 5:
+        if len(form) != 6:
             return jsonify(Error = "Malformed POST request"), 400
         else:
             sid = form['sid']
