@@ -172,7 +172,7 @@ def getClientsByID(cid):
 #	Routes for Purchase Queries
 ##############################################
 
-@app.route('/purchases', methods=['GET', 'POST'])
+@app.route('/purchase', methods=['GET', 'POST'])
 def getAllPurchases():
     if request.method == 'POST':
         return PurchaseHandler().insertPurchase(request.form)
