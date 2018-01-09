@@ -113,8 +113,8 @@ class AdminHandler:
         if len(form) != 2:
             return jsonify(Error="Malformed POST request"), 400
         else:
-            aname = form['name']
-            apassword = form['password']
+            aname = form['aname']
+            apassword = form['apassword']
             if aname and apassword:
                 dao = AdminDAO()
                 aid = dao.insert(aname, apassword)

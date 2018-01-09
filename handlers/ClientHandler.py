@@ -93,9 +93,9 @@ class ClientHandler:
         if len(form) != 4:
             return jsonify(Error = "Malformed POST request"), 400
         else:
-            cname = form['name']
-            cpassword = form['password']
-            address = form['address']
+            cname = form['cname']
+            cpassword = form['cpassword']
+            address = form['caddress']
             region = form['region']
             if cname and address and region and cpassword:
                 dao = ClientDAO()
