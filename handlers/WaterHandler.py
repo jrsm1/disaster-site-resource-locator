@@ -34,7 +34,7 @@ class WaterHandler:
         return result
 
 
-    def build_water_attributes(self, rid, price, bsize):
+    def build_water_attributes(self, rid, price, bsize, brand):
         result = {}
         result['rid'] = rid
         result['price'] = price
