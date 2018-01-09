@@ -418,6 +418,11 @@ def getFoodByType(ftype):
     return FoodHandler().getFoodByType(ftype)
 
 
+@app.route('/food/suppliers')
+def getFoodSuppliers():
+    return FoodHandler().getFoodSuppliers()
+
+
 @app.route('/purchase/expdate/<string:expdate>')
 def getFoodByExpDate(expdate):
     return FoodHandler().getFoodByExpDate(expdate)
@@ -634,6 +639,11 @@ def getEquipByCondition(condition):
 @app.route("/heavyequip/function/<string:equipfunction>")
 def getEquipByFunction(equipfunction):
     return HeavyEquipHandler().getEquipByFunction(equipfunction)
+
+
+@app.route('/heavyequip/suppliers')
+def getEquipSuppliers():
+    return HeavyEquipHandler().getEquipSuppliers()
 
 
 ##############################################
