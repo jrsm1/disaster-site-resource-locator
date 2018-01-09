@@ -18,3 +18,4 @@ from .HeavyEquipHandler import HeavyEquipHandler
 from .FirstAidHandler import FirstAidHandler
 from .ResourceHandler import ResourceHandler
 from .RequestHandler import RequestHandler
+from .ReservationHandler import ReservationHandler

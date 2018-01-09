@@ -686,5 +686,21 @@ def getRequestById(reqid):
     return RequestHandler().getRequestById(reqid)
 
 
+@app.route("/reserve", methods=['GET', 'POST'])
+def getReserveAll():
+    if request.method == 'POST':
+        return ReservationHandler().insertReservation(request.form)
+    else:
+        if not request.args:
+            return ReservationHandler().getAllReservation()
+        else:
+            return ReservationHandler().searchReservation(request.args)
+
+
+@app.route("/reserve/<int:resid>")
+def getReserveById(reqid):
+    return ReservationHandler().getReservationById(reqid)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
