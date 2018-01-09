@@ -81,7 +81,7 @@ class FoodDAO:
     def insert(self, rid, price, ftype, expdate, fname):
         cursor = self.conn.cursor()
         query = "insert into food values (%s, %s, %s, %s, %s) returning rid;"
-        cursor.execute(query, (rid, price, ftype, expdate,))
+        cursor.execute(query, (rid, price, ftype, expdate, fname))
         rid = cursor.fetchone()[0]
         self.conn.commit()
         return rid
