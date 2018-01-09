@@ -147,12 +147,15 @@ def getSalesRecordBySales(sales):
 #############################################
 
 
-@app.route('/clients')
+@app.route('/clients', methods=['GET', 'POST'])
 def getAllClients():
-    if not request.args:
-        return ClientHandler().getAllClients()
+    if request.method == 'POST':
+        return ClientHandler().insertClient(request.form)
     else:
-        return ClientHandler().searchClients(request.args)
+        if not request.args:
+            return ClientHandler().getAllClients()
+        else:
+            return ClientHandler().searchClients(request.args)
 
 
 @app.route('/clients/<string:selection>')

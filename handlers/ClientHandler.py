@@ -93,7 +93,7 @@ class ClientHandler:
             result_list.append(result)
         return jsonify(CreditCards=result_list)
 
-    def insertCllient(self, form):
+    def insertClient(self, form):
         if len(form) != 4:
             return jsonify(Error = "Malformed POST request"), 400
         else:

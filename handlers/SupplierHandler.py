@@ -86,8 +86,7 @@ class SupplierHandler:
             supplier_list = dao.getSupplierBy(selection)
             result_list = []
             for row in supplier_list:
-                result = self.build_supplier_dict(row)
-                result_list.append(result)
+                result_list.append(row)
             return jsonify(Suppliers=result_list)
         else:
             return jsonify(Error="Malformed search string."), 400
