@@ -475,6 +475,11 @@ def getClothesByPiece(piece):
     return ClothesHandler().getClothesByPiece(piece)
 
 
+@app.route('/clothes/suppliers')
+def getClothesSuppliers():
+    return ClothesHandler().getClothesSuppliers()
+
+
 ##############################################
 #	Routes for Generator Queries
 ##############################################
@@ -546,6 +551,11 @@ def getBatteryByVoltage(voltage):
 @app.route("/battery/type/<string:btype>")
 def getBatteryByType(btype):
     return BatteryHandler().getBatteryByType(btype)
+
+
+@app.route('/battery/suppliers')
+def getBatterySuppliers():
+    return BatteryHandler().getBatterySuppliers()
 
 
 ##############################################
