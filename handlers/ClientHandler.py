@@ -8,15 +8,15 @@ class ClientHandler:
         result['cname'] = row[1]
         result['cpassword'] = row[2]
         result['region'] = row[3]
-        result['address'] = row[4]
+        result['caddress'] = row[4]
         return result
 
-    def build_client_attributes(self, cid, cname, cpassword, address, region):
+    def build_client_attributes(self, cid, cname, cpassword, caddress, region):
         result = {}
         result['cid'] = cid
         result['cname'] = cname
         result['cpassword'] = cpassword
-        result['address'] = address
+        result['caddress'] = caddress
         result['region'] = region
         return result
 
