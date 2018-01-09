@@ -22,6 +22,17 @@ class WaterHandler:
         result['saddress'] = row[5]
         return result
 
+    def build_supplierwater_dict(self, row):
+        result = {}
+        result['rid'] = row[0]
+        result['sid'] = row[1]
+        result['sname'] = row[2]
+        result['saddress'] = row[3]
+        result['sphone'] = row[4]
+        result['sregion'] = row[5]
+        return result
+
+
     def build_water_attributes(self, rid, price, bsize):
         result = {}
         result['rid'] = rid
@@ -132,6 +143,6 @@ class WaterHandler:
         else:
             result_list = []
             for row in suppliers_list:
-                result = self.build_supplier_dict(row)
+                result = self.build_supplierwater_dict(row)
                 result_list.append(result)
         return jsonify(Suppliers = result_list)
