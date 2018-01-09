@@ -1,5 +1,5 @@
 from flask import jsonify
-
+from dao.ClientDAO import ClientDAO
 
 class ClientHandler:
     def build_client_dict(self, row):
@@ -7,8 +7,17 @@ class ClientHandler:
         result['cid'] = row[0]
         result['cname'] = row[1]
         result['cpassword'] = row[2]
-        result['ccity'] = row[3]
-        result['ccard'] = row[4]
+        result['region'] = row[3]
+        result['address'] = row[4]
+        return result
+
+    def build_client_attributes(self, cid, cname, cpassword, address, region):
+        result = {}
+        result['cid'] = cid
+        result['name'] = cname
+        result['password'] = cpassword
+        result['address'] = address
+        result['region'] = region
         return result
 
     def build_card_dict(self, row):
@@ -18,15 +27,9 @@ class ClientHandler:
         result['expdate'] = row[2]
         return result
 
-    def getClientList(self):
-        client1 = [0, "Juan Rivera", "password", "Mayaguez", "7865538924567"]
-        client2 = [1, "Jorge Sanchez", "password123", "Arecibo", "7861268924467"]
-        client3 = [2, "Esteban Rivera", "Mayaguez", "7876943078", "7865088934769"]
-        result = [client1, client2, client3]
-        return result
-
     def getAllClients(self):
-        client_list = self.getClientList()
+        dao = ClientDAO()
+        client_list = dao.getAllClients()
         result_list = []
         for row in client_list:
             result = self.build_client_dict(row)
@@ -34,25 +37,36 @@ class ClientHandler:
         return jsonify(Clients=result_list)
 
     def searchClients(self, args):
-            ccity = args.get("city")
+            if len(args) > 4:
+                return jsonify(Error="Malformed search string."), 400
+            cregion = args.get("region")
             cid = args.get("id")
             cname = args.get("name")
-            cpassword = args.get("password")
-            ccard = args.get("card")
-
-            if ccity or cname or cpassword or ccard or cid:
-                client_list = self.getClientList()
-                result_list = []
-                for row in client_list:
-                    result = self.build_client_dict(row)
-                    result_list.append(result)
-                return jsonify(Clients=result_list)
+            caddress = args.get("address")
+            dao = ClientDAO()
+            client_list = []
+            if len(args) == 2 and cname and cregion:
+                client_list = dao.getClientByNameRegion(cname, cregion)
+            elif len(args) == 1 and cid:
+                client_list= dao.getClientByID(cid)
+            elif len(args) == 1 and cname:
+                client_list = dao.getClientByName(cname)
+            elif len(args) == 1 and caddress:
+                client_list = dao.getClientByAddress(caddress)
+            elif len(args) == 1 and cregion:
+                client_list = dao.getClientByRegion(cregion)
             else:
-                return jsonify(Error="Malformed search string."), 400
+                return jsonify(Error="Malformed query string"), 400
+            result_list = []
+            for row in client_list:
+                result = self.build_client_dict(row)
+                result_list.append(result)
+            return jsonify(Clients=result_list)
 
     def getClientsBy(self, selection):
-        if selection == "cname" or selection == "ccity" or selection == "cid":
-            client_list = self.getClientList()
+        if selection == "cname" or selection == "address" or selection == "cid" or selection  == "region":
+            dao = ClientDAO()
+            client_list = dao.getClientBy(selection)
             result_list = []
             for row in client_list:
                 result = self.build_client_dict(row)
@@ -61,18 +75,36 @@ class ClientHandler:
         else:
             return jsonify(Error="Malformed search string."), 400
 
-    def getClientByID(self, sid):
-        result = [0, "Juan Vasquez", "San Juan", "7874561925", "18.465539,-66.105735"]
-        if not result:
+    def getClientByID(self, cid):
+        dao = ClientDAO()
+        row = dao.getClientByID(cid)
+        if not row:
             return jsonify(Error="Client Not Found"), 404
         else:
-            clientID = self.build_client_dict(result)
-        return jsonify(Client=clientID)
+            clientID = self.build_client_dict(row)
+        return jsonify(Supplier=clientID)
 
     def getCCByCID(self, cid):
-        result = ['111', 'juan', '8/8/17']
-        if not result:
-            return jsonify(Error="Credit Card Not Found"), 404
+        dao = ClientDAO()
+        client_list = dao.getCCByCID(cid)
+        result_list = []
+        for row in client_list:
+            result = self.build_client_dict(row)
+            result_list.append(result)
+        return jsonify(CreditCards=result_list)
+
+    def insertCllient(self, form):
+        if len(form) != 4:
+            return jsonify(Error = "Malformed POST request"), 400
         else:
-            resources = self.build_card_dict(result)
-        return jsonify(resources)
+            cname = form['name']
+            cpassword = form['password']
+            address = form['address']
+            region = form['region']
+            if cname and address and region and cpassword:
+                dao = ClientDAO()
+                cid = dao.Insert(cname, cpassword, address, region)
+                result = self.build_client_attributes(cid, cname, cpassword, address, region)
+                return jsonify(Client= result), 201
+            else:
+                return jsonify(Error="Unexpected attributes in POST request"), 400
