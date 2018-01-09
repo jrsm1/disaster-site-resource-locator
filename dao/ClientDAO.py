@@ -62,7 +62,7 @@ class ClientDAO:
 
     def Insert(self, cname, cpassword, address, region):
         cursor = self.conn.cursor()
-        query = "insert into supplier(cname, cpassword, address, region) values (%s, %s, %s, %s) returning sid;"
+        query = "insert into client(cname, cpassword, address, region) values (%s, %s, %s, %s) returning sid;"
         cursor.execute(query, (cname, cpassword, address, region))
         sid = cursor.fetchone()[0]
         self.conn.commit()

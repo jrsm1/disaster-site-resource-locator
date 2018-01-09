@@ -38,11 +38,11 @@ class AdminDAO:
 
     def insert(self, aname, apassword):
         cursor = self.conn.cursor()
-        query = "insert into admin values (%s, %s) returning aid;"
+        query = "insert into admin(aname, apassword) values (%s, %s) returning aid;"
         cursor.execute(query, (aname, apassword,))
-        rid = cursor.fetchone()[0]
+        aid = cursor.fetchone()[0]
         self.conn.commit()
-        return rid
+        return aid
 
     def getAdminIds(self):
         cursor = self.conn.cursor()
