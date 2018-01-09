@@ -20,6 +20,15 @@ class FirstAidHandler:
         result['medconditon'] = medcondition
         return result
 
+    def build_supplieraid_dict(self, row):
+        result = {}
+        result['rid'] = row[0]
+        result['sid'] = row[1]
+        result['sname'] = row[2]
+        result['saddress'] = row[3]
+        result['sphone'] = row[4]
+        result['sregion'] = row[5]
+        return result
 
     def getAllAid(self):
 
@@ -132,4 +141,16 @@ class FirstAidHandler:
                 return jsonify(FirstAid=result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
+
+    def getFirstAidSuppliers(self):
+        dao = FirstAidDAO()
+        suppliers_list = dao.getFirstAidSuppliers()
+        if not suppliers_list:
+            return jsonify(Error = "No Suppliers found"), 404
+        else:
+            result_list = []
+            for row in suppliers_list:
+                result = self.build_supplieraid_dict(row)
+                result_list.append(result)
+        return jsonify(Suppliers = result_list)
 

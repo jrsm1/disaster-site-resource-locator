@@ -97,3 +97,12 @@ class FirstAidDAO:
         rid = cursor.fetchone()[0]
         self.conn.commit()
         return rid
+
+    def getFirstAidSuppliers(self):
+        cursor = self.conn.cursor()
+        query = "select rid, sid, sname, saddress, sphone, region from supplier natural inner join resources where rid IN (select rid from FirstAid);"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result

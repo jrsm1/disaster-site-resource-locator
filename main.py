@@ -592,6 +592,11 @@ def getAidByMedCondition(condition):
     return FirstAidHandler().getAidByMedCondition(condition)
 
 
+@app.route('/firstaid/suppliers')
+def getFirstAidSuppliers():
+    return FirstAidHandler().getFirstAidSuppliers()
+
+
 ##############################################
 #	Routes for HeavyEquipment Queries
 ##############################################
