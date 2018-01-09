@@ -87,7 +87,7 @@ class SupplierHandler:
             result_list = []
             for row in supplier_list:
                 result_list.append(row)
-            return jsonify(Suppliers=result_list)
+            return jsonify(Suppliers=supplier_list)
         else:
             return jsonify(Error="Malformed search string."), 400
 

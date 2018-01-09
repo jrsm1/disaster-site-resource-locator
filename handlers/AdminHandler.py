@@ -51,7 +51,6 @@ class AdminHandler:
                 result = {}
                 result['aname'] = row[0]
                 result_list.append(result)
-                result_list.append(result)
 
         return jsonify(Anames=result_list)
     #not used

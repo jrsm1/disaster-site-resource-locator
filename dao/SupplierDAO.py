@@ -77,8 +77,15 @@ class SupplierDAO:
 
     def getSupplierBy(self, selection):
         cursor = self.conn.cursor()
-        query = "select %s from supplier;"
-        cursor.execute(query, (selection,))
+        if selection == "sname":
+            query = "select sname from supplier;"
+        elif selection == "saddress":
+            query = "select saddress from supplier;"
+        elif selection == "sphone":
+            query = "select sphone from supplier;"
+        else:
+            query = "select region from supplier;"
+        cursor.execute(query)
         result = []
         for row in cursor:
             result.append(row)

@@ -36,16 +36,6 @@ class AdminDAO:
         return result
 
 
-    def getPurchaseByFoodId(self, rid):
-        cursor = self.conn.cursor()
-        query = "select pid, cid, sid, rid, qty, total, ccnum from purchase natural inner join food where rid = %s;"
-        cursor.execute(query, (rid,))
-        result = []
-        for row in cursor:
-            result.append(row)
-        return result
-
-
     def insert(self, aname, apassword):
         cursor = self.conn.cursor()
         query = "insert into admin values (%s, %s) returning aid;"
