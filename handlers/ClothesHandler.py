@@ -175,7 +175,7 @@ class ClothesHandler:
             piece = form['piece']
 
             if sid and qty and price and color and size and gender and piece:
-                rid = ResourceDAO().insert(sid,qty)
+                rid = ResourcesDAO().insert(sid,qty)
                 dao = ClothesDAO()
                 dao.insert(rid, price, color, size, gender, piece)
                 result = self.build_clothes_attributes(rid, price, color, size, gender, piece)
