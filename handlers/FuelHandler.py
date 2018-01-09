@@ -1,6 +1,6 @@
 from flask import jsonify
 from dao.FuelDAO import FuelDAO
-from ResourcesDAO import ResourcesDAO
+from dao.ResourcesDAO import ResourcesDAO
 
 class FuelHandler:
 

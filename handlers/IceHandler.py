@@ -1,6 +1,6 @@
 from flask import jsonify
 from dao.IceDAO import IceDAO
-from dao.ResourceDAO import ResourceDAO
+from dao.ResourcesDAO import ResourcesDAO
 
 
 class IceHandler:

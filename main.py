@@ -407,7 +407,7 @@ def getFoodByType(ftype):
     return FoodHandler().getFoodByType(ftype)
 
 
-@app.route('/purchase/expdate/<date:expdate>')
+@app.route('/purchase/expdate/<string:expdate>')
 def getFoodByExpDate(expdate):
     return FoodHandler().getFoodByExpDate(expdate)
 
@@ -493,12 +493,12 @@ def getGeneratorByBrand(brand):
     return GeneratorHandler().getGeneratorByBrand(brand)
 
 
-@app.route("/generator/fueltype/<string:fueltype")
+@app.route("/generator/fueltype/<string:fueltype>")
 def getGeneratorByFuelType(fueltype):
     return GeneratorHandler().getGeneratorByFuelType(fueltype)
 
 
-@app.route("/generator/power/<int:powerrating")
+@app.route("/generator/power/<int:powerrating>")
 def getGeneratorByPowerRating(powerrating):
     return GeneratorHandler().getGeneratorByPowerRating(powerrating)
 
@@ -532,7 +532,7 @@ def getBatteryByVoltage(voltage):
     return BatteryHandler().getBatteryByVoltage(voltage)
 
 
-@app.route("/battery/type/<string:btype")
+@app.route("/battery/type/<string:btype>")
 def getBatteryByType(btype):
     return BatteryHandler().getBatteryByType(btype)
 
@@ -566,7 +566,7 @@ def getAidByBrand(brand):
     return FirstAidHandler().getAidByBrand(brand)
 
 
-@app.route("/firstaid/type/<string:condition")
+@app.route("/firstaid/type/<string:condition>")
 def getAidByMedCondition(condition):
     return FirstAidHandler().getAidByMedCondition(condition)
 
@@ -600,12 +600,12 @@ def getEquipByMake(make):
     return HeavyEquipHandler().getEquipByMake(make)
 
 
-@app.route("/generator/fueltype/<string:condition")
+@app.route("/generator/fueltype/<string:condition>")
 def getEquipByCondition(condition):
     return HeavyEquipHandler().getEquipByCondition(condition)
 
 
-@app.route("/generator/power/<string:equipfunction")
+@app.route("/generator/power/<string:equipfunction>")
 def getEquipByFunction(equipfunction):
     return HeavyEquipHandler().getEquipByFunction(equipfunction)
 
