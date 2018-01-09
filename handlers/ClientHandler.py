@@ -64,14 +64,10 @@ class ClientHandler:
             return jsonify(Clients=result_list)
 
     def getClientsBy(self, selection):
-        if selection == "cname" or selection == "address" or selection == "cid" or selection  == "region":
+        if selection == "cname" or selection == "address" or selection == "cid" or selection == "region":
             dao = ClientDAO()
             client_list = dao.getClientBy(selection)
-            result_list = []
-            for row in client_list:
-                result = self.build_client_dict(row)
-                result_list.append(result)
-            return jsonify(Clients=result_list)
+            return jsonify(Clients=client_list)
         else:
             return jsonify(Error="Malformed search string."), 400
 

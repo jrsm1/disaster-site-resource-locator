@@ -70,8 +70,15 @@ class ClientDAO:
 
     def getClientBy(self, selection):
         cursor = self.conn.cursor()
-        query = "select %s from client;"
-        cursor.execute(query, (selection,))
+        if selection == "cname":
+            query = "select cname from client;"
+        elif selection == "address":
+            query = "select address from client;"
+        elif selection == "region":
+            query = "select region from client;"
+        elif selection == "cid":
+            query = "select cid from client;"
+        cursor.execute(query)
         result = []
         for row in cursor:
             result.append(row)

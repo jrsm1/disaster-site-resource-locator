@@ -83,8 +83,10 @@ class SupplierDAO:
             query = "select saddress from supplier;"
         elif selection == "sphone":
             query = "select sphone from supplier;"
-        else:
+        elif selection == "sregion":
             query = "select region from supplier;"
+        elif selection == "sid":
+            query = "select sid from supplier;"
         cursor.execute(query)
         result = []
         for row in cursor:
