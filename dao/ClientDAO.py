@@ -1,7 +1,7 @@
 from config.dbconfig import pg_config
 import psycopg2
 
-class SupplierDAO:
+class ClientDAO:
     def __init__(self):
 
         connection_url = "dbname=%s user=%s host=%s password=%s" % (pg_config['dbname'],
@@ -10,84 +10,77 @@ class SupplierDAO:
                                                             pg_config['passwd'])
         self.conn = psycopg2._connect(connection_url)
 
-    def getAllSuppliers(self):
+    def getAllClients(self):
         cursor = self.conn.cursor()
-        query = "select * from supplier;"
+        query = "select * from client;"
         cursor.execute(query)
         result = []
         for row in cursor:
             result.append(row)
         return result
 
-    def getSupplierByID(self, sid):
+    def getClientByID(self, cid):
         cursor = self.conn.cursor()
-        query = "select * from supplier where sid = %s;"
-        cursor.execute(query, (sid,))
+        query = "select * from client where cid = %s;"
+        cursor.execute(query, (cid,))
         result = cursor.fetchone()
         return result
 
-    def getSupplierByNameRegion(self, sname, sregion):
+    def getClientByNameRegion(self, cname, region):
         cursor = self.conn.cursor()
-        query = "select * from supplier where sname = %s and region = %s;"
-        cursor.execute(query, (sname, sregion,))
+        query = "select * from client where cname = %s and region = %s;"
+        cursor.execute(query, (cname, region,))
         result = []
         for row in cursor:
             result.append(row)
         return result
 
-    def getSupplierByName(self, sname):
+    def getClientByName(self, cname):
         cursor = self.conn.cursor()
-        query = "select * from supplier where sname = %s;"
-        cursor.execute(query, (sname,))
+        query = "select * from client where cname = %s;"
+        cursor.execute(query, (cname,))
         result = []
         for row in cursor:
             result.append(row)
         return result
 
-    def getSupplierByAddress(self, saddress):
+    def getClientByAddress(self, address):
         cursor = self.conn.cursor()
-        query = "select * from supplier where saddress = %s;"
-        cursor.execute(query, (saddress,))
+        query = "select * from client where address = %s;"
+        cursor.execute(query, (address,))
         result = cursor.fetchone()
         return result
 
-    def getSupplierByPhone(self, sphone):
+    def getClientByRegion(self, region):
         cursor = self.conn.cursor()
-        query = "select * from supplier where sphone = %s;"
-        cursor.execute(query, (sphone,))
-        result = cursor.fetchone()
-        return result
-
-    def getSupplierByRegion(self, sregion):
-        cursor = self.conn.cursor()
-        query = "select * from supplier where region = %s;"
-        cursor.execute(query, (sregion,))
+        query = "select * from client where region = %s;"
+        cursor.execute(query, (region,))
         result = []
         for row in cursor:
             result.append(row)
         return result
 
-    def Insert(self, sname, spassword, saddress, sphone, sregion):
+    def Insert(self, cname, cpassword, address, region):
         cursor = self.conn.cursor()
-        query = "insert into supplier(sname, spassword, saddress, sphone, region) values (%s, %s, %s, %s, %s) returning sid;"
-        cursor.execute(query, (sname, spassword, saddress, sphone, sregion))
+        query = "insert into supplier(cname, cpassword, address, region) values (%s, %s, %s, %s) returning sid;"
+        cursor.execute(query, (cname, cpassword, address, region))
         sid = cursor.fetchone()[0]
         self.conn.commit()
         return sid
 
-    def getSupplierBy(self, selection):
+    def getClientBy(self, selection):
         cursor = self.conn.cursor()
-        query = "select %s from supplier;"
+        query = "select %s from client;"
         cursor.execute(query, (selection,))
         result = []
         for row in cursor:
             result.append(row)
         return result
 
-    def getResourcesBySID(self, sid):
+    def getCCByCID(self, cid):
         cursor = self.conn.cursor()
-        query = "select * from Resources where sid = %s;"
-        cursor.execute(query, (sid,))
+        query = "select * from creditcard where cid = %s;"
+        cursor.execute(query, (cid,))
         result = []
         for row in cursor:
             result.append(row)
