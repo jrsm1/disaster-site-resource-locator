@@ -73,7 +73,7 @@ class ClientDAO:
         if selection == "cname":
             query = "select cname from client;"
         elif selection == "address":
-            query = "select address from client;"
+            query = "select caddress from client;"
         elif selection == "region":
             query = "select region from client;"
         elif selection == "cid":
