@@ -136,6 +136,36 @@ class WaterHandler:
             return jsonify(Water = result_list)
 
 
+    def searchWaterRequests(self, args):
+        if len(args) > 4:
+            return jsonify(Error = "Malformed search string."), 400
+        else:
+            rid = args.get("rid")
+            price = args.get("price")
+            bsize = args.get("bsize")
+            brand = args.get("brand")
+
+            dao = WaterDAO()
+            water_list = []
+            if (len(args) == 2) and price and bsize:
+                water_list = dao.getWaterRequestsByPriceAndBottleSize(price, bsize)
+            elif (len(args) == 1) and rid:
+                water_list = dao.getWaterRequestsById(rid)
+            elif (len(args) == 1) and price:
+                water_list = dao.getWaterRequestsByPrice(price)
+            elif (len(args) == 1) and bsize:
+                water_list = dao.getWaterRequestsByBottleSize(bsize)
+            elif (len(args) == 1) and brand:
+                water_list = dao.getWaterRequestsByBrand(brand)
+            else:
+                return jsonify(Error = "Malformed query string"), 400
+            result_list = []
+            for row in water_list:
+                result = self.build_water_dict(row)
+                result_list.append(result)
+            return jsonify(Water = result_list)
+
+
     def insertWater(self, form):
         if len(form) != 5:
             return jsonify(Error = "Malformed POST request"), 400

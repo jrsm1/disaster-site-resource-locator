@@ -86,6 +86,7 @@ class WaterDAO:
         self.conn.commit()
         return rid
 
+
     def getWaterSuppliers(self):
         cursor = self.conn.cursor()
         query = "select rid, sid, sname, saddress, sphone, region from supplier natural inner join resources where rid IN (select rid from water);"
@@ -94,6 +95,7 @@ class WaterDAO:
         for row in cursor:
             result.append(row)
         return result
+
 
     def getWaterSuppliersByRegion(self, region):
         cursor = self.conn.cursor()
@@ -104,3 +106,62 @@ class WaterDAO:
         for row in cursor:
             result.append(row)
         return result
+
+
+    def getWaterRequests(self):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join water order by brand;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getWaterRequestsById(self, rid):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join water where rid = %s order by brand;"
+        cursor.execute(query, (rid,))
+        result = cursor.fetchone()
+        return result
+
+
+    def getWaterRequestsByPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join water where price = %s order by brand;"
+        cursor.execute(query, (price,))
+        result = [] 
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getWaterRequestsByBottleSize(self, bsize):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join water where bottlesize = %s order by brand;"
+        cursor.execute(query, (bsize,))
+        result = []                                                                                                   
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getWaterRequestsByBrand(self, brand):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join water where brand = %s order by brand;"
+        cursor.execute(query, (brand,))
+        result = []                                                                                                   
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getWaterRequestsByPriceAndBottleSize(self, price, bsize):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join water where price = %s and bottlesize = %s order by brand;"
+        cursor.execute(query, (price, bsize,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
