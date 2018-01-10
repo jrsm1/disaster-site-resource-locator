@@ -32,6 +32,18 @@ class ToolsHandler:
         result['sregion'] = row[5]
         return result
 
+    def build_requesttools_dict(self, row):
+        result = {}
+        result['rid'] = row[0]
+        result['requestid'] = row[1]
+        result['cid'] = row[2]
+        result['qty'] = row[3]
+        result['name'] = row[4]
+        result['brand'] = row[5]
+        result['price'] = row[6]
+        return result
+
+
     def getAllTools(self):
 
         dao = ToolsDAO()
@@ -126,6 +138,36 @@ class ToolsHandler:
             return jsonify(Tools = result_list)
 
 
+    def searchToolsRequests(self, args):
+        if len(args) > 4:
+            return jsonify(Error = "Malformed search string."), 400
+        else:
+            rid = args.get("rid")
+            name = args.get("name")
+            brand = args.get("brand")
+            price = args.get("price")
+
+            dao = ToolsDAO()
+            tools_list = []
+            if (len(args) == 2) and name and brand:
+                tools_list = dao.getToolsByRequestsNameAndBrand(name, brand)
+            elif (len(args) == 1) and rid:
+                tools_list = dao.getToolsRequestsById(rid)
+            elif (len(args) == 1) and name:
+                tools_list = dao.getToolsRequestsByName(name)
+            elif (len(args) == 1) and brand:
+                tools_list = dao.getToolsRequestsByBrand(brand)
+            elif (len(args) == 1) and price:
+                tools_list = dao.getToolsRequestsByPrice(price)
+            else:
+                return jsonify(Error = "Malformed query string"), 400
+            result_list = []
+            for row in tools_list:
+                result = self.build_requesttools_dict(row)
+                result_list.append(result)
+            return jsonify(Tools = result_list)
+
+
     def insertTools(self, form):
         if len(form) != 5:
             return jsonify(Error = "Malformed POST request"), 400
@@ -168,5 +210,16 @@ class ToolsHandler:
                 result = self.build_suppliertools_dict(row)
                 result_list.append(result)
         return jsonify(Suppliers = result_list)
+
+
+    def getAllToolsRequests(self):
+
+        dao = ToolsDAO()
+        tools_list = dao.getAllToolsRequests()
+        result_list = []
+        for row in tools_list:
+            result = self.build_requesttools_dict(row)
+            result_list.append(result)
+        return jsonify(Food=result_list)
 
 

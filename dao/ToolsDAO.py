@@ -105,3 +105,61 @@ class ToolsDAO:
         for row in cursor:
             result.append(row)
         return result
+
+
+    def getAllToolsRequests(self):
+        cursor = self.conn.cursor()
+        query = "select * from tools natural inner join request order by name;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getToolsRequestsById(self, rid):
+        cursor = self.conn.cursor()
+        query = "select * from tools natural inner join request where rid = %s;"
+        cursor.execute(query, (rid,))
+        result = cursor.fetchone()
+        return result
+
+
+    def getToolsRequestsByName(self, name):
+        cursor = self.conn.cursor()
+        query = "select * from tools natural inner join request where name = %s order by name;"
+        cursor.execute(query, (name,))
+        result = [] 
+        for row in cursor:
+             result.append(row)
+        return result
+
+
+    def getToolsRequestsByBrand(self, brand):
+        cursor = self.conn.cursor()
+        query = "select * from tools natural inner join request where brand = %s order by name;"
+        cursor.execute(query, (brand,))
+        result = []                                                                                                   
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getToolsRequestsByPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from tools natural inner join request where price = %s order by name;"
+        cursor.execute(query, (price,))
+        result = []                                                                                                   
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getToolsRequestsByNameAndBrand(self, name, brand):
+        cursor = self.conn.cursor()
+        query = "select * from tools natural inner join request where name = %s and brand = %s order by name;"
+        cursor.execute(query, (name, brand,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
