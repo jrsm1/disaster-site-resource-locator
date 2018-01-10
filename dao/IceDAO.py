@@ -12,7 +12,7 @@ class IceDAO:
 
     def getAllIce(self):
         cursor = self.conn.cursor()
-        query = "select * from ice;"
+        query = "select * from ice order by bagsize;"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -85,6 +85,7 @@ class IceDAO:
             result.append(row)
         return result
 
+
     def getIceSuppliersByRegion(self, region):
         cursor = self.conn.cursor()
         query = "select rid, sid, sname, saddress, sphone, region from supplier natural inner join resources where region = %s and " \
@@ -95,3 +96,50 @@ class IceDAO:
             result.append(row)
         return result
 
+
+    def getAllIceRequests(self):
+        cursor = self.conn.cursor()
+        query = "select * from ice natural inner join request order by bagsize;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getIceRequestsById(self, rid):
+        cursor = self.conn.cursor()
+        query = "select * from ice natural inner join request where rid = %s order by bagsize;"
+        cursor.execute(query, (rid,))
+        result = cursor.fetchone()
+        return result
+
+
+    def getIceRequestsByPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from ice natural inner join request where price = %s order by bagsize;"
+        cursor.execute(query, (price,))
+        result = [] 
+        for row in cursor:
+             result.append(row)
+        return result
+
+
+    def getIceRequestsByBagSize(self, bsize):
+        cursor = self.conn.cursor()
+        query = "select * from ice natural inner join request where bagsize = %s order by bagsize;"
+        cursor.execute(query, (bsize,))
+        result = []                                                                                                   
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getIceRequestsByPriceAndBagSize(self, price, bsize):
+        cursor = self.conn.cursor()
+        query = "select * from ice natural inner join request where price = %s and bagsize = %s order by bagsize;"
+        cursor.execute(query, (price, bsize,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result

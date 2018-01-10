@@ -33,6 +33,17 @@ class WaterHandler:
         result['sregion'] = row[5]
         return result
 
+    def build_requestwater_dict(self, row):
+        result = {}
+        result['reservationid'] = row[0]
+        result['cid'] = row[1]
+        result['rid'] = row[2]
+        result['qty'] = row[3]
+        result['price'] = row[4]
+        result['bottlesize'] = row[5]
+        result['brand'] = row[6]
+        return result
+
 
     def build_water_attributes(self, rid, price, bsize, brand):
         result = {}
@@ -197,6 +208,7 @@ class WaterHandler:
                 result_list.append(result)
         return jsonify(Suppliers = result_list)
 
+
     def getWaterSuppliersByRegion(self, region):
         dao = WaterDAO()
         suppliers_list = dao.getWaterSuppliersByRegion(region)
@@ -206,6 +218,19 @@ class WaterHandler:
             result_list = []
             for row in suppliers_list:
                 result = self.build_supplierwater_dict(row)
+                result_list.append(result)
+        return jsonify(Suppliers = result_list)
+
+
+    def getWaterRequests(self):
+        dao = WaterDAO()
+        requests_list = dao.getWaterRequests()
+        if not requests_list:
+            return jsonify(Error = "No Requests found"), 404
+        else:
+            result_list = []
+            for row in requests_list:
+                result = self.build_requestwater_dict(row)
                 result_list.append(result)
         return jsonify(Suppliers = result_list)
 
