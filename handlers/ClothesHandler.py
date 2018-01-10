@@ -208,3 +208,14 @@ class ClothesHandler:
         return jsonify(Suppliers = result_list)
 
 
+    def getAllClothesRequests(self):
+
+        dao = ClothesDAO()
+        food_list = dao.getAllFoodRequests()
+        result_list = []
+        for row in food_list:
+            result = self.build_requestfood_dict(row)
+            result_list.append(result)
+        return jsonify(Food=result_list)
+
+

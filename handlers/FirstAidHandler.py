@@ -208,10 +208,10 @@ class FirstAidHandler:
 
     def getAllAidRequests(self):
 
-        dao = FoodDAO()
-        food_list = dao.getAllAidRequests()
+        dao = FirstAidDAO()
+        aid_list = dao.getAllAidRequests()
         result_list = []
-        for row in food_list:
+        for row in aid_list:
             result = self.build_requestaid_dict(row)
             result_list.append(result)
-        return jsonify(Food=result_list)
+        return jsonify(Aid=result_list)

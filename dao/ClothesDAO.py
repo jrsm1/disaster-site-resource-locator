@@ -115,3 +115,72 @@ class ClothesDAO:
             result.append(row)
         return result
 
+
+    def getAllRequestsClothes(self):
+        cursor = self.conn.cursor()
+        query = "select * from clothes order by piece;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getClothesRequestsById(self, rid):
+        cursor = self.conn.cursor()
+        query = "select * from clothes natural inner join request where rid = %s order by piece;"
+        cursor.execute(query, (rid,))
+        result = cursor.fetchone()
+        return result
+
+
+    def getClothesRequestsByPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from clothes natural inner join request where price = %s order by piece;"
+        cursor.execute(query, (price,))
+        result = [] 
+        for row in cursor:
+             result.append(row)
+        return result
+
+
+    def getClothesRequestsByColor(self, color):
+        cursor = self.conn.cursor()
+        query = "select * from clothes natural inner join request where color = %s order by piece;"
+        cursor.execute(query, (color,))
+        result = [] 
+        for row in cursor:
+             result.append(row)
+        return result
+
+
+    def getClothesRequestsBySize(self, size):
+        cursor = self.conn.cursor()
+        query = "select * from clothes natural inner join request where size = %s order by piece;"
+        cursor.execute(query, (size,))
+        result = []                                                                                                   
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getClothesRequestsByGender(self, gender):
+        cursor = self.conn.cursor()
+        query = "select * from clothes natural inner join request where gender = %s order by piece;"
+        cursor.execute(query, (gender,))
+        result = []                                                                                                   
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getClothesRequestsByPiece(self, piece):
+        cursor = self.conn.cursor()
+        query = "select * from clothes natural inner join request where piece = %s order by piece;"
+        cursor.execute(query, (piece,))
+        result = []                                                                                                   
+        for row in cursor:
+            result.append(row)
+        return result
+
+
