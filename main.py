@@ -307,6 +307,11 @@ def getIceSuppliers():
     return IceHandler().getIceSuppliers()
 
 
+@app.route('/ice/suppliers/<string:region>')
+def getIceSuppliersByRegion(region):
+    return IceHandler().getIceSuppliersByRegion(region)
+
+
 ##############################################
 #	Routes for Tools Queries
 ##############################################
@@ -509,6 +514,11 @@ def getClothesByPiece(piece):
 @app.route('/clothes/suppliers')
 def getClothesSuppliers():
     return ClothesHandler().getClothesSuppliers()
+
+
+@app.route('/clothes/suppliers/<string:region>')
+def getClothesSuppliersByRegion(region):
+    return ClothesHandler().getClothesSuppliersByRegion(region)
 
 
 ##############################################
