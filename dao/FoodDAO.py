@@ -86,6 +86,7 @@ class FoodDAO:
         self.conn.commit()
         return rid
 
+
     def getFoodSuppliers(self):
         cursor = self.conn.cursor()
         query = "select rid, sid, sname, saddress, sphone, region from supplier natural inner join resources where rid IN (select rid from food);"
@@ -101,6 +102,64 @@ class FoodDAO:
                 "rid IN (select rid from food);"
         cursor.execute(query, (region,))
         result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getFoodRequests(self):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join food order by fname;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getFoodRequestsById(self, rid):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join food where rid = %s order by fname;"
+        cursor.execute(query, (rid,))
+        result = cursor.fetchone()
+        return result
+
+
+    def getFoodRequestsByPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join food where price = %s order by fname;"
+        cursor.execute(query, (price,))
+        result = [] 
+        for row in cursor:
+             result.append(row)
+        return result
+
+
+    def getFoodRequestsByType(self, ftype):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join food where ftype = %s order by fname;"
+        cursor.execute(query, (ftype,))
+        result = []                                                                                                   
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getFoodRequestsByExpDate(self, expdate):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join food where expdate = %s order by fname;"
+        cursor.execute(query, (ftype,))
+        result = []                                                                                                   
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getFoodRequestsByName(self, fname):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join food where fname = %s order by fname;"
+        cursor.execute(query, (fname,))
+        result = []                                                                                                   
         for row in cursor:
             result.append(row)
         return result

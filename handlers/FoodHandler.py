@@ -35,6 +35,16 @@ class FoodHandler:
         result['sregion'] = row[5]
         return result
 
+    def build_requestfood_dict(self, row):
+        result = {}
+        result['requestid'] = row[0]
+        result['sid'] = row[1]
+        result['sname'] = row[2]
+        result['saddress'] = row[3]
+        result['sphone'] = row[4]
+        result['sregion'] = row[5]
+        return result
+
     def getAllFood(self):
 
         dao = FoodDAO()
