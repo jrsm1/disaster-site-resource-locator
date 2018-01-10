@@ -172,7 +172,7 @@ class WaterHandler:
                 return jsonify(Error = "Malformed query string"), 400
             result_list = []
             for row in water_list:
-                result = self.build_water_dict(row)
+                result = self.build_requestwater_dict(row)
                 result_list.append(result)
             return jsonify(Water = result_list)
 
