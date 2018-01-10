@@ -359,6 +359,11 @@ def getToolsSuppliers():
     return ToolsHandler().getToolsSuppliers()
 
 
+@app.route('/tools/suppliers/<string:region>')
+def getToolsSuppliersByRegion(region):
+    return ToolsHandler().getToolsSuppliersByRegion(region)
+
+
 
 ##############################################
 #	Routes for Fuel Queries
