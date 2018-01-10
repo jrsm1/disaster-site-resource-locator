@@ -189,3 +189,153 @@ class GeneratorDAO:
             result.append(row)
         return result
 
+    def getAllGeneratorRequests(self):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join generator order by brand;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getGeneratorRequestsById(self, rid):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join generator where rid = %s order by brand;"
+        cursor.execute(query, (rid,))
+        result = cursor.fetchone()
+        return result
+
+    def getGeneratorRequestsByPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join generator where price = %s order by brand;"
+        cursor.execute(query, (price,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getGeneratorRequestsByBrand(self, brand):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join generator where brand = %s order by brand;"
+        cursor.execute(query, (brand,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getGeneratorRequestsByPowerRating(self, powerrating):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join generator where powerrating = %s order by brand;"
+        cursor.execute(query, (powerrating,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getGeneratorRequestsByFuelType(self, fueltype):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join generator where fueltype = %s order by brand;"
+        cursor.execute(query, (fueltype,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getGeneratorRequestsByPriceAndBrand(self, price, brand):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join generator where price = %s and brand = %s order by brand;"
+        cursor.execute(query, (price, brand,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getGeneratorRequestsByFuelTypeAndBrand(self, fueltype, brand):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join generator where fueltype = %s and brand = %s order by brand;"
+        cursor.execute(query, (fueltype, brand,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getGeneratorRequestsByPriceAndFuelType(self, price, fueltype):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join generator where price = %s and fueltype = %s order by brand;"
+        cursor.execute(query, (price, fueltype,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getGeneratorRequestsByPriceAndPowerRating(self, price, powerrating):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join generator where price = %s and powerrating = %s order by brand;"
+        cursor.execute(query, (price, powerrating,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getGeneratorRequestsByPowerRatingAndFuelType(self, powerrating, fueltype):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join generator where powerrating = %s and fueltype = %s order by brand;"
+        cursor.execute(query, (powerrating, fueltype,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getGeneratorRequestsByBrandAndPowerRating(self, brand, powerrating):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join generator where brand = %s and powerrating = %s order by brand;"
+        cursor.execute(query, (brand, powerrating,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getGeneratorRequestsByPriceBrandAndFuelType(self, price, brand, fueltype):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join generator where price = %s and brand = %s and fueltype = %s order by brand;"
+        cursor.execute(query, (price, brand, fueltype,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getGeneratorRequestsByPriceBrandAndPowerRating(self, price, brand, powerrating):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join generator where price = %s and brand = %s and powerrating = %s order by brand;"
+        cursor.execute(query, (price, brand, powerrating,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getGeneratorRequestsByPricePowerRatingAndFuelType(self, price, powerrating, fueltype):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join generator where price = %s and powerrating = %s and fueltype = %s order by brand;"
+        cursor.execute(query, (price, powerrating, fueltype,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getGeneratorRequestsByPowerRatingBrandAndFuelType(self, powerrating, brand, fueltype):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join generator where powerrating = %s and brand = %s and fueltype = %s order by brand;"
+        cursor.execute(query, (powerrating, brand, fueltype,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getGeneratorRequestsByPriceBrandFuelTypeAndPowerRating(self, price, brand, fueltype, powerrating):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join generator where price = %s and brand = %s and fueltype = %s and powerrating = %s order by brand;"
+        cursor.execute(query, (price, brand, fueltype, powerrating))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result

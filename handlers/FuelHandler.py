@@ -26,13 +26,26 @@ class FuelHandler:
     def build_supplierfuel_dict(self, row):
         result = {}
         result['rid'] = row[0]
-        result['sid'] = row[1]
-        result['sname'] = row[2]
-        result['saddress'] = row[3]
-        result['sphone'] = row[4]
-        result['sregion'] = row[5]
+        result['requestid'] = row[1]
+        result['cid'] = row[2]
+        result['qty'] = row[3]
+        result['ftype'] = row[4]
+        result['price'] = row[5]
+        result['containersize'] = row[6]
+        result['brand'] = row[7]
         return result
 
+    def build_requestfuel_dict(self, row):
+        result = {}
+        result['rid'] = row[0]
+        result['requestid'] = row[1]
+        result['cid'] = row[2]
+        result['qty'] = row[3]
+        result['price'] = row[4]
+        result['ftype'] = row[5]
+        result['expdate'] = row[6]
+        result['name'] = row[7]
+        return result
 
     def getAllFuel(self):
 
@@ -186,4 +199,44 @@ class FuelHandler:
                 result = self.build_supplierfuel_dict(row)
                 result_list.append(result)
         return jsonify(Suppliers = result_list)
+
+    def getAllFuelRequests(self):
+
+        dao = FuelDAO()
+        food_list = dao.getAllFuelRequests()
+        result_list = []
+        for row in food_list:
+            result = self.build_requestfuel_dict(row)
+            result_list.append(result)
+        return jsonify(Food=result_list)
+
+    def searchFuelRequests(self, args):
+        if len(args) > 4:
+            return jsonify(Error = "Malformed search string."), 400
+        else:
+            rid = args.get("rid")
+            ftype = args.get("ftype")
+            price = args.get("price")
+            csize = args.get("csize")
+            brand = args.get("brand")
+
+            dao = FuelDAO()
+            fuel_list = []
+            if (len(args) == 1) and rid:
+                fuel_list = dao.getFuelRequestsById(rid)
+            elif (len(args) == 1) and ftype:
+                fuel_list = dao.getFuelRequestsByType(ftype)
+            elif (len(args) == 1) and price:
+                fuel_list = dao.getFuelRequestsByPrice(price)
+            elif (len(args) == 1) and csize:
+                fuel_list = dao.getFuelRequestsByContainerSize(csize)
+            elif (len(args) == 1) and brand:
+                fuel_list = dao.getFuelRequestsByBrand(brand)
+            else:
+                return jsonify(Error = "Malformed query string"), 400
+            result_list = []
+            for row in fuel_list:
+                result = self.build_fuel_dict(row)
+                result_list.append(result)
+            return jsonify(Fuel = result_list)
 

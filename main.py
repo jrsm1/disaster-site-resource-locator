@@ -323,7 +323,7 @@ def getIceSuppliersByRegion(region):
 @app.route('/ice/requests')
 def getIceRequests():
     if not request.args:
-        return IceHandler().getIceRequests()
+        return IceHandler().getAllIceRequests()
     else:
         return IceHandler().searchIceRequests(request.args)
 
@@ -442,7 +442,7 @@ def getFuelSuppliersByRegion(region):
 @app.route('/fuel/requests')
 def getFuelRequests():
     if not request.args:
-        return FuelHandler().getFuelRequests()
+        return FuelHandler().getAllFuelRequests()
     else:
         return FuelHandler().searchFuelRequests(request.args)
 
@@ -502,7 +502,7 @@ def getFoodByExpDate(expdate):
 @app.route('/food/requests')
 def getFoodRequests():
     if not request.args:
-        return FoodHandler().getFoodRequests()
+        return FoodHandler().getAllFoodRequests()
     else:
         return FoodHandler().searchFoodRequests(request.args)
 
@@ -572,7 +572,7 @@ def getClothesSuppliersByRegion(region):
 @app.route('/clothes/requests')
 def getClothesRequests():
     if not request.args:
-        return ClothesHandler().getClothesRequests()
+        return ClothesHandler().getAllClothesRequests()
     else:
         return ClothesHandler().searchClothesRequests(request.args)
 
@@ -681,7 +681,7 @@ def getBatterySuppliersByRegion(region):
 @app.route('/battery/requests')
 def getBatteryRequests():
     if not request.args:
-        return BatteryHandler().getBatteryRequests()
+        return BatteryHandler().getAllBatteryRequests()
     else:
         return BatteryHandler().searchBatteryRequests(request.args)
 
@@ -728,6 +728,14 @@ def getFirstAidSuppliers():
 @app.route('/firstaid/suppliers/<string:region>')
 def getAidSuppliersByRegion(region):
     return FirstAidHandler().getAidSuppliersByRegion(region)
+
+
+@app.route('/firstaid/requests')
+def getAidRequests():
+    if not request.args:
+        return FirstAidHandler().getAllAidRequests()
+    else:
+        return FirstAidHandler().searchAidRequests(request.args)
 
 ##############################################
 #	Routes for HeavyEquipment Queries
@@ -778,6 +786,14 @@ def getEquipSuppliersByRegion(region):
     return HeavyEquipHandler().getEquipSuppliersByRegion(region)
 
 
+@app.route('/heavyequip/requests')
+def getEquipRequests():
+    if not request.args:
+        return HeavyEquipHandler().getAllHeavyEquipRequests()
+    else:
+        return HeavyEquipHandler().searchHeavyEquipRequests(request.args)
+
+
 ##############################################
 #	Routes for Request Queries
 ##############################################
@@ -814,8 +830,7 @@ def getReserveById(reqid):
 ################################################
 #	Routes for Credit Card
 ###############################################
-
-
+'''
 @app.route('/creditcard', methods=['GET', 'POST'])
 def getAllCards():
     if request.method == 'POST':
@@ -848,6 +863,6 @@ def getCardByLimit(limit):
 @app.route('/creditcard/cvv/<string:cvv>')
 def getCardByCardVerificationValue(cvv):
     return CreditCardHandler().getCardByCardVerificationValue(cvv)
-
+'''
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

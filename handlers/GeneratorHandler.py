@@ -198,3 +198,64 @@ class GeneratorHandler:
                 result_list.append(result)
         return jsonify(Suppliers = result_list)
 
+    def getGeneratorRequests(self):
+        dao = GeneratorDAO()
+        generator_list = dao.getAllGeneratorRequests()
+        result_list = []
+        for row in generator_list:
+            result = self.build_requestgenerator_dict(row)
+            result_list.append(result)
+        return jsonify(Food=result_list)
+
+    def searchGeneratorsRequests(self, args):
+        if len(args) > 5:
+            return jsonify(Error = "Malformed search string."), 400
+        else:
+            rid = args.get("rid")
+            price = args.get("price")
+            brand = args.get("brand")
+            fueltype = args.get("fueltype")
+            powerrating = args.get("powerrating")
+
+            dao = GeneratorDAO()
+            generator_list = []
+            if (len(args) == 4) and price and brand and fueltype and powerrating:
+                generator_list = dao.getGeneratorRequestsByPriceBrandFuelTypeAndPowerRating(price, brand, fueltype, powerrating)
+            elif (len(args) == 3) and price and brand and fueltype:
+                generator_list = dao.getGeneratorRequestsByPriceBrandAndFuelType(price, brand, fueltype)
+            elif (len(args) == 3) and price and brand and powerrating:
+                generator_list = dao.getGeneratorRequestsByPriceBrandAndPowerRating(price, brand, powerrating)
+            elif (len(args) == 3) and price and powerrating and fueltype:
+                generator_list = dao.getGeneratorRequestsByPricePowerRatingAndFuelType(price, powerrating, fueltype)
+            elif (len(args) == 3) and powerrating and brand and fueltype:
+                generator_list = dao.getGeneratorRequestsByPowerRatingBrandAndFuelType(powerrating, brand, fueltype)
+            elif (len(args) == 2) and price and brand:
+                generator_list = dao.getGeneratorRequestsByPriceAndBrand(price, brand)
+            elif (len(args) == 2) and fueltype and brand:
+                generator_list = dao.getGeneratorRequestsByFuelTypeAndBrand(fueltype, brand)
+            elif (len(args) == 2) and price and fueltype:
+                generator_list = dao.getGeneratorRequestsByPriceAndFuelType(price, fueltype)
+            elif (len(args) == 2) and price and powerrating:
+                generator_list = dao.getGeneratorRequestsByPriceAndPowerRating(price, powerrating)
+            elif (len(args) == 2) and powerrating and fueltype:
+                generator_list = dao.getGeneratorRequestsByPowerRatingAndFuelType(powerrating, fueltype)
+            elif (len(args) == 2) and brand and powerrating:
+                generator_list = dao.getGeneratorRequestsByBrandAndPowerRating(brand, powerrating)
+            elif (len(args) == 1) and rid:
+                generator_list = dao.getGeneratorRequestsById(rid)
+            elif (len(args) == 1) and price:
+                generator_list = dao.getGeneratorRequestsByPrice(price)
+            elif (len(args) == 1) and brand:
+                generator_list = dao.getGeneratorRequestsByBrand(brand)
+            elif (len(args) == 1) and fueltype:
+                generator_list = dao.getGeneratorRequestsByFuelType(fueltype)
+            elif (len(args) == 1) and powerrating:
+                generator_list = dao.getGeneratorRequestsByPowerRating(powerrating)
+            else:
+                return jsonify(Error = "Malformed query string"), 400
+            result_list = []
+            for row in generator_list:
+                result = self.build_generator_dict(row)
+                result_list.append(result)
+            return jsonify(Generator=result_list)
+

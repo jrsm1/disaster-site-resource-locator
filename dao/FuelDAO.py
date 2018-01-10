@@ -64,7 +64,7 @@ class FuelDAO:
         cursor.execute(query, (brand,))
         result = [] 
         for row in cursor:
-             result.append(row)
+            result.append(row)
         return result
 
 
@@ -77,10 +77,10 @@ class FuelDAO:
             result.append(row)
         return result
 
-    def insert(self, rid, ftype, price, csize):
+    def insert(self, rid, ftype, price, csize, brand):
         cursor = self.conn.cursor()
-        query = "insert into fuel values (%s, %s, %s, %s) returning rid;"
-        cursor.execute(query, (rid, ftype, price, csize,))
+        query = "insert into fuel values (%s, %s, %s, %s, brand) returning rid;"
+        cursor.execute(query, (rid, ftype, price, csize, brand,))
         rid = cursor.fetchone()[0]
         self.conn.commit()
         return rid
@@ -104,3 +104,52 @@ class FuelDAO:
             result.append(row)
         return result
 
+    def getAllFuelRequests(self):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join fuel order by brand;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getFuelRequestsById(self, rid):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join fuel where rid = %s order by brand;"
+        cursor.execute(query, (rid,))
+        result = cursor.fetchone()
+        return result
+
+    def getFuelRequestsByType(self, ftype):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join fuel where rid = %s order by brand;"
+        cursor.execute(query, (ftype,))
+        result = cursor.fetchone()
+        return result
+
+    def getFuelRequestsByPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join fuel where price = %s order by brand;"
+        cursor.execute(query, (price,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getFuelRequestsByContainerSize(self, csize):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join fuel where containersize = %s order by brand;"
+        cursor.execute(query, (csize,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getFuelRequestsByBrand(self, brand):
+        cursor = self.conn.cursor()
+        query = "select * from request natural inner join fuel where brand = %s order by brand;"
+        cursor.execute(query, (brand,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
