@@ -626,12 +626,12 @@ def getGeneratorSuppliersByRegion(region):
     return GeneratorHandler().getGeneratorSuppliersByRegion(region)
 
 
-@app.route('/clothes/requests')
-def getClothesRequests():
+@app.route('/generator/requests')
+def getGeneratorRequests():
     if not request.args:
-        return ClothesHandler().getClothesRequests()
+        return GeneratorHandler().getGeneratorRequests()
     else:
-        return ClothesHandler().searchClothesRequests(request.args)
+        return GeneratorHandler().searchGeneratorsRequests(request.args)
 
 
 ##############################################
