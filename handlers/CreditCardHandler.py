@@ -12,7 +12,7 @@ class CreditCardHandler:
         result['cvv'] = row[4]
         return result
 
-    def build_card_atttributes(selfself, cid, ccnum, expdate, limit, cvv):
+    def build_card_atttributes(self, cid, ccnum, expdate, limit, cvv):
         result = {}
         result['cid'] = cid
         result['ccnum'] = ccnum

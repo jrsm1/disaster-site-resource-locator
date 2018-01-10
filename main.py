@@ -256,6 +256,14 @@ def getWaterSuppliers():
     return WaterHandler().getWaterSuppliers()
 
 
+@app.route('/water/requests')
+def getWaterRequests():
+    if not request.args:
+        return WaterHandler().getWaterRequests()
+    else:
+        return WaterHandler().searchWaterRequests(request.args)
+
+
 @app.route('/water/suppliers/<string:region>')
 def getWaterSuppliersByRegion(region):
     return WaterHandler().getWaterSuppliersByRegion(region)
@@ -312,6 +320,14 @@ def getIceSuppliersByRegion(region):
     return IceHandler().getIceSuppliersByRegion(region)
 
 
+@app.route('/ice/requests')
+def getIceRequests():
+    if not request.args:
+        return IceHandler().getIceRequests()
+    else:
+        return IceHandler().searchIceRequests(request.args)
+
+
 ##############################################
 #	Routes for Tools Queries
 ##############################################
@@ -364,6 +380,12 @@ def getToolsSuppliersByRegion(region):
     return ToolsHandler().getToolsSuppliersByRegion(region)
 
 
+@app.route('/tools/requests')
+def getToolsRequests():
+    if not request.args:
+        return ToolsHandler().getToolsRequests()
+    else:
+        return ToolsHandler().searchToolsRequests(request.args)
 
 ##############################################
 #	Routes for Fuel Queries
@@ -417,6 +439,14 @@ def getFuelSuppliersByRegion(region):
     return FuelHandler().getFuelSuppliersByRegion(region)
 
 
+@app.route('/fuel/requests')
+def getFuelRequests():
+    if not request.args:
+        return FuelHandler().getFuelRequests()
+    else:
+        return FuelHandler().searchFuelRequests(request.args)
+
+
 ##############################################
 #	Routes for Food Queries
 ##############################################
@@ -467,6 +497,14 @@ def getFoodSuppliersByRegion(region):
 @app.route('/purchase/expdate/<string:expdate>')
 def getFoodByExpDate(expdate):
     return FoodHandler().getFoodByExpDate(expdate)
+
+
+@app.route('/food/requests')
+def getFoodRequests():
+    if not request.args:
+        return FoodHandler().getFoodRequests()
+    else:
+        return FoodHandler().searchFoodRequests(request.args)
 
 
 ##############################################
@@ -531,6 +569,14 @@ def getClothesSuppliersByRegion(region):
     return ClothesHandler().getClothesSuppliersByRegion(region)
 
 
+@app.route('/clothes/requests')
+def getClothesRequests():
+    if not request.args:
+        return ClothesHandler().getClothesRequests()
+    else:
+        return ClothesHandler().searchClothesRequests(request.args)
+
+
 ##############################################
 #	Routes for Generator Queries
 ##############################################
@@ -580,6 +626,14 @@ def getGeneratorSuppliersByRegion(region):
     return GeneratorHandler().getGeneratorSuppliersByRegion(region)
 
 
+@app.route('/clothes/requests')
+def getClothesRequests():
+    if not request.args:
+        return ClothesHandler().getClothesRequests()
+    else:
+        return ClothesHandler().searchClothesRequests(request.args)
+
+
 ##############################################
 #	Routes for Battery Queries
 ##############################################
@@ -622,6 +676,14 @@ def getBatterySuppliers():
 @app.route('/battery/suppliers/<string:region>')
 def getBatterySuppliersByRegion(region):
     return BatteryHandler().getBatterySuppliersByRegion(region)
+
+
+@app.route('/battery/requests')
+def getBatteryRequests():
+    if not request.args:
+        return BatteryHandler().getBatteryRequests()
+    else:
+        return BatteryHandler().searchBatteryRequests(request.args)
 
 
 ##############################################
@@ -749,7 +811,43 @@ def getReserveAll():
 @app.route("/reserve/<int:resid>")
 def getReserveById(reqid):
     return ReservationHandler().getReservationById(reqid)
+################################################
+#	Routes for Credit Card
+###############################################
 
+
+@app.route('/creditcard', methods=['GET', 'POST'])
+def getAllCards():
+    if request.method == 'POST':
+        return CreditCardHandler().insertCreditCard(request.form)
+    else:
+        if not request.args:
+            return CreditCardHandler().getAllCreditCards()
+        else:
+            return CreditCardHandler().searchCards(request.args)
+
+
+@app.route('/creditcard/cid/<int:cid>')
+def getCardByClientId(cid):
+    return CreditCardHandler().getCreditCardByClientID(cid)
+
+
+@app.route('/creditcard/ccnum/<string:ccnum>')
+def getCardByCardNumber(ccnum):
+    return CreditCardHandler().getCardByCardNumber(ccnum)
+
+
+@app.route('/creditcard/expdate/<date:expdate>')
+def getCardByExpirationDate(expdate):
+    return CreditCardHandler().getCreditCardByExpirationDate(expdate)
+
+@app.route('/creditcard/limit/<float:limit>')
+def getCardByLimit(limit):
+    return CreditCardHandler().getCardByCardLimit(limit)
+
+@app.route('/creditcard/cvv/<string:cvv>')
+def getCardByCardVerificationValue(cvv):
+    return CreditCardHandler().getCardByCardVerificationValue(cvv)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
