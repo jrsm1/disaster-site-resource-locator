@@ -711,6 +711,11 @@ def getEquipSuppliers():
     return HeavyEquipHandler().getEquipSuppliers()
 
 
+@app.route('/heavyequip/suppliers/<string:region>')
+def getEquipSuppliersByRegion(region):
+    return HeavyEquipHandler().getEquipSuppliersByRegion(region)
+
+
 ##############################################
 #	Routes for Request Queries
 ##############################################
