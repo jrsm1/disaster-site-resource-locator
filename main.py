@@ -307,6 +307,11 @@ def getIceSuppliers():
     return IceHandler().getIceSuppliers()
 
 
+@app.route('/ice/suppliers/<string:region>')
+def getIceSuppliersByRegion(region):
+    return IceHandler().getIceSuppliersByRegion(region)
+
+
 ##############################################
 #	Routes for Tools Queries
 ##############################################

@@ -136,3 +136,16 @@ class IceHandler:
                 result = self.build_supplierice_dict(row)
                 result_list.append(result)
         return jsonify(Suppliers = result_list)
+
+    def getIceSuppliersByRegion(self, region):
+        dao = IceDAO()
+        suppliers_list = dao.getIceSuppliersByRegion(region)
+        if not suppliers_list:
+            return jsonify(Error = "No Suppliers found"), 404
+        else:
+            result_list = []
+            for row in suppliers_list:
+                result = self.build_supplierice_dict(row)
+                result_list.append(result)
+        return jsonify(Suppliers = result_list)
+
