@@ -195,3 +195,16 @@ class ClothesHandler:
                 result_list.append(result)
         return jsonify(Suppliers = result_list)
 
+    def getClothesSuppliersByRegion(self, region):
+        dao = ClothesDAO()
+        suppliers_list = dao.getClothesSuppliersByRegion(region)
+        if not suppliers_list:
+            return jsonify(Error = "No Suppliers found"), 404
+        else:
+            result_list = []
+            for row in suppliers_list:
+                result = self.build_supplierclothes_dict(row)
+                result_list.append(result)
+        return jsonify(Suppliers = result_list)
+
+

@@ -516,6 +516,11 @@ def getClothesSuppliers():
     return ClothesHandler().getClothesSuppliers()
 
 
+@app.route('/clothes/suppliers/<string:region>')
+def getClothesSuppliersByRegion(region):
+    return ClothesHandler().getClothesSuppliersByRegion(region)
+
+
 ##############################################
 #	Routes for Generator Queries
 ##############################################
