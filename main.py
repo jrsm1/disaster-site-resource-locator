@@ -789,9 +789,9 @@ def getEquipSuppliersByRegion(region):
 @app.route('/heavyequip/requests')
 def getEquipRequests():
     if not request.args:
-        return HeavyEquipHandler().getAllHeavyEquipRequests()
+        return HeavyEquipHandler().getAllEquipRequests()
     else:
-        return HeavyEquipHandler().searchHeavyEquipRequests(request.args)
+        return HeavyEquipHandler().searchEquipRequests(request.args)
 
 
 ##############################################
