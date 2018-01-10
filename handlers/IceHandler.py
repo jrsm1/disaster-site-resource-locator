@@ -32,7 +32,7 @@ class IceHandler:
 
     def build_requestice_dict(self, row):
         result = {}
-        result['reservationid'] = row[0]
+        result['requestid'] = row[0]
         result['cid'] = row[1]
         result['rid'] = row[2]
         result['qty'] = row[3]
