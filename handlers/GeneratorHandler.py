@@ -32,6 +32,17 @@ class GeneratorHandler:
         result['sregion'] = row[5]
         return result
 
+    def build_requestgenerator_dict(self, row):
+        result = {}
+        result['rid'] = row[0]
+        result['requestid'] = row[1]
+        result['cid'] = row[2]
+        result['qty'] = row[3]
+        result['price'] = row[4]
+        result['brand'] = row[5]
+        result['fueltype'] = row[6]
+        result['powerrating'] = row[7]
+        return result
     def getAllGenerator(self):
 
         dao = GeneratorDAO()

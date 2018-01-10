@@ -208,7 +208,7 @@ class FuelHandler:
         for row in food_list:
             result = self.build_requestfuel_dict(row)
             result_list.append(result)
-        return jsonify(Food=result_list)
+        return jsonify(Fuel=result_list)
 
     def searchFuelRequests(self, args):
         if len(args) > 4:
