@@ -154,3 +154,14 @@ class FirstAidHandler:
                 result_list.append(result)
         return jsonify(Suppliers = result_list)
 
+    def getAidSuppliersByRegion(self, region):
+        dao = FirstAidDAO()
+        suppliers_list = dao.getAidSuppliersByRegion(region)
+        if not suppliers_list:
+            return jsonify(Error="No Suppliers found"), 404
+        else:
+            result_list = []
+            for row in suppliers_list:
+                result = self.build_supplieraid_dict(row)
+                result_list.append(result)
+        return jsonify(Suppliers=result_list)

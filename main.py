@@ -628,6 +628,10 @@ def getFirstAidSuppliers():
     return FirstAidHandler().getFirstAidSuppliers()
 
 
+@app.route('/water/suppliers/<string:region>')
+def getAidSuppliersByRegion(region):
+    return FirstAidHandler().getAidSuppliersByRegion(region)
+
 ##############################################
 #	Routes for HeavyEquipment Queries
 ##############################################
