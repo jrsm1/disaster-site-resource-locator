@@ -13,7 +13,7 @@ class HeavyEquipDAO:
 
     def getAllEquip(self):
         cursor = self.conn.cursor()
-        query = "select * from HeavyEquip;"
+        query = "select * from HeavyEquip order by function;"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -22,14 +22,14 @@ class HeavyEquipDAO:
 
     def getEquipById(self, rid):
         cursor = self.conn.cursor()
-        query = "select * from HeavyEquip where rid = %s;"
+        query = "select * from HeavyEquip where rid = %s order by function;"
         cursor.execute(query, (rid,))
         result = cursor.fetchone()
         return result
 
     def getEquipByPrice(self, price):
         cursor = self.conn.cursor()
-        query = "select * from HeavyEquip where price = %s;"
+        query = "select * from HeavyEquip where price = %s order by function;"
         cursor.execute(query, (price,))
         result = []
         for row in cursor:
@@ -38,7 +38,7 @@ class HeavyEquipDAO:
 
     def getEquipByMake(self, make):
         cursor = self.conn.cursor()
-        query = "select * from HeavyEquip where make = %s;"
+        query = "select * from HeavyEquip where make = %s order by function;"
         cursor.execute(query, (make,))
         result = []
         for row in cursor:
@@ -47,7 +47,7 @@ class HeavyEquipDAO:
 
     def getEquipByCondition(self, condition):
         cursor = self.conn.cursor()
-        query = "select * from HeavyEquip where condition = %s;"
+        query = "select * from HeavyEquip where condition = %s order by function;"
         cursor.execute(query, (condition,))
         result = []
         for row in cursor:
@@ -56,7 +56,7 @@ class HeavyEquipDAO:
 
     def getEquipByFunction(self, equipfunction):
         cursor = self.conn.cursor()
-        query = "select * from HeavyEquip where function = %s;"
+        query = "select * from HeavyEquip where function = %s order by function;"
         cursor.execute(query, (equipfunction,))
         result = []
         for row in cursor:
@@ -65,7 +65,7 @@ class HeavyEquipDAO:
 
     def getEquipByPriceAndMake(self, price, make):
         cursor = self.conn.cursor()
-        query = "select * from HeavyEquip where price = %s and make= %s;"
+        query = "select * from HeavyEquip where price = %s and make= %s order by function;"
         cursor.execute(query, (price, make,))
         result = []
         for row in cursor:
@@ -74,7 +74,7 @@ class HeavyEquipDAO:
 
     def getEquipByConditionAndMake(self, condition, make):
         cursor = self.conn.cursor()
-        query = "select * from HeavyEquip where condition = %s and make = %s;"
+        query = "select * from HeavyEquip where condition = %s and make = %s order by function;"
         cursor.execute(query, (condition, make,))
         result = []
         for row in cursor:
@@ -83,7 +83,7 @@ class HeavyEquipDAO:
 
     def getEquipByPriceAndCondition(self, price, condition):
         cursor = self.conn.cursor()
-        query = "select * from HeavyEquip where price = %s and condition= %s;"
+        query = "select * from HeavyEquip where price = %s and condition= %s order by function;"
         cursor.execute(query, (price, condition,))
         result = []
         for row in cursor:
@@ -92,7 +92,7 @@ class HeavyEquipDAO:
 
     def getEquipByPriceAndFunction(self, price, equipfunction):
         cursor = self.conn.cursor()
-        query = "select * from HeavyEquip where price = %s and function = %s;"
+        query = "select * from HeavyEquip where price = %s and function = %s order by function;"
         cursor.execute(query, (price, equipfunction,))
         result = []
         for row in cursor:
@@ -101,7 +101,7 @@ class HeavyEquipDAO:
 
     def getEquipByFunctionAndCondition(self, equipfunction, condition):
         cursor = self.conn.cursor()
-        query = "select * from HeavyEquip where function = %s and condition = %s;"
+        query = "select * from HeavyEquip where function = %s and condition = %s order by function;"
         cursor.execute(query, (equipfunction, condition,))
         result = []
         for row in cursor:
@@ -110,7 +110,7 @@ class HeavyEquipDAO:
 
     def getEquipByMakeAndFunction(self, make, equipfunction):
         cursor = self.conn.cursor()
-        query = "select * from HeavyEquip where make = %s and function = %s;"
+        query = "select * from HeavyEquip where make = %s and function = %s order by function;"
         cursor.execute(query, (make, equipfunction,))
         result = []
         for row in cursor:
@@ -119,7 +119,7 @@ class HeavyEquipDAO:
 
     def getEquipByPriceMakeAndCondition(self, price, make, condition):
         cursor = self.conn.cursor()
-        query = "select * from HeavyEquip where price = %s and make = %s and condition= %s;"
+        query = "select * from HeavyEquip where price = %s and make = %s and condition= %s order by function;"
         cursor.execute(query, (price, make, condition,))
         result = []
         for row in cursor:
@@ -128,7 +128,7 @@ class HeavyEquipDAO:
 
     def getEquipByPriceMakeAndFunction(self, price, brand, equipfunction):
         cursor = self.conn.cursor()
-        query = "select * from HeavyEquip where price = %s and make = %s and function = %s;"
+        query = "select * from HeavyEquip where price = %s and make = %s and function = %s order by function;"
         cursor.execute(query, (price, brand, equipfunction,))
         result = []
         for row in cursor:
@@ -137,7 +137,7 @@ class HeavyEquipDAO:
 
     def getEquipByPriceFunctionAndCondition(self, price, equipfunction, condition):
         cursor = self.conn.cursor()
-        query = "select * from HeavyEquip where price = %s and function= %s and condition = %s;"
+        query = "select * from HeavyEquip where price = %s and function= %s and condition = %s order by function;"
         cursor.execute(query, (price, equipfunction, condition,))
         result = []
         for row in cursor:
@@ -146,7 +146,7 @@ class HeavyEquipDAO:
 
     def getEquipByFunctionMakeAndCondition(self, equipfunction, make, condition):
         cursor = self.conn.cursor()
-        query = "select * from HeavyEquip where function = %s and make = %s and condition = %s;"
+        query = "select * from HeavyEquip where function = %s and make = %s and condition = %s order by function;"
         cursor.execute(query, (equipfunction, make, condition,))
         result = []
         for row in cursor:
@@ -155,7 +155,7 @@ class HeavyEquipDAO:
 
     def getEquipByPriceMakeConditionAndFunction(self, price, make, condition, equipfunction):
         cursor = self.conn.cursor()
-        query = "select * from HeavyEquip where price = %s and make = %s and condition = %s and function = %s;"
+        query = "select * from HeavyEquip where price = %s and make = %s and condition = %s and function = %s order by function;"
         cursor.execute(query, (price, make, condition, equipfunction))
         result = []
         for row in cursor:
