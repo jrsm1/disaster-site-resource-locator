@@ -13,7 +13,7 @@ class BatteryDAO:
 
     def getAllBattery(self):
         cursor = self.conn.cursor()
-        query = "select * from battery;"
+        query = "select * from battery order by btype;"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -23,7 +23,7 @@ class BatteryDAO:
 
     def getBatteryById(self, rid):
         cursor = self.conn.cursor()
-        query = "select * from battery where rid = %s;"
+        query = "select * from battery where rid = %s order by btype;"
         cursor.execute(query, (rid,))
         result = cursor.fetchone()
         return result
@@ -31,7 +31,7 @@ class BatteryDAO:
 
     def getBatteryByPrice(self, price):
         cursor = self.conn.cursor()
-        query = "select * from battery where price = %s;"
+        query = "select * from battery where price = %s order by btype;"
         cursor.execute(query, (price,))
         result = []
         for row in cursor:
@@ -41,7 +41,7 @@ class BatteryDAO:
 
     def getBatteryByVoltage(self, voltage):
         cursor = self.conn.cursor()
-        query = "select * from battery where voltage = %s;"
+        query = "select * from battery where voltage = %s order by btype;"
         cursor.execute(query, (voltage,))
         result = []
         for row in cursor:
@@ -50,7 +50,7 @@ class BatteryDAO:
 
     def getBatteryByType(self, btype):
         cursor = self.conn.cursor()
-        query = "select * from battery where btype = %s;"
+        query = "select * from battery where btype = %s order by btype;"
         cursor.execute(query, (btype,))
         result = []
         for row in cursor:
@@ -59,7 +59,7 @@ class BatteryDAO:
 
     def getBatteryByPriceAndVoltage(self, price, voltage):
         cursor = self.conn.cursor()
-        query = "select * from battery where price = %s and voltage = %s;"
+        query = "select * from battery where price = %s and voltage = %s order by btype;"
         cursor.execute(query, (price, voltage,))
         result = []
         for row in cursor:
@@ -68,7 +68,7 @@ class BatteryDAO:
 
     def getBatteryByTypeAndVoltage(self, btype, voltage):
         cursor = self.conn.cursor()
-        query = "select * from battery where btype = %s and voltage = %s;"
+        query = "select * from battery where btype = %s and voltage = %s order by btype;"
         cursor.execute(query, (btype, voltage,))
         result = []
         for row in cursor:
@@ -77,7 +77,7 @@ class BatteryDAO:
 
     def getBatteryByPriceAndType(self, price, btype):
         cursor = self.conn.cursor()
-        query = "select * from battery where price = %s and btype = %s;"
+        query = "select * from battery where price = %s and btype = %s order by btype;"
         cursor.execute(query, (price, btype,))
         result = []
         for row in cursor:
@@ -86,7 +86,7 @@ class BatteryDAO:
 
     def getBatteryByPriceVoltageAndType(self, price, voltage, btype):
         cursor = self.conn.cursor()
-        query = "select * from battery where price = %s and voltage = %s and btype = %s;"
+        query = "select * from battery where price = %s and voltage = %s and btype = %s order by btype;"
         cursor.execute(query, (price, voltage, btype,))
         result = []
         for row in cursor:

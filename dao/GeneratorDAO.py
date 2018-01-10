@@ -13,7 +13,7 @@ class GeneratorDAO:
 
     def getAllGenerator(self):
         cursor = self.conn.cursor()
-        query = "select * from generator;"
+        query = "select * from generator order by brand;"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -22,14 +22,14 @@ class GeneratorDAO:
 
     def getGeneratorById(self, rid):
         cursor = self.conn.cursor()
-        query = "select * from generator where rid = %s;"
+        query = "select * from generator where rid = %s order by brand;"
         cursor.execute(query, (rid,))
         result = cursor.fetchone()
         return result
 
     def getGeneratorByPrice(self, price):
         cursor = self.conn.cursor()
-        query = "select * from generator where price = %s;"
+        query = "select * from generator where price = %s order by brand;"
         cursor.execute(query, (price,))
         result = []
         for row in cursor:
@@ -38,7 +38,7 @@ class GeneratorDAO:
 
     def getGeneratorByBrand(self, brand):
         cursor = self.conn.cursor()
-        query = "select * from generator where brand = %s;"
+        query = "select * from generator where brand = %s order by brand;"
         cursor.execute(query, (brand,))
         result = []
         for row in cursor:
@@ -47,7 +47,7 @@ class GeneratorDAO:
 
     def getGeneratorByPowerRating(self, powerrating):
         cursor = self.conn.cursor()
-        query = "select * from generator where powerrating = %s;"
+        query = "select * from generator where powerrating = %s order by brand;"
         cursor.execute(query, (powerrating,))
         result = []
         for row in cursor:
@@ -56,7 +56,7 @@ class GeneratorDAO:
 
     def getGeneratorByFuelType(self, fueltype):
         cursor = self.conn.cursor()
-        query = "select * from generator where fueltype = %s;"
+        query = "select * from generator where fueltype = %s order by brand;"
         cursor.execute(query, (fueltype,))
         result = []
         for row in cursor:
@@ -65,7 +65,7 @@ class GeneratorDAO:
 
     def getGeneratorByPriceAndBrand(self, price, brand):
         cursor = self.conn.cursor()
-        query = "select * from generator where price = %s and brand = %s;"
+        query = "select * from generator where price = %s and brand = %s order by brand;"
         cursor.execute(query, (price, brand,))
         result = []
         for row in cursor:
@@ -74,7 +74,7 @@ class GeneratorDAO:
 
     def getGeneratorByFuelTypeAndBrand(self, fueltype, brand):
         cursor = self.conn.cursor()
-        query = "select * from generator where fueltype = %s and brand = %s;"
+        query = "select * from generator where fueltype = %s and brand = %s order by brand;"
         cursor.execute(query, (fueltype, brand,))
         result = []
         for row in cursor:
@@ -83,7 +83,7 @@ class GeneratorDAO:
 
     def getGeneratorByPriceAndFuelType(self, price, fueltype):
         cursor = self.conn.cursor()
-        query = "select * from generator where price = %s and fueltype = %s;"
+        query = "select * from generator where price = %s and fueltype = %s order by brand;"
         cursor.execute(query, (price, fueltype,))
         result = []
         for row in cursor:
@@ -92,7 +92,7 @@ class GeneratorDAO:
 
     def getGeneratorByPriceAndPowerRating(self, price, powerrating):
         cursor = self.conn.cursor()
-        query = "select * from generator where price = %s and powerrating = %s;"
+        query = "select * from generator where price = %s and powerrating = %s order by brand;"
         cursor.execute(query, (price, powerrating,))
         result = []
         for row in cursor:
@@ -101,7 +101,7 @@ class GeneratorDAO:
 
     def getGeneratorByPowerRatingAndFuelType(self, powerrating, fueltype):
         cursor = self.conn.cursor()
-        query = "select * from generator where powerrating = %s and fueltype = %s;"
+        query = "select * from generator where powerrating = %s and fueltype = %s order by brand;"
         cursor.execute(query, (powerrating, fueltype,))
         result = []
         for row in cursor:
@@ -110,7 +110,7 @@ class GeneratorDAO:
 
     def getGeneratorByBrandAndPowerRating(self, brand, powerrating):
         cursor = self.conn.cursor()
-        query = "select * from generator where brand = %s and powerrating = %s;"
+        query = "select * from generator where brand = %s and powerrating = %s order by brand;"
         cursor.execute(query, (brand, powerrating,))
         result = []
         for row in cursor:
@@ -119,7 +119,7 @@ class GeneratorDAO:
 
     def getGeneratorByPriceBrandAndFuelType(self, price, brand, fueltype):
         cursor = self.conn.cursor()
-        query = "select * from generator where price = %s and brand = %s and fueltype = %s;"
+        query = "select * from generator where price = %s and brand = %s and fueltype = %s order by brand;"
         cursor.execute(query, (price, brand, fueltype,))
         result = []
         for row in cursor:
@@ -128,7 +128,7 @@ class GeneratorDAO:
 
     def getGeneratorByPriceBrandAndPowerRating(self, price, brand, powerrating):
         cursor = self.conn.cursor()
-        query = "select * from generator where price = %s and brand = %s and powerrating = %s;"
+        query = "select * from generator where price = %s and brand = %s and powerrating = %s order by brand;"
         cursor.execute(query, (price, brand, powerrating,))
         result = []
         for row in cursor:
@@ -137,7 +137,7 @@ class GeneratorDAO:
 
     def getGeneratorByPricePowerRatingAndFuelType(self, price, powerrating, fueltype):
         cursor = self.conn.cursor()
-        query = "select * from generator where price = %s and powerrating = %s and fueltype = %s;"
+        query = "select * from generator where price = %s and powerrating = %s and fueltype = %s order by brand;"
         cursor.execute(query, (price, powerrating, fueltype,))
         result = []
         for row in cursor:
@@ -146,7 +146,7 @@ class GeneratorDAO:
 
     def getGeneratorByPowerRatingBrandAndFuelType(self, powerrating, brand, fueltype):
         cursor = self.conn.cursor()
-        query = "select * from generator where powerrating = %s and brand = %s and fueltype = %s;"
+        query = "select * from generator where powerrating = %s and brand = %s and fueltype = %s order by brand;"
         cursor.execute(query, (powerrating, brand, fueltype,))
         result = []
         for row in cursor:
@@ -155,7 +155,7 @@ class GeneratorDAO:
 
     def getGeneratorByPriceBrandFuelTypeAndPowerRating(self, price, brand, fueltype, powerrating):
         cursor = self.conn.cursor()
-        query = "select * from generator where price = %s and brand = %s and fueltype = %s and powerrating = %s;"
+        query = "select * from generator where price = %s and brand = %s and fueltype = %s and powerrating = %s order by brand;"
         cursor.execute(query, (price, brand, fueltype, powerrating))
         result = []
         for row in cursor:
