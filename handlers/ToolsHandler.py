@@ -220,6 +220,6 @@ class ToolsHandler:
         for row in tools_list:
             result = self.build_requesttools_dict(row)
             result_list.append(result)
-        return jsonify(Food=result_list)
+        return jsonify(Tools=result_list)
 
 

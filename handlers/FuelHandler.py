@@ -236,7 +236,7 @@ class FuelHandler:
                 return jsonify(Error = "Malformed query string"), 400
             result_list = []
             for row in fuel_list:
-                result = self.build_fuel_dict(row)
+                result = self.build_requestfuel_dict(row)
                 result_list.append(result)
             return jsonify(Fuel = result_list)
 
