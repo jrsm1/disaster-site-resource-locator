@@ -271,7 +271,7 @@ class HeavyEquipHandler:
     def getAllEquipRequests(self):
 
         dao = HeavyEquipDAO()
-        equip_list = dao.getAllHeavyEquipRequests()
+        equip_list = dao.getAllEquipRequests()
         result_list = []
         for row in equip_list:
             result = self.build_requestequip_dict(row)
