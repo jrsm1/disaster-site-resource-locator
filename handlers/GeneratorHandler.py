@@ -185,3 +185,16 @@ class GeneratorHandler:
                 result = self.build_suppliergenerator_dict(row)
                 result_list.append(result)
         return jsonify(Suppliers = result_list)
+
+    def getGeneratorSuppliersByRegion(self, region):
+        dao = GeneratorDAO()
+        suppliers_list = dao.getGeneratorSuppliersByRegion(region)
+        if not suppliers_list:
+            return jsonify(Error = "No Suppliers found"), 404
+        else:
+            result_list = []
+            for row in suppliers_list:
+                result = self.build_suppliergenerator_dict(row)
+                result_list.append(result)
+        return jsonify(Suppliers = result_list)
+

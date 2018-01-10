@@ -178,3 +178,14 @@ class GeneratorDAO:
         for row in cursor:
             result.append(row)
         return result
+
+    def getGeneratorSuppliersByRegion(self, region):
+        cursor = self.conn.cursor()
+        query = "select rid, sid, sname, saddress, sphone, region from supplier natural inner join resources where region = %s and " \
+                "rid IN (select rid from generator);"
+        cursor.execute(query, (region,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
