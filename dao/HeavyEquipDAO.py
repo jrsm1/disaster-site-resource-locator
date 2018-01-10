@@ -189,3 +189,156 @@ class HeavyEquipDAO:
         for row in cursor:
             result.append(row)
         return result
+
+
+    def getAllEquipRequests(self):
+        cursor = self.conn.cursor()
+        query = "select * from HeavyEquip natural inner join request order by function;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getEquipRequestsById(self, rid):
+        cursor = self.conn.cursor()
+        query = "select * from HeavyEquip natural inner join request where rid = %s order by function;"
+        cursor.execute(query, (rid,))
+        result = cursor.fetchone()
+        return result
+
+    def getEquipRequestsByPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from HeavyEquip natural inner join request where price = %s order by function;"
+        cursor.execute(query, (price,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getEquipRequestsByMake(self, make):
+        cursor = self.conn.cursor()
+        query = "select * from HeavyEquip natural inner join request where make = %s order by function;"
+        cursor.execute(query, (make,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getEquipRequestsByCondition(self, condition):
+        cursor = self.conn.cursor()
+        query = "select * from HeavyEquip natural inner join request where condition = %s order by function;"
+        cursor.execute(query, (condition,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getEquipRequestsByFunction(self, equipfunction):
+        cursor = self.conn.cursor()
+        query = "select * from HeavyEquip natural inner join request where function = %s order by function;"
+        cursor.execute(query, (equipfunction,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getEquipRequestsByPriceAndMake(self, price, make):
+        cursor = self.conn.cursor()
+        query = "select * from HeavyEquip natural inner join request where price = %s and make= %s order by function;"
+        cursor.execute(query, (price, make,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getEquipRequestsByConditionAndMake(self, condition, make):
+        cursor = self.conn.cursor()
+        query = "select * from HeavyEquip natural inner join request where condition = %s and make = %s order by function;"
+        cursor.execute(query, (condition, make,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getEquipRequestsByPriceAndCondition(self, price, condition):
+        cursor = self.conn.cursor()
+        query = "select * from HeavyEquip natural inner join request where price = %s and condition= %s order by function;"
+        cursor.execute(query, (price, condition,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getEquipRequestsByPriceAndFunction(self, price, equipfunction):
+        cursor = self.conn.cursor()
+        query = "select * from HeavyEquip natural inner join request where price = %s and function = %s order by function;"
+        cursor.execute(query, (price, equipfunction,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getEquipRequestsByFunctionAndCondition(self, equipfunction, condition):
+        cursor = self.conn.cursor()
+        query = "select * from HeavyEquip natural inner join request where function = %s and condition = %s order by function;"
+        cursor.execute(query, (equipfunction, condition,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getEquipRequestsByMakeAndFunction(self, make, equipfunction):
+        cursor = self.conn.cursor()
+        query = "select * from HeavyEquip natural inner join request where make = %s and function = %s order by function;"
+        cursor.execute(query, (make, equipfunction,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getEquipByPriceMakeAndCondition(self, price, make, condition):
+        cursor = self.conn.cursor()
+        query = "select * from HeavyEquip natural inner join request where price = %s and make = %s and condition= %s order by function;"
+        cursor.execute(query, (price, make, condition,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getEquipByPriceMakeAndFunction(self, price, brand, equipfunction):
+        cursor = self.conn.cursor()
+        query = "select * from HeavyEquip where price = %s and make = %s and function = %s order by function;"
+        cursor.execute(query, (price, brand, equipfunction,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getEquipByPriceFunctionAndCondition(self, price, equipfunction, condition):
+        cursor = self.conn.cursor()
+        query = "select * from HeavyEquip where price = %s and function= %s and condition = %s order by function;"
+        cursor.execute(query, (price, equipfunction, condition,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getEquipByFunctionMakeAndCondition(self, equipfunction, make, condition):
+        cursor = self.conn.cursor()
+        query = "select * from HeavyEquip where function = %s and make = %s and condition = %s order by function;"
+        cursor.execute(query, (equipfunction, make, condition,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getEquipByPriceMakeConditionAndFunction(self, price, make, condition, equipfunction):
+        cursor = self.conn.cursor()
+        query = "select * from HeavyEquip where price = %s and make = %s and condition = %s and function = %s order by function;"
+        cursor.execute(query, (price, make, condition, equipfunction))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+

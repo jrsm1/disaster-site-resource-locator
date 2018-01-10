@@ -33,6 +33,18 @@ class HeavyEquipHandler:
         return result
 
 
+    def build_requestequip_dict(self, row):
+        result = {}
+        result['rid'] = row[0]
+        result['requestid'] = row[1]
+        result['cid'] = row[2]
+        result['qty'] = row[3]
+        result['make'] = row[4]
+        result['condition'] = row[5]
+        result['function'] = row[6]
+        result['price'] = row[7]
+        return result
+
 
     def getAllEquip(self):
 
@@ -157,6 +169,59 @@ class HeavyEquipHandler:
                 result_list.append(result)
             return jsonify(HeavyEquip=result_list)
 
+
+    def searchEquipRequests(self, args):
+        if len(args) > 5:
+            return jsonify(Error = "Malformed search string."), 400
+        else:
+            rid = args.get("rid")
+            price = args.get("price")
+            make = args.get("make")
+            condition = args.get("condition")
+            equipfunction = args.get("function")
+
+            dao = HeavyEquipDAO()
+            equip_list = []
+            if (len(args) == 4) and price and make and condition and equipfunction:
+                equip_list = dao.getEquipRequestsByPriceMakeConditionAndFunction(price, make, condition, equipfunction)
+            elif (len(args) == 3) and price and make and condition:
+                equip_list = dao.getEquipRequestsByPriceMakeAndCondition(price, make, condition)
+            elif (len(args) == 3) and price and make and equipfunction:
+                equip_list = dao.getEquipRequestsByPriceMakeAndFunction(price, make, equipfunction)
+            elif (len(args) == 3) and price and equipfunction and condition:
+                equip_list = dao.getEquipRequestsByPriceFunctionAndCondition(price, equipfunction, condition)
+            elif (len(args) == 3) and equipfunction and make and condition:
+                equip_list = dao.getEquipRequestsByFunctionMakeAndCondition(equipfunction, make, condition)
+            elif (len(args) == 2) and price and make:
+                equip_list = dao.getEquipRequestsByPriceAndMake(price, make)
+            elif (len(args) == 2) and condition and make:
+                equip_list = dao.getEquipRequestsByConditionAndMake(condition, make)
+            elif (len(args) == 2) and price and condition:
+                equip_list = dao.getEquipRequestsByPriceAndCondition(price, condition)
+            elif (len(args) == 2) and price and equipfunction:
+                equip_list = dao.getEquipRequestsByPriceAndFunction(price, equipfunction)
+            elif (len(args) == 2) and equipfunction and condition:
+                equip_list = dao.getEquipRequestsByFunctionAndCondition(equipfunction, condition)
+            elif (len(args) == 2) and make and equipfunction:
+                equip_list = dao.getEquipRequestsByMakeAndFunction(make, equipfunction)
+            elif (len(args) == 1) and rid:
+                equip_list = dao.getEquipRequestsById(rid)
+            elif (len(args) == 1) and price:
+                equip_list = dao.getEquipRequestsByPrice(price)
+            elif (len(args) == 1) and make:
+                equip_list = dao.getEquipRequestsByMake(make)
+            elif (len(args) == 1) and condition:
+                equip_list = dao.getEquipRequestsByCondition(condition)
+            elif (len(args) == 1) and equipfunction:
+                equip_list = dao.getEquipRequestsByFunction(equipfunction)
+            else:
+                return jsonify(Error = "Malformed query string"), 400
+            result_list = []
+            for row in equip_list:
+                result = self.build_requestequip_dict(row)
+                result_list.append(result)
+            return jsonify(HeavyEquip=result_list)
+
     def insertEquip(self, form):
         if len(form) != 6:
             return jsonify(Error="Malformed POST request"), 400
@@ -201,4 +266,15 @@ class HeavyEquipHandler:
                 result = self.build_supplierequip_dict(row)
                 result_list.append(result)
         return jsonify(Suppliers = result_list)
+
+
+    def getAllEquipRequests(self):
+
+        dao = HeavyEquipDAO()
+        equip_list = dao.getAllHeavyEquipRequests()
+        result_list = []
+        for row in equip_list:
+            result = self.build_requestequip_dict(row)
+            result_list.append(result)
+        return jsonify(Equip=result_list)
 
