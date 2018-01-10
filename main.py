@@ -412,6 +412,11 @@ def getFuelSuppliers():
     return FuelHandler().getFuelSuppliers()
 
 
+@app.route('/fuel/suppliers/<string:region>')
+def getFuelSuppliersByRegion(region):
+    return FuelHandler().getFuelSuppliersByRegion(region)
+
+
 ##############################################
 #	Routes for Food Queries
 ##############################################
