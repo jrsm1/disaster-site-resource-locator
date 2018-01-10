@@ -12,7 +12,7 @@ class FoodDAO:
 
     def getAllFood(self):
         cursor = self.conn.cursor()
-        query = "select * from food;"
+        query = "select * from food order by fname;"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -22,7 +22,7 @@ class FoodDAO:
 
     def getFoodById(self, rid):
         cursor = self.conn.cursor()
-        query = "select * from food where rid = %s;"
+        query = "select * from food where rid = %s order by fname;"
         cursor.execute(query, (rid,))
         result = cursor.fetchone()
         return result
@@ -30,7 +30,7 @@ class FoodDAO:
 
     def getFoodByPrice(self, price):
         cursor = self.conn.cursor()
-        query = "select * from food where price = %s;"
+        query = "select * from food where price = %s order by fname;"
         cursor.execute(query, (price,))
         result = [] 
         for row in cursor:
@@ -40,7 +40,7 @@ class FoodDAO:
 
     def getFoodByType(self, ftype):
         cursor = self.conn.cursor()
-        query = "select * from food where ftype = %s;"
+        query = "select * from food where ftype = %s order by fname;"
         cursor.execute(query, (ftype,))
         result = []                                                                                                   
         for row in cursor:
@@ -50,8 +50,18 @@ class FoodDAO:
 
     def getFoodByExpDate(self, expdate):
         cursor = self.conn.cursor()
-        query = "select * from food where expdate = %s;"
+        query = "select * from food where expdate = %s order by fname;"
         cursor.execute(query, (ftype,))
+        result = []                                                                                                   
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getFoodByName(self, fname):
+        cursor = self.conn.cursor()
+        query = "select * from food where fname = %s order by fname;"
+        cursor.execute(query, (fname,))
         result = []                                                                                                   
         for row in cursor:
             result.append(row)
@@ -68,10 +78,10 @@ class FoodDAO:
         return result
 
 
-    def insert(self, rid, price, ftype, expdate):
+    def insert(self, rid, price, ftype, expdate, fname):
         cursor = self.conn.cursor()
-        query = "insert into food values (%s, %s, %s, %s) returning rid;"
-        cursor.execute(query, (rid, price, ftype, expdate,))
+        query = "insert into food values (%s, %s, %s, %s, %s) returning rid;"
+        cursor.execute(query, (rid, price, ftype, expdate, fname))
         rid = cursor.fetchone()[0]
         self.conn.commit()
         return rid

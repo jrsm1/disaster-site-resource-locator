@@ -2028,7 +2028,7 @@
         <dia:point val="57,2"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="57,2;65.23,6.3"/>
+        <dia:rectangle val="57,2;65.23,7.1"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -2040,7 +2040,7 @@
         <dia:real val="8.2300000000000004"/>
       </dia:attribute>
       <dia:attribute name="elem_height">
-        <dia:real val="4.3000000000000007"/>
+        <dia:real val="5.0999999999999996"/>
       </dia:attribute>
       <dia:attribute name="text_colour">
         <dia:color val="#000000"/>
@@ -2109,6 +2109,26 @@
           </dia:attribute>
           <dia:attribute name="unique">
             <dia:boolean val="true"/>
+          </dia:attribute>
+        </dia:composite>
+        <dia:composite type="table_attribute">
+          <dia:attribute name="name">
+            <dia:string>#Name#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="type">
+            <dia:string>#varchar(20)#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="comment">
+            <dia:string>##</dia:string>
+          </dia:attribute>
+          <dia:attribute name="primary_key">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+          <dia:attribute name="nullable">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+          <dia:attribute name="unique">
+            <dia:boolean val="false"/>
           </dia:attribute>
         </dia:composite>
         <dia:composite type="table_attribute">
@@ -3866,15 +3886,15 @@
         <dia:point val="48.92,20"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="48.8518,5.73181;57.0682,20.0682"/>
+        <dia:rectangle val="48.8514,6.53136;57.0686,20.0686"/>
       </dia:attribute>
       <dia:attribute name="poly_points">
         <dia:point val="48.92,20"/>
-        <dia:point val="57,5.8"/>
+        <dia:point val="57,6.6"/>
       </dia:attribute>
       <dia:connections>
         <dia:connection handle="0" to="O17" connection="4"/>
-        <dia:connection handle="1" to="O12" connection="18"/>
+        <dia:connection handle="1" to="O12" connection="20"/>
       </dia:connections>
     </dia:object>
     <dia:object type="Standard - PolyLine" version="0" id="O52">
@@ -4044,7 +4064,7 @@
         <dia:point val="11.6727,23.1657"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="11.6522,22.4902;12.1202,23.3717"/>
+        <dia:rectangle val="11.6727,22.5107;12.1202,23.3307"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -4077,7 +4097,7 @@
         <dia:point val="23.7396,23.7122"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="23.7191,23.0367;24.2671,23.9182"/>
+        <dia:rectangle val="23.7396,23.0572;24.2671,23.8772"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -4110,7 +4130,7 @@
         <dia:point val="23.7942,31.644"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="23.7737,30.9685;24.3217,31.85"/>
+        <dia:rectangle val="23.7942,30.989;24.3217,31.809"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -4143,7 +4163,7 @@
         <dia:point val="23.3023,39.376"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="23.2818,38.7005;23.8298,39.582"/>
+        <dia:rectangle val="23.3023,38.721;23.8298,39.541"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -4209,7 +4229,7 @@
         <dia:point val="20.6447,10.7434"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="20.6242,10.0679;21.0922,10.9494"/>
+        <dia:rectangle val="20.6447,10.0884;21.0922,10.9084"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
