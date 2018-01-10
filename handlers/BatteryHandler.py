@@ -31,6 +31,17 @@ class BatteryHandler:
         result['sregion'] = row[5]
         return result
 
+    def build_requestbattery_dict(self, row):
+        result = {}
+        result['rid'] = row[0]
+        result['requestid'] = row[1]
+        result['cid'] = row[2]
+        result['qty'] = row[3]
+        result['price'] = row[4]
+        result['voltage'] = row[5]
+        result['btype'] = row[6]
+        return result
+
 
     def getAllBattery(self):
 
@@ -127,6 +138,42 @@ class BatteryHandler:
             return jsonify(Battery=result_list)
 
 
+    def searchBatteryRequests(self, args):
+        if len(args) > 4:
+            return jsonify(Error = "Malformed search string."), 400
+        else:
+            rid = args.get("rid")
+            price = args.get("price")
+            voltage = args.get("voltage")
+            btype = args.get("type")
+
+            dao = BatteryDAO()
+            battery_list = []
+            if (len(args) == 3) and price and voltage and btype:
+                battery_list = dao.getBatteryRequestsByPriceVoltageAndType(price, voltage, btype)
+            elif (len(args) == 2) and price and voltage:
+                battery_list = dao.getBatteryRequestsByPriceAndVoltage(price, voltage)
+            elif (len(args) == 2) and btype and voltage:
+                battery_list = dao.getBatteryRequestsByTypeAndVoltage(btype, voltage)
+            elif (len(args) == 2) and price and btype:
+                battery_list = dao.getBatteryRequestsByPriceAndType(price, btype)
+            elif (len(args) == 1) and rid:
+                battery_list = dao.getBatteryRequestsById(rid)
+            elif (len(args) == 1) and price:
+                battery_list = dao.getBatteryRequestsByPrice(price)
+            elif (len(args) == 1) and voltage:
+                battery_list = dao.getBatteryRequestsByVoltage(voltage)
+            elif (len(args) == 1) and btype:
+                battery_list = dao.getBatteryRequestsByType(btype)
+            else:
+                return jsonify(Error = "Malformed query string"), 400
+            result_list = []
+            for row in battery_list:
+                result = self.build_requestbattery_dict(row)
+                result_list.append(result)
+            return jsonify(Battery=result_list)
+
+
     def insertBattery(self, form):
         if len(form) != 5:
             return jsonify(Error="Malformed POST request"), 400
@@ -169,4 +216,15 @@ class BatteryHandler:
                 result = self.build_supplierbattery_dict(row)
                 result_list.append(result)
         return jsonify(Suppliers = result_list)
+
+
+    def getAllBatteryRequests(self):
+
+        dao = BatteryDAO()
+        battery_list = dao.getAllBatteryRequests()
+        result_list = []
+        for row in battery_list:
+            result = self.build_requestbattery_dict(row)
+            result_list.append(result)
+        return jsonify(Battery=result_list)
 

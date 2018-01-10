@@ -120,3 +120,86 @@ class BatteryDAO:
             result.append(row)
         return result
 
+
+    def getAllBatteryRequests(self):
+        cursor = self.conn.cursor()
+        query = "select * from battery natural inner join request order by btype;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getBatteryRequestsById(self, rid):
+        cursor = self.conn.cursor()
+        query = "select * from battery natural inner join request where rid = %s order by btype;"
+        cursor.execute(query, (rid,))
+        result = cursor.fetchone()
+        return result
+
+
+    def getBatteryRequestsByPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from battery natural inner join request where price = %s order by btype;"
+        cursor.execute(query, (price,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getBatteryRequestsByVoltage(self, voltage):
+        cursor = self.conn.cursor()
+        query = "select * from battery natural inner join request where voltage = %s order by btype;"
+        cursor.execute(query, (voltage,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getBatteryRequestsByType(self, btype):
+        cursor = self.conn.cursor()
+        query = "select * from battery natural inner join request where btype = %s order by btype;"
+        cursor.execute(query, (btype,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getBatteryRequestsByPriceAndVoltage(self, price, voltage):
+        cursor = self.conn.cursor()
+        query = "select * from battery natural inner join request where price = %s and voltage = %s order by btype;"
+        cursor.execute(query, (price, voltage,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getBatteryRequestsByTypeAndVoltage(self, btype, voltage):
+        cursor = self.conn.cursor()
+        query = "select * from battery natural inner join request where btype = %s and voltage = %s order by btype;"
+        cursor.execute(query, (btype, voltage,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getBatteryRequestsByPriceAndType(self, price, btype):
+        cursor = self.conn.cursor()
+        query = "select * from battery natural inner join request where price = %s and btype = %s order by btype;"
+        cursor.execute(query, (price, btype,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getBatteryRequestsByPriceVoltageAndType(self, price, voltage, btype):
+        cursor = self.conn.cursor()
+        query = "select * from battery natural inner join request where price = %s and voltage = %s and btype = %s order by btype;"
+        cursor.execute(query, (price, voltage, btype,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
