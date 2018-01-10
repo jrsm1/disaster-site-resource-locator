@@ -256,6 +256,11 @@ def getWaterSuppliers():
     return WaterHandler().getWaterSuppliers()
 
 
+@app.route('/water/suppliers/<string:region>')
+def getWaterSuppliersByRegion(region):
+    return WaterHandler().getWaterSuppliersByRegion(region)
+
+
 @app.route('/water/bsize/<string:bsize>')
 def getWaterByBottleSize(bsize):
     return WaterHandler().getWaterByBottleSize(bsize)
