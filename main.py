@@ -383,7 +383,7 @@ def getToolsSuppliersByRegion(region):
 @app.route('/tools/requests')
 def getToolsRequests():
     if not request.args:
-        return ToolsHandler().getToolsRequests()
+        return ToolsHandler().getAllToolsRequests()
     else:
         return ToolsHandler().searchToolsRequests(request.args)
 
