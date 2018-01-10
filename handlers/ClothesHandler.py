@@ -36,6 +36,21 @@ class ClothesHandler:
         result['sregion'] = row[5]
         return result
 
+
+    def build_requestclothes_dict(self, row):
+        result = {}
+        result['rid'] = row[0]
+        result['requestid'] = row[1]
+        result['cid'] = row[2]
+        result['qty'] = row[3]
+        result['price'] = row[4]
+        result['color'] = row[5]
+        result['size'] = row[6]
+        result['gender'] = row[7]
+        result['piece'] = row[8]
+        return result
+
+
     def getAllClothes(self):
 
         dao = ClothesDAO()
@@ -162,6 +177,40 @@ class ClothesHandler:
             return jsonify(Clothes = result_list)
 
 
+    def searchClothesRequests(self, args):
+        if len(args) > 6:
+            return jsonify(Error = "Malformed search string."), 400
+        else:
+            rid = args.get("rid")
+            price = args.get("price")
+            color = args.get("color")
+            size = args.get("size")
+            gender = args.get("gender")
+            piece = args.get("piece")
+
+            dao = ClothesDAO()
+            clothes_list = []
+            if (len(args) == 1) and rid:
+                clothes_list = dao.getClothesRequestsById(rid)
+            elif (len(args) == 1) and price:
+                clothes_list = dao.getClothesRequestsByPrice(price)
+            elif (len(args) == 1) and color:
+                clothes_list = dao.getClothesRequestsByColor(color)
+            elif (len(args) == 1) and size:
+                clothes_list = dao.getClothesRequestsBySize(size)
+            elif (len(args) == 1) and gender:
+                clothes_list = dao.getClothesRequestsByGender(gender)
+            elif (len(args) == 1) and piece:
+                clothes_list = dao.getClothesRequestsByPiece(piece)
+            else:
+                return jsonify(Error = "Malformed query string"), 400
+            result_list = []
+            for row in clothes_list:
+                result = self.build_requestclothes_dict(row)
+                result_list.append(result)
+            return jsonify(Clothes = result_list)
+
+
     def insertClothes(self, form):
         if len(form) != 7:
             return jsonify(Error = "Malformed POST request"), 400
@@ -211,11 +260,11 @@ class ClothesHandler:
     def getAllClothesRequests(self):
 
         dao = ClothesDAO()
-        food_list = dao.getAllFoodRequests()
+        clothes_list = dao.getAllClothesRequests()
         result_list = []
-        for row in food_list:
-            result = self.build_requestfood_dict(row)
+        for row in clothes_list:
+            result = self.build_requestclothes_dict(row)
             result_list.append(result)
-        return jsonify(Food=result_list)
+        return jsonify(Clothes=result_list)
 
 

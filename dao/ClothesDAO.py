@@ -116,7 +116,7 @@ class ClothesDAO:
         return result
 
 
-    def getAllRequestsClothes(self):
+    def getAllClothesRequests(self):
         cursor = self.conn.cursor()
         query = "select * from clothes order by piece;"
         cursor.execute(query)
