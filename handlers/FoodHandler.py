@@ -198,3 +198,81 @@ class FoodHandler:
         return jsonify(Suppliers = result_list)
 
 
+    def getAllFoodRequests(self):
+
+        dao = FoodDAO()
+        food_list = dao.getAllFoodRequests()
+        result_list = []
+        for row in food_list:
+            result = self.build_requestfood_dict(row)
+            result_list.append(result)
+        return jsonify(Food=result_list)
+
+
+    def getFoodRequestsById(self, rid):
+
+        dao = FoodDAO()
+        row = dao.getFoodRequestsById(rid)
+        if not row:
+            return jsonify(Error="Food Not Found"), 404
+        else:
+            food = self.build_requestfood_dict(row)
+        return jsonify(Food = food)
+
+
+    def getFoodRequestsByPrice(self, price):
+
+        dao = FoodDAO()
+        food_list = dao.getFoodRequestsByPrice(price)
+        if not food_list:
+            return jsonify(Error = "No Food found"), 404
+        else:
+            result_list = []
+            for row in food_list:
+                result = self.build_requestfood_dict(row)
+                result_list.append(result)
+        return jsonify(Food = result_list)
+
+
+    def getFoodRequestsByType(self, ftype):
+
+        dao = FoodDAO()
+        food_list = dao.getFoodRequestsByType(ftype)
+        if not food_list:
+            return jsonify(Error = "No Food found"), 404
+        else:
+            result_list = []
+            for row in food_list:
+                result = self.build_requestfood_dict(row)
+                result_list.append(result)
+        return jsonify(Food = result_list)
+
+
+    def getFoodRequestsByExpDate(self, expdate):
+
+        dao = FoodDAO()
+        food_list = dao.getFoodRequestsByExpDate(expdate)
+        if not food_list:
+            return jsonify(Error = "No Food found"), 404
+        else:
+            result_list = []
+            for row in food_list:
+                result = self.build_requestfood_dict(row)
+                result_list.append(result)
+        return jsonify(Food = result_list)
+
+
+    def getFoodRequestsByName(self, fname):
+
+        dao = FoodDAO()
+        food_list = dao.getFoodRequestsByName(fname)
+        if not food_list:
+            return jsonify(Error = "No Food found"), 404
+        else:
+            result_list = []
+            for row in food_list:
+                result = self.build_requestfood_dict(row)
+                result_list.append(result)
+        return jsonify(Food = result_list)
+
+
