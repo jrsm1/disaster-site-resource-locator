@@ -10,15 +10,17 @@ class FuelHandler:
         result['ftype'] = row[1]
         result['price'] = row[2]
         result['csize'] = row[3]
+        result['brand'] = row[4]
         return result
 
 
-    def build_fuel_attributes(self, rid, ftype, price, csize):
+    def build_fuel_attributes(self, rid, ftype, price, csize, brand):
         result = {}
         result['rid'] = rid
         result['ftype'] = ftype
         result['price'] = price
         result['csize'] = csize
+        result['brand'] = brand
         return result
 
     def build_supplierfuel_dict(self, row):
@@ -96,6 +98,20 @@ class FuelHandler:
         return jsonify(Fuel = result_list)
 
 
+    def getFuelByBrand(self, brand):
+
+        dao = FuelDAO()
+        fuel_list = dao.getFuelByBrand(brand)
+        if not fuel_list:
+            return jsonify(Error = "No Fuel found"), 404
+        else:
+            result_list = []
+            for row in fuel_list:
+                result = self.build_fuel_dict(row)
+                result_list.append(result)
+        return jsonify(Fuel = result_list)
+
+
     def searchFuel(self, args):
         if len(args) > 4:
             return jsonify(Error = "Malformed search string."), 400
@@ -104,6 +120,7 @@ class FuelHandler:
             ftype = args.get("ftype")
             price = args.get("price")
             csize = args.get("csize")
+            brand = args.get("brand")
 
             dao = FuelDAO()
             fuel_list = []
@@ -115,6 +132,8 @@ class FuelHandler:
                 fuel_list = dao.getFuelByPrice(price)
             elif (len(args) == 1) and csize:
                 fuel_list = dao.getFuelByContainerSize(csize)
+            elif (len(args) == 1) and brand:
+                fuel_list = dao.getFuelByBrand(brand)
             else:
                 return jsonify(Error = "Malformed query string"), 400
             result_list = []
@@ -125,7 +144,7 @@ class FuelHandler:
 
 
     def insertFuel(self, form):
-        if len(form) != 5:
+        if len(form) != 6:
             return jsonify(Error = "Malformed POST request"), 400
         else:
             sid = form['sid']
@@ -133,11 +152,12 @@ class FuelHandler:
             ftype = form['ftype']
             price = form['price']
             csize = form['csize']
-            if sid and qty and ftype and price and csize:
+            brand = form['brand']
+            if sid and qty and ftype and price and csize and brand:
                 rid = ResourcesDAO().insert(sid, qty)
                 dao = FuelDAO()
-                dao.insert(rid, ftype, price, csize)
-                result = self.build_fuel_attributes(rid, ftype, price, csize)
+                dao.insert(rid, ftype, price, csize, brand)
+                result = self.build_fuel_attributes(rid, ftype, price, csize, brand)
                 return jsonify(Fuel = result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400

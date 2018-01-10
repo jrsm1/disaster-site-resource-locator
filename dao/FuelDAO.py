@@ -12,7 +12,7 @@ class FuelDAO:
 
     def getAllFuel(self):
         cursor = self.conn.cursor()
-        query = "select * from fuel;"
+        query = "select * from fuel order by brand;"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -22,7 +22,7 @@ class FuelDAO:
 
     def getFuelById(self, rid):
         cursor = self.conn.cursor()
-        query = "select * from fuel where rid = %s;"
+        query = "select * from fuel where rid = %s order by brand;"
         cursor.execute(query, (rid,))
         result = cursor.fetchone()
         return result
@@ -30,7 +30,7 @@ class FuelDAO:
 
     def getFuelByType(self, ftype):
         cursor = self.conn.cursor()
-        query = "select * from fuel where ftype = %s;"
+        query = "select * from fuel where ftype = %s order by brand;"
         cursor.execute(query, (ftype,))
         result = []                                                                                                   
         for row in cursor:
@@ -40,7 +40,7 @@ class FuelDAO:
 
     def getFuelByPrice(self, price):
         cursor = self.conn.cursor()
-        query = "select * from fuel where price = %s;"
+        query = "select * from fuel where price = %s order by brand;"
         cursor.execute(query, (price,))
         result = [] 
         for row in cursor:
@@ -50,11 +50,21 @@ class FuelDAO:
 
     def getFuelByContainerSize(self, csize):
         cursor = self.conn.cursor()
-        query = "select * from fuel where containersize = %s;"
+        query = "select * from fuel where containersize = %s order by brand;"
         cursor.execute(query, (csize,))
         result = []                                                                                                   
         for row in cursor:
             result.append(row)
+        return result
+
+
+    def getFuelByBrand(self, brand):
+        cursor = self.conn.cursor()
+        query = "select * from fuel where brand = %s order by brand;"
+        cursor.execute(query, (brand,))
+        result = [] 
+        for row in cursor:
+             result.append(row)
         return result
 
 
