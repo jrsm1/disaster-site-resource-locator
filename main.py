@@ -575,6 +575,11 @@ def getGeneratorSuppliers():
     return GeneratorHandler().getGeneratorSuppliers()
 
 
+@app.route('/generator/suppliers/<string:region>')
+def getGeneratorSuppliersByRegion(region):
+    return GeneratorHandler().getGeneratorSuppliersByRegion(region)
+
+
 ##############################################
 #	Routes for Battery Queries
 ##############################################
@@ -612,6 +617,11 @@ def getBatteryByType(btype):
 @app.route('/battery/suppliers')
 def getBatterySuppliers():
     return BatteryHandler().getBatterySuppliers()
+
+
+@app.route('/battery/suppliers/<string:region>')
+def getBatterySuppliersByRegion(region):
+    return BatteryHandler().getBatterySuppliersByRegion(region)
 
 
 ##############################################

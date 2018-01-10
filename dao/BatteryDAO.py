@@ -109,3 +109,14 @@ class BatteryDAO:
         for row in cursor:
             result.append(row)
         return result
+
+    def getBatterySuppliersByRegion(self, region):
+        cursor = self.conn.cursor()
+        query = "select rid, sid, sname, saddress, sphone, region from supplier natural inner join resources where region = %s and " \
+                "rid IN (select rid from battery);"
+        cursor.execute(query, (region,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
