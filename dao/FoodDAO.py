@@ -107,7 +107,7 @@ class FoodDAO:
         return result
 
 
-    def getFoodRequests(self):
+    def getAllFoodRequests(self):
         cursor = self.conn.cursor()
         query = "select * from request natural inner join food order by fname;"
         cursor.execute(query)
