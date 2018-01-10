@@ -118,7 +118,7 @@ class ClothesDAO:
 
     def getAllClothesRequests(self):
         cursor = self.conn.cursor()
-        query = "select * from clothes order by piece;"
+        query = "select * from clothes natural inner join request order by piece;"
         cursor.execute(query)
         result = []
         for row in cursor:
