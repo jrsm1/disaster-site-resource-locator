@@ -12,7 +12,7 @@ class ToolsDAO:
 
     def getAllTools(self):
         cursor = self.conn.cursor()
-        query = "select * from tools;"
+        query = "select * from tools order by name;"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -30,7 +30,7 @@ class ToolsDAO:
 
     def getToolsByName(self, name):
         cursor = self.conn.cursor()
-        query = "select * from tools where name = %s;"
+        query = "select * from tools where name = %s order by name;"
         cursor.execute(query, (name,))
         result = [] 
         for row in cursor:
@@ -40,7 +40,7 @@ class ToolsDAO:
 
     def getToolsByBrand(self, brand):
         cursor = self.conn.cursor()
-        query = "select * from tools where brand = %s;"
+        query = "select * from tools where brand = %s order by name;"
         cursor.execute(query, (brand,))
         result = []                                                                                                   
         for row in cursor:
@@ -50,7 +50,7 @@ class ToolsDAO:
 
     def getToolsByPrice(self, price):
         cursor = self.conn.cursor()
-        query = "select * from tools where price = %s;"
+        query = "select * from tools where price = %s order by name;"
         cursor.execute(query, (price,))
         result = []                                                                                                   
         for row in cursor:
@@ -60,7 +60,7 @@ class ToolsDAO:
 
     def getToolsByNameAndBrand(self, name, brand):
         cursor = self.conn.cursor()
-        query = "select * from tools where name = %s and brand = %s;"
+        query = "select * from tools where name = %s and brand = %s order by name;"
         cursor.execute(query, (name, brand,))
         result = []
         for row in cursor:
@@ -85,6 +85,7 @@ class ToolsDAO:
         rid = cursor.fetchone()[0]
         self.conn.commit()
         return rid
+
 
     def getToolsSuppliers(self):
         cursor = self.conn.cursor()

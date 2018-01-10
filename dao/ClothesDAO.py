@@ -12,7 +12,7 @@ class ClothesDAO:
 
     def getAllClothes(self):
         cursor = self.conn.cursor()
-        query = "select * from clothes;"
+        query = "select * from clothes order by piece;"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -22,7 +22,7 @@ class ClothesDAO:
 
     def getClothesById(self, rid):
         cursor = self.conn.cursor()
-        query = "select * from clothes where rid = %s;"
+        query = "select * from clothes where rid = %s order by piece;"
         cursor.execute(query, (rid,))
         result = cursor.fetchone()
         return result
@@ -30,7 +30,7 @@ class ClothesDAO:
 
     def getClothesByPrice(self, price):
         cursor = self.conn.cursor()
-        query = "select * from clothes where price = %s;"
+        query = "select * from clothes where price = %s order by piece;"
         cursor.execute(query, (price,))
         result = [] 
         for row in cursor:
@@ -40,7 +40,7 @@ class ClothesDAO:
 
     def getClothesByColor(self, color):
         cursor = self.conn.cursor()
-        query = "select * from clothes where color = %s;"
+        query = "select * from clothes where color = %s order by piece;"
         cursor.execute(query, (color,))
         result = [] 
         for row in cursor:
@@ -50,7 +50,7 @@ class ClothesDAO:
 
     def getClothesBySize(self, size):
         cursor = self.conn.cursor()
-        query = "select * from clothes where size = %s;"
+        query = "select * from clothes where size = %s order by piece;"
         cursor.execute(query, (size,))
         result = []                                                                                                   
         for row in cursor:
@@ -60,7 +60,7 @@ class ClothesDAO:
 
     def getClothesByGender(self, gender):
         cursor = self.conn.cursor()
-        query = "select * from clothes where gender = %s;"
+        query = "select * from clothes where gender = %s order by piece;"
         cursor.execute(query, (gender,))
         result = []                                                                                                   
         for row in cursor:
@@ -70,7 +70,7 @@ class ClothesDAO:
 
     def getClothesByPiece(self, piece):
         cursor = self.conn.cursor()
-        query = "select * from clothes where piece = %s;"
+        query = "select * from clothes where piece = %s order by piece;"
         cursor.execute(query, (piece,))
         result = []                                                                                                   
         for row in cursor:
