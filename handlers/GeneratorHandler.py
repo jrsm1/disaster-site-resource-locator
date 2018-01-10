@@ -216,7 +216,7 @@ class GeneratorHandler:
         for row in generator_list:
             result = self.build_requestgenerator_dict(row)
             result_list.append(result)
-        return jsonify(Food=result_list)
+        return jsonify(Generator=result_list)
 
     def searchGeneratorsRequests(self, args):
         if len(args) > 5:
