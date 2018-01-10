@@ -444,6 +444,11 @@ def getFoodSuppliers():
     return FoodHandler().getFoodSuppliers()
 
 
+@app.route('/food/suppliers/<string:region>')
+def getFoodSuppliersByRegion(region):
+    return FoodHandler().getFoodSuppliersByRegion(region)
+
+
 @app.route('/purchase/expdate/<string:expdate>')
 def getFoodByExpDate(expdate):
     return FoodHandler().getFoodByExpDate(expdate)
@@ -627,6 +632,10 @@ def getAidByMedCondition(condition):
 def getFirstAidSuppliers():
     return FirstAidHandler().getFirstAidSuppliers()
 
+
+@app.route('/firstaid/suppliers/<string:region>')
+def getAidSuppliersByRegion(region):
+    return FirstAidHandler().getAidSuppliersByRegion(region)
 
 ##############################################
 #	Routes for HeavyEquipment Queries
