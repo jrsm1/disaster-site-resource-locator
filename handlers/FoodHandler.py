@@ -37,14 +37,14 @@ class FoodHandler:
 
     def build_requestfood_dict(self, row):
         result = {}
-        result['requestid'] = row[0]
-        result['cid'] = row[7]
-        result['rid'] = row[6]
+        result['requestid'] = row[6]
+        result['cid'] = row[0]
+        result['rid'] = row[7]
         result['qty'] = row[5]
-        result['expdate'] = row[2]
-        result['price'] = row[3]
-        result['ftype'] = row[4]
-        result['name'] = row[1]
+        result['expdate'] = row[1]
+        result['price'] = row[4]
+        result['ftype'] = row[2]
+        result['name'] = row[3]
         return result
 
     def getAllFood(self):
