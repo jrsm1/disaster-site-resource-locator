@@ -51,7 +51,7 @@ class FoodDAO:
     def getFoodByExpDate(self, expdate):
         cursor = self.conn.cursor()
         query = "select * from food where expdate = %s order by fname;"
-        cursor.execute(query, (ftype,))
+        cursor.execute(query, (expdate,))
         result = []                                                                                                   
         for row in cursor:
             result.append(row)
@@ -148,7 +148,7 @@ class FoodDAO:
     def getFoodRequestsByExpDate(self, expdate):
         cursor = self.conn.cursor()
         query = "select * from request natural inner join food where expdate = %s order by fname;"
-        cursor.execute(query, (ftype,))
+        cursor.execute(query, (expdate,))
         result = []                                                                                                   
         for row in cursor:
             result.append(row)

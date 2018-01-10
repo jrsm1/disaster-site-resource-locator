@@ -117,3 +117,83 @@ class FirstAidDAO:
             result.append(row)
         return result
 
+
+    def getAllAidRequests(self):
+        cursor = self.conn.cursor()
+        query = "select * from FirstAid natural inner join request order by brand;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getAidRequestsById(self, rid):
+        cursor = self.conn.cursor()
+        query = "select * from FirstAid natural inner join request where rid = %s order by brand;"
+        cursor.execute(query, (rid,))
+        result = cursor.fetchone()
+        return result
+
+    def getAidRequestsByPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from FirstAid natural inner join request where price = %s order by brand;"
+        cursor.execute(query, (price,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getAidRequestsByBrand(self, brand):
+        cursor = self.conn.cursor()
+        query = "select * from FirstAid natural inner join request where brand = %s order by brand;"
+        cursor.execute(query, (brand,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getAidRequestsByMedCondition(self, medcondition):
+        cursor = self.conn.cursor()
+        query = "select * from FirstAid natural inner join request where medcondition = %s order by brand;"
+        cursor.execute(query, (medcondition,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getAidRequestsByPriceAndBrand(self, price, brand):
+        cursor = self.conn.cursor()
+        query = "select * from FirstAid natural inner join request where price = %s and brand = %s order by brand;"
+        cursor.execute(query, (price, brand,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getAidRequestsByMedConditionAndBrand(self, medcondition, brand):
+        cursor = self.conn.cursor()
+        query = "select * from FirstAid natural inner join request where medcondition = %s and brand = %s order by brand;"
+        cursor.execute(query, (medcondition, brand,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getAidRequestsByPriceAndMedCondition(self, price, medcondition):
+        cursor = self.conn.cursor()
+        query = "select * from FirstAid natural inner join request where price = %s and medcondition = %s order by brand;"
+        cursor.execute(query, (price, medcondition,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getAidRequestsByPriceBrandAndMedCondition(self, price, brand, medcondition):
+        cursor = self.conn.cursor()
+        query = "select * from FirstAid natural inner join request where price = %s and brand = %s and medcondition = %s order by brand;"
+        cursor.execute(query, (price, brand, medcondition,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+

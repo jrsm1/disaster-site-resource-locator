@@ -38,11 +38,13 @@ class FoodHandler:
     def build_requestfood_dict(self, row):
         result = {}
         result['requestid'] = row[0]
-        result['sid'] = row[1]
-        result['sname'] = row[2]
-        result['saddress'] = row[3]
-        result['sphone'] = row[4]
-        result['sregion'] = row[5]
+        result['cid'] = row[1]
+        result['rid'] = row[2]
+        result['qty'] = row[3]
+        result['name'] = row[4]
+        result['price'] = row[5]
+        result['ftype'] = row[6]
+        result['expdate'] = row[7]
         return result
 
     def getAllFood(self):
@@ -150,6 +152,37 @@ class FoodHandler:
             result_list = []
             for row in food_list:
                 result = self.build_food_dict(row)
+                result_list.append(result)
+            return jsonify(Food = result_list)
+
+
+    def searchFoodRequests(self, args):
+        if len(args) > 5:
+            return jsonify(Error = "Malformed search string."), 400
+        else:
+            rid = args.get("rid")
+            price = args.get("price")
+            ftype = args.get("ftype")
+            expdate = args.get("expdate")
+            fname = args.get("fname")
+
+            dao = FoodDAO()
+            food_list = []
+            if (len(args) == 1) and rid:
+                food_list = dao.getFoodRequestsById(rid)
+            elif (len(args) == 1) and price:
+                food_list = dao.getFoodRequestsByPrice(price)
+            elif (len(args) == 1) and ftype:
+                food_list = dao.getFoodRequestsByType(ftype)
+            elif (len(args) == 1) and expdate:
+                food_list = dao.getFoodRequestsByExpDate(expdate)
+            elif (len(args) == 1) and fname:
+                food_list = dao.getFoodRequestsByName(fname)
+            else:
+                return jsonify(Error = "Malformed query string"), 400
+            result_list = []
+            for row in food_list:
+                result = self.build_requestfood_dict(row)
                 result_list.append(result)
             return jsonify(Food = result_list)
 
