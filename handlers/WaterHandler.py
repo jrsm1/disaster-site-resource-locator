@@ -196,6 +196,26 @@ class WaterHandler:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
 
 
+    def updateWater(self, rid, form):
+        dao = WaterDAO()
+        if not dao.getWaterById(rid):
+            return jsonify(Error = "Water not found."), 404
+        else:
+            if len(form) != 3:
+                return jsonify(Error="Malformed update request"), 400
+            else:
+                price = form['price']
+                bsize = form['bsize']
+                brand = form['brand']
+
+                if price and bsize and brand:
+                    dao.update(rid, price, bsize, brand)
+                    result = self.build_water_attributes(rid, price, bsize, brand)
+                    return jsonify(Water=result), 200
+                else:
+                    return jsonify(Error="Unexpected attributes in update request"), 400
+
+
     def getWaterSuppliers(self):
         dao = WaterDAO()
         suppliers_list = dao.getWaterSuppliers()

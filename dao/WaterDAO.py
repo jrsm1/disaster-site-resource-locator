@@ -87,6 +87,14 @@ class WaterDAO:
         return rid
 
 
+    def update(self, rid, price, bsize, brand):
+        cursor = self.conn.cursor()
+        query = "update water set price = %s, bsize = %s, brand = %s, where rid = %s;"
+        cursor.execute(query, (price, bsize, brand, rid,))
+        self.conn.commit()
+        return rid
+
+
     def getWaterSuppliers(self):
         cursor = self.conn.cursor()
         query = "select rid, sid, sname, saddress, sphone, region from supplier natural inner join resources where rid IN (select rid from water);"

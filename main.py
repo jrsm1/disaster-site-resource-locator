@@ -239,7 +239,7 @@ def getWaterById(rid):
     if request.method == 'GET':
         return WaterHandler().getWaterById(rid)
     elif request.method == 'PUT':
-        pass
+        return WaterHandler().updateWater(rid)
     elif request.method == 'DELETE':
         pass
     else:
