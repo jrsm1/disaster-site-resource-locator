@@ -812,8 +812,10 @@ def getRequestAll():
 def getRequestById(reqid):
     return RequestHandler().getRequestById(reqid)
 
-
-@app.route("/reserve", methods=['GET', 'POST'])
+##############################################
+#	Routes for Request Queries
+##############################################
+@app.route("/reservation", methods=['GET', 'POST'])
 def getReserveAll():
     if request.method == 'POST':
         return ReservationHandler().insertReservation(request.form)
