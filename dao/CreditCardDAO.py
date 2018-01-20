@@ -29,7 +29,7 @@ class CreditCardDAO:
             result.append(row)
         return result
 
-    def getCardByNumber(self, ccnum):
+    def getCardByCardNumber(self, ccnum):
         cursor = self.conn.cursor()
         query = "select * from CreditCard where ccnum = %s;"
         cursor.execute(query, (ccnum,))
@@ -47,7 +47,7 @@ class CreditCardDAO:
 
     def getCardByLimit(self, limit):
         cursor = self.conn.cursor()
-        query = "select * from CreditCard where limit = %s;"
+        query = "select * from CreditCard where climit = %s;"
         cursor.execute(query, (limit,))
         result = []
         for row in cursor:

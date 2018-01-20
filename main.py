@@ -832,7 +832,7 @@ def getReserveById(reqid):
 ################################################
 #	Routes for Credit Card
 ###############################################
-'''
+
 @app.route('/creditcard', methods=['GET', 'POST'])
 def getAllCards():
     if request.method == 'POST':
@@ -846,25 +846,25 @@ def getAllCards():
 
 @app.route('/creditcard/cid/<int:cid>')
 def getCardByClientId(cid):
-    return CreditCardHandler().getCreditCardByClientID(cid)
+    return CreditCardHandler().getCreditCardByClientId(cid)
 
 
 @app.route('/creditcard/ccnum/<string:ccnum>')
 def getCardByCardNumber(ccnum):
-    return CreditCardHandler().getCardByCardNumber(ccnum)
+    return CreditCardHandler().getCreditCardByCardNumber(ccnum)
 
 
-@app.route('/creditcard/expdate/<date:expdate>')
+@app.route('/creditcard/expdate/<string:expdate>')
 def getCardByExpirationDate(expdate):
     return CreditCardHandler().getCreditCardByExpirationDate(expdate)
 
 @app.route('/creditcard/limit/<float:limit>')
 def getCardByLimit(limit):
-    return CreditCardHandler().getCardByCardLimit(limit)
+    return CreditCardHandler().getCreditCardByLimit(limit)
 
 @app.route('/creditcard/cvv/<string:cvv>')
 def getCardByCardVerificationValue(cvv):
-    return CreditCardHandler().getCardByCardVerificationValue(cvv)
-'''
+    return CreditCardHandler().getCreditCardByCardVerificationValue(cvv)
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

@@ -8,16 +8,16 @@ class CreditCardHandler:
         result['cid'] = row[0]
         result['ccnum'] = row[1]
         result['expdate'] = row[2]
-        result['limit'] = row[3]
+        result['climit'] = row[3]
         result['cvv'] = row[4]
         return result
 
-    def build_card_atttributes(self, cid, ccnum, expdate, limit, cvv):
+    def build_card_atttributes(self, cid, ccnum, expdate, climit, cvv):
         result = {}
         result['cid'] = cid
         result['ccnum'] = ccnum
         result['expdate'] = expdate
-        result['limit'] = limit
+        result['climit'] = climit
         result['cvv'] = cvv
         return result
 
@@ -33,7 +33,7 @@ class CreditCardHandler:
             result_list.append(result)
         return jsonify(CreditCards = result_list)
 
-    def getCardByClient(self, cid):
+    def getCreditCardByClientId(self, cid):
 
         dao = CreditCardDAO()
         card_list = dao.getCardByClientId(cid)
@@ -46,7 +46,7 @@ class CreditCardHandler:
                 result_list.append(result)
         return jsonify(CreditCards=result_list)
 
-    def getCardByCardNumber(self, ccnum):
+    def getCreditCardByCardNumber(self, ccnum):
 
         dao = CreditCardDAO()
         card_list = dao.getCardByCardNumber(ccnum)
@@ -59,7 +59,7 @@ class CreditCardHandler:
                 result_list.append(result)
         return jsonify(CreditCards=result_list)
 
-    def getCardByExpirationDate(self, expdate):
+    def getCreditCardByExpirationDate(self, expdate):
 
         dao = CreditCardDAO()
         card_list = dao.getCardByExpirationDate(expdate)
@@ -72,10 +72,10 @@ class CreditCardHandler:
                 result_list.append(result)
         return jsonify(CreditCards=result_list)
 
-    def getCardByLimit(self, limit):
+    def getCreditCardByLimit(self, climit):
 
         dao = CreditCardDAO()
-        card_list = dao.getCardByLimit(limit)
+        card_list = dao.getCardByLimit(climit)
         if not card_list:
             return jsonify(Error="No card found"), 404
         else:
@@ -85,7 +85,7 @@ class CreditCardHandler:
                 result_list.append(result)
         return jsonify(CreditCards=result_list)
 
-    def getCardByCardVerificationValue(self, cvv):
+    def getCreditCardByCardVerificationValue(self, cvv):
 
         dao = CreditCardDAO()
         card_list = dao.getCardByCardVerificationValue(cvv)
@@ -105,41 +105,41 @@ class CreditCardHandler:
             cid= args.get("cid")
             ccnum = args.get("ccnum")
             expdate = args.get("expdate")
-            limit = args.get("limit")
+            climit = args.get("climit")
             cvv = args.get("cvv")
 
             dao = CreditCardDAO()
             card_list = []
-            if (len(args) == 4) and cid and ccnum and limit and cvv:
-                card_list = dao.getCardByClientAndCardNumberAndLimitAndCardVerificationValue(cid, ccnum, limit, cvv)
+            if (len(args) == 4) and cid and ccnum and climit and cvv:
+                card_list = dao.getCardByClientAndCardNumberAndLimitAndCardVerificationValue(cid, ccnum, climit, cvv)
             elif (len(args) == 2) and cid and ccnum:
                 card_list = dao.getCardByClientAndCardNumber(cid, ccnum)
             elif (len(args) == 2) and cid and expdate:
                 card_list = dao.getCardByCardNumberAndExpirationDate(cid,expdate)
-            elif (len(args) == 2) and cid and limit:
-                card_list = dao.getCardByClientAndLimit(cid, limit)
+            elif (len(args) == 2) and cid and climit:
+                card_list = dao.getCardByClientAndLimit(cid, climit)
             elif (len(args) == 2) and cid and cvv:
                 card_list = dao.getCardByClientAndCardVerificationValue(cid, cvv)
             elif (len(args) == 2) and ccnum and expdate:
                 card_list = dao.getCardByCardNumberAndExpirationDate(ccnum, expdate)
-            elif (len(args) == 2) and ccnum and limit:
-                card_list = dao.getCardByCardNumberAndLimit(ccnum, limit)
+            elif (len(args) == 2) and ccnum and climit:
+                card_list = dao.getCardByCardNumberAndLimit(ccnum, climit)
             elif (len(args) == 2) and ccnum and cvv:
                 card_list = dao.getCardByCardNumberAndCardVerificationValue(ccnum, cvv)
-            elif (len(args) == 2) and expdate and limit:
-                card_list = dao.getCardByExpirationDateAndLimit(expdate, limit)
+            elif (len(args) == 2) and expdate and climit:
+                card_list = dao.getCardByExpirationDateAndLimit(expdate, climit)
             elif (len(args) == 2) and expdate and cvv:
                 card_list = dao.getCardByExpirationDateAndCardVerificationValue(expdate, cvv)
-            elif (len(args) == 2) and limit and cvv:
-                card_list = dao.getCardByLimitAndCardVerificationValue(limit, cvv)
+            elif (len(args) == 2) and climit and cvv:
+                card_list = dao.getCardByLimitAndCardVerificationValue(climit, cvv)
             elif (len(args) == 1) and cid:
                 card_list = dao.getCardByClientId(cid)
             elif (len(args) == 1) and ccnum:
                 card_list = dao.getCardByCardNumber(ccnum)
             elif (len(args) == 1) and expdate:
                 card_list = dao.getCardByExpirationDate(expdate)
-            elif (len(args) == 1) and limit:
-                card_list = dao.getCardByLimit(limit)
+            elif (len(args) == 1) and climit:
+                card_list = dao.getCardByLimit(climit)
             elif (len(args) == 1) and cvv:
                 card_list = dao.getCardByCardVerificationValue(cvv)
             else:
@@ -157,12 +157,12 @@ class CreditCardHandler:
             cid = form["cid"]
             ccnum = form["ccnum"]
             expdate = form['expdate']
-            limit = form['limit']
+            climit = form['climit']
             cvv = form['cvv']
-            if cid and ccnum and expdate and limit and cvv:
+            if cid and ccnum and expdate and climit and cvv:
                 dao = CreditCardDAO()
-                dao.insert(cid, ccnum, expdate, limit, cvv)
-                result = self.build_card_attributes(cid, ccnum, expdate, limit, cvv)
+                dao.insert(cid, ccnum, expdate, climit, cvv)
+                result = self.build_card_attributes(cid, ccnum, expdate, climit, cvv)
                 return jsonify(CreditCard=result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
