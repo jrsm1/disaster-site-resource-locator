@@ -7,10 +7,10 @@ class HeavyEquipHandler:
     def build_equip_dict(self, row):
         result = {}
         result['rid'] = row[0]
-        result['price'] = row[1]
-        result['make'] = row[2]
-        result['condition'] = row[3]
-        result['function'] = row[4]
+        result['make'] = row[1]
+        result['condition'] = row[2]
+        result['function'] = row[3]
+        result['price'] = row[4]
         return result
 
     def build_equip_attributes(self, rid, price, make, condition, equipfunction):
@@ -39,10 +39,10 @@ class HeavyEquipHandler:
         result['requestid'] = row[1]
         result['cid'] = row[2]
         result['qty'] = row[3]
-        result['make'] = row[4]
-        result['condition'] = row[5]
-        result['function'] = row[6]
-        result['price'] = row[7]
+        result['condition'] = row[4]
+        result['function'] = row[5]
+        result['price'] = row[6]
+        result['make'] = row[7]
         return result
 
 

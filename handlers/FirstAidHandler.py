@@ -7,8 +7,8 @@ class FirstAidHandler:
     def build_aid_dict(self, row):
         result = {}
         result['rid'] = row[0]
-        result['price'] = row[1]
-        result['brand'] = row[2]
+        result['brand'] = row[1]
+        result['price'] = row[2]
         result['medconditon'] = row[3]
         return result
 
@@ -26,8 +26,8 @@ class FirstAidHandler:
         result['cid'] = row[1]
         result['rid'] = row[2]
         result['qty'] = row[3]
-        result['brand'] = row[4]
-        result['price'] = row[5]
+        result['price'] = row[4]
+        result['brand'] = row[5]
         result['medcondition'] = row[6]
         return result
 
