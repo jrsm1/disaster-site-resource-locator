@@ -89,7 +89,7 @@ class WaterDAO:
 
     def update(self, rid, price, bsize, brand):
         cursor = self.conn.cursor()
-        query = "update water set price = %s, bsize = %s, brand = %s, where rid = %s;"
+        query = "update water set price = %s, bottlesize = %s, brand = %s where rid = %s;"
         cursor.execute(query, (price, bsize, brand, rid,))
         self.conn.commit()
         return rid
