@@ -38,6 +38,26 @@ class WaterDAO:
         return result
 
 
+    def getWaterByLessThanPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from water where price < %s order by brand;"
+        cursor.execute(query, (price,))
+        result = [] 
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getWaterByGreaterThanPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from water where price > %s order by brand;"
+        cursor.execute(query, (price,))
+        result = [] 
+        for row in cursor:
+            result.append(row)
+        return result
+
+
     def getWaterByBottleSize(self, bsize):
         cursor = self.conn.cursor()
         query = "select * from water where bottlesize = %s order by brand;"

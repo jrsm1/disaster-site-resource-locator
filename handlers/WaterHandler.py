@@ -89,6 +89,34 @@ class WaterHandler:
         return jsonify(Water = result_list)
 
 
+    def getWaterByLessThanPrice(self, price):
+
+        dao = WaterDAO()
+        price_list = dao.getWaterByLessThanPrice(price)
+        if not price_list:
+            return jsonify(Error = "No price found"), 404
+        else:
+            result_list = []
+            for row in price_list:
+                result = self.build_water_dict(row)
+                result_list.append(result)
+        return jsonify(Water = result_list)
+
+
+    def getWaterByGreaterThanPrice(self, price):
+
+        dao = WaterDAO()
+        price_list = dao.getWaterByGreaterThanPrice(price)
+        if not price_list:
+            return jsonify(Error = "No price found"), 404
+        else:
+            result_list = []
+            for row in price_list:
+                result = self.build_water_dict(row)
+                result_list.append(result)
+        return jsonify(Water = result_list)
+
+
     def getWaterByBottleSize(self, bsize):
 
         dao = WaterDAO()

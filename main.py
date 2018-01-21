@@ -251,6 +251,16 @@ def getWaterByPrice(price):
     return WaterHandler().getWaterByPrice(price)
 
 
+@app.route('/water/price/less/<float:price>')
+def getWaterByLessThanPrice(price):
+    return WaterHandler().getWaterByLessThanPrice(price)
+
+
+@app.route('/water/price/greater/<float:price>')
+def getWaterByGreaterThanPrice(price):
+    return WaterHandler().getWaterByGreaterThanPrice(price)
+
+
 @app.route('/water/suppliers')
 def getWaterSuppliers():
     return WaterHandler().getWaterSuppliers()
