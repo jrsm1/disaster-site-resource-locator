@@ -557,7 +557,7 @@ def getClothesById(rid):
     if request.method == 'GET':
         return ClothesHandler().getClothesById(rid)
     elif request.method == 'PUT':
-        pass
+        return ClothesHandler().updateClothes(rid, request.form)
     elif request.method == 'DELETE':
         pass
     else:
@@ -567,6 +567,16 @@ def getClothesById(rid):
 @app.route('/clothes/price/<float:price>')
 def getClothesByPrice(price):
     return ClothesHandler().getClothesByPrice(price)
+
+
+@app.route('/clothes/price/less/<float:price>')
+def getClothesByLessThanPrice(price):
+    return ClothesHandler().getClothesByLessThanPrice(price)
+
+
+@app.route('/clothes/price/greater/<float:price>')
+def getClothesByGreaterThanPrice(price):
+    return ClothesHandler().getClothesByGreaterThanPrice(price)
 
 
 @app.route('/clothes/color/<string:color>')

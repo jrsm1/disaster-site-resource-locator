@@ -87,6 +87,34 @@ class ClothesHandler:
         return jsonify(Clothes = result_list)
 
 
+    def getClothesByLessThanPrice(self, price):
+
+        dao = ClothesDAO()
+        price_list = dao.getClothesByLessThanPrice(price)
+        if not price_list:
+            return jsonify(Error = "No price found"), 404
+        else:
+            result_list = []
+            for row in price_list:
+                result = self.build_clothes_dict(row)
+                result_list.append(result)
+        return jsonify(Clothes = result_list)
+
+
+    def getClothesByGreaterThanPrice(self, price):
+
+        dao = ClothesDAO()
+        price_list = dao.getClothesByGreaterThanPrice(price)
+        if not price_list:
+            return jsonify(Error = "No price found"), 404
+        else:
+            result_list = []
+            for row in price_list:
+                result = self.build_clothes_dict(row)
+                result_list.append(result)
+        return jsonify(Clothes = result_list)
+
+
     def getClothesByColor(self, color):
 
         dao = ClothesDAO()
@@ -231,6 +259,27 @@ class ClothesHandler:
                 return jsonify(Clothes = result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
+
+
+    def updateClothes(self, rid, form):
+        dao = ClothesDAO()
+        if not dao.getClothesById(rid):
+            return jsonify(Error = "Clothes not found."), 404
+        else:
+            if len(form) != 5:
+                return jsonify(Error="Malformed update request"), 400
+            else:
+                price = form['price']
+                color = form['color']
+                size = form['size']
+                gender = form['gender']
+                piece = form['piece']
+
+                if price and color and size and gender and piece:
+                    dao.update(rid, price, color, size, gender, piece)
+                    result = self.build_clothes_attributes(rid, price, color, size, gender, piece)
+                    return jsonify(Clothes=result), 200
+
 
     def getClothesSuppliers(self):
         dao = ClothesDAO()
