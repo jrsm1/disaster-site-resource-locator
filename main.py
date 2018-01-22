@@ -315,6 +315,16 @@ def getIceByPrice(price):
     return IceHandler().getIceByPrice(price)
 
 
+@app.route('/ice/price/less/<float:price>')
+def getIceByLessThanPrice(price):
+    return IceHandler().getIceByLessThanPrice(price)
+
+
+@app.route('/ice/price/greater/<float:price>')
+def getIceByGreaterThanPrice(price):
+    return IceHandler().getIceByGreaterThanPrice(price)
+
+
 @app.route('/ice/bsize/<string:bsize>')
 def getIceByBagSize(bsize):
     return IceHandler().getIceByBagSize(bsize)
@@ -710,7 +720,7 @@ def getAllAid():
             return FirstAidHandler().searchAid(request.args)
 
 
-@app.route('/firstaid/<int:rid>', methods=['GET','PUT','DELETE'])
+@app.route('/firstaid/rid/<int:rid>', methods=['GET','PUT','DELETE'])
 def getAidById(rid):
     if request.method == 'GET':
         return FirstAidHandler().getAidById(rid)

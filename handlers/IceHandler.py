@@ -78,6 +78,35 @@ class IceHandler:
         return jsonify(Ice = result_list)
 
 
+    def getIceByGreaterThanPrice(self, price):
+
+        dao = IceDAO()
+        price_list = dao.getIceByGreaterThanPrice(price)
+        if not price_list:
+            return jsonify(Error = "No price found"), 404
+        else:
+            result_list = []
+            for row in price_list:
+                result = self.build_ice_dict(row)
+                result_list.append(result)
+        return jsonify(Ice = result_list)
+
+
+    def getIceByLessThanPrice(self, price):
+
+        dao = IceDAO()
+        price_list = dao.getIceByLessThanPrice(price)
+        if not price_list:
+            return jsonify(Error = "No price found"), 404
+        else:
+            result_list = []
+            for row in price_list:
+                result = self.build_ice_dict(row)
+                result_list.append(result)
+        return jsonify(Ice = result_list)
+
+
+
     def getIceByBagSize(self, bsize):
 
         dao = IceDAO()

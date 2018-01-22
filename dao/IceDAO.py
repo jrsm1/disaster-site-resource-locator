@@ -38,6 +38,27 @@ class IceDAO:
         return result
 
 
+    def getIceByLessThanPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from ice where price < %s order by bagsize;"
+        cursor.execute(query, (price,))
+        result = [] 
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getIceByGreaterThanPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from ice where price > %s order by bagsize;"
+        cursor.execute(query, (price,))
+        result = [] 
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+
     def getIceByBagSize(self, bsize):
         cursor = self.conn.cursor()
         query = "select * from ice where bagsize = %s order by bagsize;"
