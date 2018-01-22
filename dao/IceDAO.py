@@ -143,3 +143,19 @@ class IceDAO:
         for row in cursor:
             result.append(row)
         return result
+
+    def insert(self, rid, price, bagsize):
+        cursor = self.conn.cursor()
+        query = "insert into ice values (%s, %s, %s) returning rid;"
+        cursor.execute(query, (rid, price, bagsize,))
+        rid = cursor.fetchone()[0]
+        self.conn.commit()
+        return rid
+
+
+    def update(self, rid, price, bagsize):
+        cursor = self.conn.cursor()
+        query = "update ice set price = %s, bagsize = %s where rid = %s;"
+        cursor.execute(query, (price, bagsize, rid,))
+        self.conn.commit()
+        return rid
