@@ -160,5 +160,13 @@ class CreditCardDAO:
 
     def insert(self, cid, ccnum, expdate, limit, cvv):
         cursor = self.conn.cursor()
-        query = "insert into FirstAid(cid, ccnum, expdate, limit, cvv) values (%s, %s, %s, %s, %s) returning rid;"
+        query = "insert into CreditCard(cid, ccnum, expdate, limit, cvv) values (%s, %s, %s, %s, %s);"
         cursor.execute(query, (cid, ccnum, expdate, limit, cvv))
+        self.conn.commit()
+
+    def update(self, cid, ccnum, expdate, limit, cvv):
+        cursor = self.conn.cursor()
+        query = "update CreditCard set ccnum = %s, expdate = %s, limit = %s, cvv = %s where cid = %s;"
+        cursor.execute(query, (ccnum, expdate, limit, cvv, cid,))
+        self.conn.commit()
+        return cid
