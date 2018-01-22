@@ -240,3 +240,37 @@ class IceHandler:
                 result_list.append(result)
         return jsonify(Ice = result_list)
 
+    def insertIce(self, form):
+        if len(form) != 4:
+            return jsonify(Error = "Malformed POST request"), 400
+        else:
+            sid = form['sid']
+            qty = form['qty']
+            price = form['price']
+            bagsize = form['bagsize']
+            if sid and qty and price and bagsize:
+                rid = ResourcesDAO().insert(sid, qty)
+                dao = IceDAO()
+                dao.insert(rid, price, bagsize)
+                result = self.build_ice_attributes(rid, price, bagsize)
+                return jsonify(Ice = result), 201
+            else:
+                return jsonify(Error="Unexpected attributes in POST request"), 400
+
+    def updateIce(self, rid, form):
+        dao = IceDAO()
+        if not dao.getIceById(rid):
+            return jsonify(Error = "Ice not found."), 404
+        else:
+            if len(form) != 2:
+                return jsonify(Error="Malformed update request"), 400
+            else:
+                price = form['price']
+                bagsize = form['bagsize']
+
+                if price and bagsize:
+                    dao.update(rid, price, bagsize)
+                    result = self.build_ice_attributes(rid, price, bagsize)
+                    return jsonify(Ice=result), 200
+                else:
+                    return jsonify(Error="Unexpected attributes in update request"), 400
