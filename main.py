@@ -303,7 +303,7 @@ def getIceById(rid):
     if request.method == 'GET':
         return IceHandler().getIceById(rid)
     elif request.method == 'PUT':
-        pass
+        return IceHandler().updateIce(rid, request.form)
     elif request.method == 'DELETE':
         pass
     else:
