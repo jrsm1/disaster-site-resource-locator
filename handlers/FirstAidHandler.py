@@ -215,3 +215,22 @@ class FirstAidHandler:
             result = self.build_requestaid_dict(row)
             result_list.append(result)
         return jsonify(Aid=result_list)
+
+    def updateAid(self, rid, form):
+        dao = FirstAidDAO()
+        if not dao.getAidById(rid):
+            return jsonify(Error = "First Aid not found."), 404
+        else:
+            if len(form) != 3:
+                return jsonify(Error="Malformed update request"), 400
+            else:
+                price = form['price']
+                brand = form['brand']
+                medcondition= form['medcondition']
+
+                if price and brand and medcondition:
+                    dao.update(rid, price, brand, medcondition)
+                    result = self.build_aid_attributes(rid, price, brand, medcondition)
+                    return jsonify(FirstAid=result), 200
+                else:
+                    return jsonify(Error="Unexpected attributes in update request"), 400
