@@ -167,6 +167,26 @@ class CreditCardHandler:
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
 
+    def updateCard(self, cid, form):
+        dao = CreditCardDAO()
+        if not dao.getCreditCardById(cid):
+            return jsonify(Error="Credit card not found."), 404
+        else:
+            if len(form) != 4:
+                return jsonify(Error="Malformed update request"), 400
+            else:
+                ccnum = form['ccnum']
+                expdate = form['expdate']
+                climit = form['climit']
+                cvv = form['cvv']
+
+                if ccnum and expdate and climit and cvv:
+                    dao.update(ccnum, expdate, climit, cvv)
+                    result = self.build_card_atttributes(ccnum,expdate,climit,cvv)
+                    return jsonify(CreditCard=result), 200
+                else:
+                    return jsonify(Error="Unexpected attributes in update request"), 400
+
 
 
 
