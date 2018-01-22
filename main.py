@@ -368,7 +368,7 @@ def getToolsById(rid):
     if request.method == 'GET':
         return ToolsHandler().getToolsById(rid)
     elif request.method == 'PUT':
-        pass
+        return ToolsHandler().updateTools(rid, request.form)
     elif request.method == 'DELETE':
         pass
     else:
@@ -388,6 +388,16 @@ def getToolsByBrand(brand):
 @app.route('/tools/price/<float:price>')
 def getToolsByPrice(price):
     return ToolsHandler().getToolsByPrice(price)
+
+
+@app.route('/tools/price/less/<float:price>')
+def getToolsByLessThanPrice(price):
+    return ToolsHandler().getToolsByLessThanPrice(price)
+
+
+@app.route('/tools/price/greater/<float:price>')
+def getToolsByGreaterThanPrice(price):
+    return ToolsHandler().getToolsByGreaterThanPrice(price)
 
 
 @app.route('/tools/suppliers')

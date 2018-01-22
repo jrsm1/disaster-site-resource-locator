@@ -108,6 +108,35 @@ class ToolsHandler:
         return jsonify(Tools = result_list)
 
 
+    def getToolsByLessThanPrice(self, price):
+
+        dao = ToolsDAO()
+        price_list = dao.getToolsByLessThanPrice(price)
+        if not price_list:
+            return jsonify(Error = "No price found"), 404
+        else:
+            result_list = []
+            for row in price_list:
+                result = self.build_tools_dict(row)
+                result_list.append(result)
+        return jsonify(Tools = result_list)
+
+
+    def getToolsByGreaterThanPrice(self, price):
+
+        dao = ToolsDAO()
+        price_list = dao.getToolsByGreaterThanPrice(price)
+        if not price_list:
+            return jsonify(Error = "No price found"), 404
+        else:
+            result_list = []
+            for row in price_list:
+                result = self.build_tools_dict(row)
+                result_list.append(result)
+        return jsonify(Tools = result_list)
+
+
+
     def searchTools(self, args):
         if len(args) > 4:
             return jsonify(Error = "Malformed search string."), 400
@@ -187,6 +216,27 @@ class ToolsHandler:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
 
 
+    def updateTools(self, rid, form):
+        dao = ToolsDAO()
+        if not dao.getToolsById(rid):
+            return jsonify(Error = "Tools not found."), 404
+        else:
+            if len(form) != 3:
+                return jsonify(Error="Malformed update request"), 400
+            else:
+                name = form['name']
+                brand = form['brand']
+                price = form['price']
+
+                if name and brand and price:
+                    dao.update(rid, name, brand, price)
+                    result = self.build_tools_attributes(rid, name, brand, price)
+                    return jsonify(Tools=result), 200
+                else:
+                    return jsonify(Error="Unexpected attributes in update request"), 400
+
+
+
     def getToolsSuppliers(self):
         dao = ToolsDAO()
         suppliers_list = dao.getToolsSuppliers()
@@ -198,6 +248,7 @@ class ToolsHandler:
                 result = self.build_suppliertools_dict(row)
                 result_list.append(result)
         return jsonify(Suppliers = result_list)
+
 
     def getToolsSuppliersByRegion(self, region):
         dao = ToolsDAO()

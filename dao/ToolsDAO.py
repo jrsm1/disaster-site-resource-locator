@@ -58,6 +58,26 @@ class ToolsDAO:
         return result
 
 
+    def getToolsByLessThanPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from tools where price < %s order by name;"
+        cursor.execute(query, (price,))
+        result = [] 
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getToolsByGreaterThanPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from tools where price > %s order by name;"
+        cursor.execute(query, (price,))
+        result = [] 
+        for row in cursor:
+            result.append(row)
+        return result
+
+
     def getToolsByNameAndBrand(self, name, brand):
         cursor = self.conn.cursor()
         query = "select * from tools where name = %s and brand = %s order by name;"
@@ -83,6 +103,14 @@ class ToolsDAO:
         query = "insert into tools values (%s, %s, %s, %s) returning rid;"
         cursor.execute(query, (rid, name, brand, price,))
         rid = cursor.fetchone()[0]
+        self.conn.commit()
+        return rid
+
+
+    def update(self, rid, name, brand, price):
+        cursor = self.conn.cursor()
+        query = "update tools set name = %s, brand = %s, price = %s where rid = %s;"
+        cursor.execute(query, (name, brand, price, rid,))
         self.conn.commit()
         return rid
 
