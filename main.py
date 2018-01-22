@@ -854,9 +854,16 @@ def getAllCards():
             return CreditCardHandler().searchCards(request.args)
 
 
-@app.route('/creditcard/cid/<int:cid>')
+@app.route('/creditcard/cid/<int:cid>', methods=['GET','PUT','DELETE'])
 def getCardByClientId(cid):
-    return CreditCardHandler().getCreditCardByClientId(cid)
+    if request.method == 'GET':
+        return CreditCardHandler().getCreditCardByClientId(cid)
+    elif request.method == 'PUT':
+        return CreditCardHandler().updateCard(cid, request.form)
+    elif request.method == 'DELETE':
+        pass
+    else:
+        return jsonify(Error="Method not allowed."), 405
 
 
 @app.route('/creditcard/ccnum/<string:ccnum>')
