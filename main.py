@@ -710,9 +710,16 @@ def getAllAid():
             return FirstAidHandler().searchAid(request.args)
 
 
-@app.route('/firstaid/<int:rid>')
+@app.route('/firstaid/<int:rid>', methods=['GET','PUT','DELETE'])
 def getAidById(rid):
-    return FirstAidHandler().getAidById(rid)
+    if request.method == 'GET':
+        return FirstAidHandler().getAidById(rid)
+    elif request.method == 'PUT':
+        return FirstAidHandler().updateAid(rid, request.form)
+    elif request.method == 'DELETE':
+        pass
+    else:
+        return jsonify(Error="Method not allowed."), 405
 
 
 @app.route("/firstaid/price/<float:price>")
