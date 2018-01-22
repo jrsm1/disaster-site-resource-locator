@@ -98,6 +98,13 @@ class FirstAidDAO:
         self.conn.commit()
         return rid
 
+    def update(self, rid, price, brand, medcondition):
+        cursor = self.conn.cursor()
+        query = "update FirstAid set price = %s, brand = %s, medcondition = %s where rid = %s;"
+        cursor.execute(query, (price, brand, medcondition, rid,))
+        self.conn.commit()
+        return rid
+
     def getFirstAidSuppliers(self):
         cursor = self.conn.cursor()
         query = "select rid, sid, sname, saddress, sphone, region from supplier natural inner join resources where rid IN (select rid from FirstAid);"
