@@ -747,6 +747,16 @@ def getAidByPrice(price):
     return FirstAidHandler().getAidByPrice(price)
 
 
+@app.route('/firstaid/price/less/<float:price>')
+def getAidByLessThanPrice(price):
+    return FirstAidHandler().getAidByLessThanPrice(price)
+
+
+@app.route('/firstaid/price/greater/<float:price>')
+def getAidByGreaterThanPrice(price):
+    return FirstAidHandler().getAidByGreaterThanPrice(price)
+
+
 @app.route("/firstaid/brand/<string:brand>")
 def getAidByBrand(brand):
     return FirstAidHandler().getAidByBrand(brand)

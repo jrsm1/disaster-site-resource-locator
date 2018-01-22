@@ -66,6 +66,35 @@ class FirstAidHandler:
                 result_list.append(result)
         return jsonify(FirstAid=result_list)
 
+
+    def getAidByLessThanPrice(self, price):
+
+        dao = FirstAidDAO()
+        price_list = dao.getAidByLessThanPrice(price)
+        if not price_list:
+            return jsonify(Error = "No price found"), 404
+        else:
+            result_list = []
+            for row in price_list:
+                result = self.build_aid_dict(row)
+                result_list.append(result)
+        return jsonify(FirstAid = result_list)
+
+
+    def getAidByGreaterThanPrice(self, price):
+
+        dao = FirstAidDAO()
+        price_list = dao.getAidByGreaterThanPrice(price)
+        if not price_list:
+            return jsonify(Error = "No price found"), 404
+        else:
+            result_list = []
+            for row in price_list:
+                result = self.build_aid_dict(row)
+                result_list.append(result)
+        return jsonify(FirstAid = result_list)
+
+
     def getAidByBrand(self, brand):
         dao = FirstAidDAO()
         brand_list = dao.getAidByBrand(brand)
@@ -78,6 +107,7 @@ class FirstAidHandler:
                 result_list.append(result)
         return jsonify(FirstAid=result_list)
 
+
     def getAidByMedCondition(self, condition):
         dao = FirstAidDAO()
         condition_list = dao.getAidByMedCondition(condition)
@@ -89,6 +119,7 @@ class FirstAidHandler:
                 result = self.build_aid_dict(row)
                 result_list.append(result)
         return jsonify(FirstAid=result_list)
+
 
     def searchAid(self, args):
         if len(args) > 4:
@@ -181,6 +212,7 @@ class FirstAidHandler:
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
 
+
     def getFirstAidSuppliers(self):
         dao = FirstAidDAO()
         suppliers_list = dao.getFirstAidSuppliers()
@@ -192,6 +224,7 @@ class FirstAidHandler:
                 result = self.build_supplieraid_dict(row)
                 result_list.append(result)
         return jsonify(Suppliers = result_list)
+
 
     def getAidSuppliersByRegion(self, region):
         dao = FirstAidDAO()
@@ -215,6 +248,7 @@ class FirstAidHandler:
             result = self.build_requestaid_dict(row)
             result_list.append(result)
         return jsonify(Aid=result_list)
+
 
     def updateAid(self, rid, form):
         dao = FirstAidDAO()

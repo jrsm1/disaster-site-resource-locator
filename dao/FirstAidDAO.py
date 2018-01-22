@@ -20,12 +20,14 @@ class FirstAidDAO:
             result.append(row)
         return result
 
+
     def getAidById(self, rid):
         cursor = self.conn.cursor()
         query = "select * from FirstAid where rid = %s order by brand;"
         cursor.execute(query, (rid,))
         result = cursor.fetchone()
         return result
+
 
     def getAidByPrice(self, price):
         cursor = self.conn.cursor()
@@ -36,6 +38,27 @@ class FirstAidDAO:
             result.append(row)
         return result
 
+
+    def getAidByLessThanPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from FirstAid where price < %s order by brand;"
+        cursor.execute(query, (price,))
+        result = [] 
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getAidByGreaterThanPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from FirstAid where price > %s order by brand;"
+        cursor.execute(query, (price,))
+        result = [] 
+        for row in cursor:
+            result.append(row)
+        return result
+
+
     def getAidByBrand(self, brand):
         cursor = self.conn.cursor()
         query = "select * from FirstAid where brand = %s order by brand;"
@@ -45,6 +68,7 @@ class FirstAidDAO:
             result.append(row)
         return result
 
+
     def getAidByMedCondition(self, medcondition):
         cursor = self.conn.cursor()
         query = "select * from FirstAid where medcondition = %s order by brand;"
@@ -53,6 +77,7 @@ class FirstAidDAO:
         for row in cursor:
             result.append(row)
         return result
+
 
     def getAidByPriceAndBrand(self, price, brand):
         cursor = self.conn.cursor()
@@ -72,6 +97,7 @@ class FirstAidDAO:
             result.append(row)
         return result
 
+
     def getAidByPriceAndMedCondition(self, price, medcondition):
         cursor = self.conn.cursor()
         query = "select * from FirstAid where price = %s and medcondition = %s order by brand;"
@@ -80,6 +106,7 @@ class FirstAidDAO:
         for row in cursor:
             result.append(row)
         return result
+
 
     def getAidByPriceBrandAndMedCondition(self, price, brand, medcondition):
         cursor = self.conn.cursor()
@@ -90,6 +117,7 @@ class FirstAidDAO:
             result.append(row)
         return result
 
+
     def insert(self, rid, price, brand, medcondition):
         cursor = self.conn.cursor()
         query = "insert into FirstAid(rid, price, brand, medcondition) values (%s, %s, %s, %s) returning rid;"
@@ -98,12 +126,14 @@ class FirstAidDAO:
         self.conn.commit()
         return rid
 
+
     def update(self, rid, price, brand, medcondition):
         cursor = self.conn.cursor()
         query = "update FirstAid set price = %s, brand = %s, medcondition = %s where rid = %s;"
         cursor.execute(query, (price, brand, medcondition, rid,))
         self.conn.commit()
         return rid
+
 
     def getFirstAidSuppliers(self):
         cursor = self.conn.cursor()
