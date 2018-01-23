@@ -185,6 +185,27 @@ class GeneratorHandler:
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
 
+    def updateGenerator(self, rid, form):
+        dao = GeneratorDAO()
+        if not dao.getGeneratorById(rid):
+            return jsonify(Error = "Generator not found."), 404
+        else:
+            if len(form) != 4:
+                return jsonify(Error="Malformed update request"), 400
+            else:
+                price = form['price']
+                brand = form['brand']
+                fueltype = form['fueltype']
+                powerrating = form['powerrating']
+
+                if price and brand and fueltype and powerrating:
+                    dao.update(rid, price, brand, fueltype, powerrating)
+                    result = self.build_clothes_attributes(rid, price, brand, fueltype, powerrating)
+                    return jsonify(Generator=result), 200
+                else:
+                    return jsonify(Error="Unexpected attributes in update request"), 400
+
+
     def getGeneratorSuppliers(self):
         dao = GeneratorDAO()
         suppliers_list = dao.getGeneratorSuppliers()
