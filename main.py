@@ -631,9 +631,16 @@ def getAllGenerator():
             return GeneratorHandler().searchGenerator(request.args)
 
 
-@app.route('/generator/<int:rid>')
+@app.route('/generator/<int:rid>', methods=['GET','PUT','DELETE'])
 def getGeneratorById(rid):
-    return GeneratorHandler().getGeneratorById(rid)
+    if request.method == 'GET':
+        return GeneratorHandler().getGeneratorById(rid)
+    elif request.method == 'PUT':
+        return GeneratorHandler().updateGenerator(rid, request.form)
+    elif request.method == 'DELETE':
+        pass
+    else:
+        return jsonify(Error="Method not allowed."), 405
 
 
 @app.route("/generator/price/<float:price>")
@@ -688,16 +695,9 @@ def getAllBattery():
             return BatteryHandler().searchBattery(request.args)
 
 
-@app.route('/generator/<int:rid>', methods=['GET','PUT','DELETE'])
-def getGeneratorById(rid):
-    if request.method == 'GET':
-        return GeneratorHandler().getGeneratorById(rid)
-    elif request.method == 'PUT':
-        return GeneratorHandler().updateGenerator(rid, form)
-    elif request.method == 'DELETE':
-        pass
-    else:
-        return jsonify(Error="Method not allowed."), 405
+@app.route('/battery/<int:rid>')
+def getBatteryById(rid):
+    return BatteryHandler().getBatteryById(rid)
 
 
 @app.route("/battery/price/<float:price>")
