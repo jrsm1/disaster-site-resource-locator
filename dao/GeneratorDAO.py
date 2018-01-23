@@ -36,6 +36,27 @@ class GeneratorDAO:
             result.append(row)
         return result
 
+
+    def getGeneratorByLessThanPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from generator where price < %s order by brand;"
+        cursor.execute(query, (price,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getGeneratorByGreaterThanPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from generator where price > %s order by brand;"
+        cursor.execute(query, (price,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+
     def getGeneratorByBrand(self, brand):
         cursor = self.conn.cursor()
         query = "select * from generator where brand = %s order by brand;"

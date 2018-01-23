@@ -636,7 +636,7 @@ def getAllGenerator():
             return GeneratorHandler().searchGenerator(request.args)
 
 
-@app.route('/generator/<int:rid>', methods=['GET','PUT','DELETE'])
+@app.route('/generator/rid/<int:rid>', methods=['GET','PUT','DELETE'])
 def getGeneratorById(rid):
     if request.method == 'GET':
         return GeneratorHandler().getGeneratorById(rid)
@@ -651,6 +651,16 @@ def getGeneratorById(rid):
 @app.route("/generator/price/<float:price>")
 def getGeneratorByPrice(price):
     return GeneratorHandler().getGeneratorByPrice(price)
+
+
+@app.route('/generator/price/less/<float:price>')
+def getGeneratorByLessThanPrice(price):
+    return GeneratorHandler().getGeneratorByLessThanPrice(price)
+
+
+@app.route('/generator/price/greater/<float:price>')
+def getGeneratorByGreaterThanPrice(price):
+    return GeneratorHandler().getGeneratorByGreaterThanPrice(price)
 
 
 @app.route("/generator/brand/<string:brand>")

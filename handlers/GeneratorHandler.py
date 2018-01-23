@@ -78,6 +78,35 @@ class GeneratorHandler:
                 result_list.append(result)
         return jsonify(Generator=result_list)
 
+
+    def getGeneratorByLessThanPrice(self, price):
+
+        dao = GeneratorDAO()
+        price_list = dao.getGeneratorByLessThanPrice(price)
+        if not price_list:
+            return jsonify(Error = "No price found"), 404
+        else:
+            result_list = []
+            for row in price_list:
+                result = self.build_generator_dict(row)
+                result_list.append(result)
+        return jsonify(Generator=result_list)
+
+
+    def getGeneratorByGreaterThanPrice(self, price):
+
+        dao = GeneratorDAO()
+        price_list = dao.getGeneratorByGreaterThanPrice(price)
+        if not price_list:
+            return jsonify(Error = "No price found"), 404
+        else:
+            result_list = []
+            for row in price_list:
+                result = self.build_generator_dict(row)
+                result_list.append(result)
+        return jsonify(Generator=result_list)
+
+
     def getGeneratorByBrand(self, brand):
         dao = GeneratorDAO()
         brand_list = dao.getGeneratorByBrand(brand)
@@ -200,7 +229,7 @@ class GeneratorHandler:
 
                 if price and brand and fueltype and powerrating:
                     dao.update(rid, price, brand, fueltype, powerrating)
-                    result = self.build_clothes_attributes(rid, price, brand, fueltype, powerrating)
+                    result = self.build_generator_attributes(rid, price, brand, fueltype, powerrating)
                     return jsonify(Generator=result), 200
                 else:
                     return jsonify(Error="Unexpected attributes in update request"), 400
