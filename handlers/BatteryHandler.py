@@ -78,6 +78,35 @@ class BatteryHandler:
                 result_list.append(result)
         return jsonify(Battery=result_list)
 
+
+    def getBatteryByLessThanPrice(self, price):
+
+        dao = BatteryDAO()
+        price_list = dao.getBatteryByLessThanPrice(price)
+        if not price_list:
+            return jsonify(Error = "No price found"), 404
+        else:
+            result_list = []
+            for row in price_list:
+                result = self.build_battery_dict(row)
+                result_list.append(result)
+        return jsonify(Battery=result_list)
+
+
+    def getBatteryByGreaterThanPrice(self, price):
+
+        dao = BatteryDAO()
+        price_list = dao.getBatteryByGreaterThanPrice(price)
+        if not price_list:
+            return jsonify(Error = "No price found"), 404
+        else:
+            result_list = []
+            for row in price_list:
+                result = self.build_battery_dict(row)
+                result_list.append(result)
+        return jsonify(Battery=result_list)
+
+
     def getBatteryByVoltage(self, voltage):
         dao = BatteryDAO()
         voltage_list = dao.getBatteryByVoltage(voltage)
@@ -191,6 +220,26 @@ class BatteryHandler:
                 return jsonify(Battery = result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
+
+
+    def updateBattery(self, rid, form):
+        dao = BatteryDAO()
+        if not dao.getBatteryById(rid):
+            return jsonify(Error = "Battery not found."), 404
+        else:
+            if len(form) != 3:
+                return jsonify(Error="Malformed update request"), 400
+            else:
+                price = form['price']
+                voltage = form['voltage']
+                btype = form['btype']
+
+                if price and voltage and btype:
+                    dao.update(rid, price, voltage, btype)
+                    result = self.build_battery_attributes(rid, price, voltage, btype)
+                    return jsonify(Battery=result), 200
+                else:
+                    return jsonify(Error="Unexpected attributes in update request"), 400
 
 
     def getBatterySuppliers(self):

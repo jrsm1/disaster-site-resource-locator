@@ -39,6 +39,26 @@ class BatteryDAO:
         return result
 
 
+    def getBatteryByLessThanPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from battery where price < %s order by btype;"
+        cursor.execute(query, (price,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getBatteryByGreaterThanPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from battery where price > %s order by btype;"
+        cursor.execute(query, (price,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+
     def getBatteryByVoltage(self, voltage):
         cursor = self.conn.cursor()
         query = "select * from battery where voltage = %s order by btype;"
@@ -100,6 +120,16 @@ class BatteryDAO:
         rid = cursor.fetchone()[0]
         self.conn.commit()
         return rid
+
+
+    def update(self, rid, price, voltage, btype):
+        cursor = self.conn.cursor()
+        query = "update battery set price = %s, voltage = %s, btype = %s where rid = %s;"
+        cursor.execute(query, (price, voltage, btype, rid,))
+        self.conn.commit()
+        return rid
+
+
 
     def getBatterySuppliers(self):
         cursor = self.conn.cursor()

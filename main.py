@@ -710,14 +710,30 @@ def getAllBattery():
             return BatteryHandler().searchBattery(request.args)
 
 
-@app.route('/battery/<int:rid>')
+@app.route('/battery/rid/<int:rid>', methods=['GET','PUT','DELETE'])
 def getBatteryById(rid):
-    return BatteryHandler().getBatteryById(rid)
+    if request.method == 'GET':
+        return BatteryHandler().getBatteryById(rid)
+    elif request.method == 'PUT':
+        return BatteryHandler().updateBattery(rid, request.form)
+    elif request.method == 'DELETE':
+        pass
+    else:
+        return jsonify(Error="Method not allowed."), 405
 
 
 @app.route("/battery/price/<float:price>")
 def getBatteryByPrice(price):
     return BatteryHandler().getBatteryByPrice(price)
+
+@app.route('/battery/price/less/<float:price>')
+def getBatteryByLessThanPrice(price):
+    return BatteryHandler().getBatteryByLessThanPrice(price)
+
+
+@app.route('/battery/price/greater/<float:price>')
+def getBatteryByGreaterThanPrice(price):
+    return BatteryHandler().getBatteryByGreaterThanPrice(price)
 
 
 @app.route("/battery/voltage/<int:voltage>")
