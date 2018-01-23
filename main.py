@@ -7,6 +7,11 @@ app = Flask(__name__)
 def greeting():
     return render_template('index.html')
 
+
+@app.route('/supplier')
+def testpost():
+    return render_template('SupplierPost.html')
+
 ################################################
 #	Routes for Resource Queries
 ###############################################
