@@ -170,6 +170,13 @@ class GeneratorDAO:
         self.conn.commit()
         return rid
 
+    def update(self, rid, price, brand, fueltype, powerrating):
+        cursor = self.conn.cursor()
+        query = "update generator set price = %s, brand = %s, fueltype = %s where rid = %s;"
+        cursor.execute(query, (price, brand, fueltype, rid,))
+        self.conn.commit()
+        return rid
+
     def getGeneratorSuppliers(self):
         cursor = self.conn.cursor()
         query = "select rid, sid, sname, saddress, sphone, region from supplier natural inner join resources where rid IN (select rid from generator);"
