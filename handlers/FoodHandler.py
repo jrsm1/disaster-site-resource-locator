@@ -308,4 +308,24 @@ class FoodHandler:
                 result_list.append(result)
         return jsonify(Food = result_list)
 
+    def updateFood(self, rid, form):
+        dao = FoodDAO()
+        if not dao.getFoodById(rid):
+            return jsonify(Error = "Food not found."), 404
+        else:
+            if len(form) != 4:
+                return jsonify(Error="Malformed update request"), 400
+            else:
+                price = form['price']
+                ftype = form['ftype']
+                expdate = form['expdate']
+                fname = form['fname']
+
+                if price and ftype and expdate and fname:
+                    dao.update(rid, price, ftype, expdate, fname)
+                    result = self.build_food_attributes(rid, price, ftype, expdate, fname)
+                    return jsonify(Food=result), 200
+                else:
+                    return jsonify(Error="Unexpected attributes in update request"), 400
+
 

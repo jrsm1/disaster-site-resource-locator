@@ -164,3 +164,10 @@ class FoodDAO:
             result.append(row)
         return result
 
+    def update(self, rid, price, ftype, expdate, fname):
+        cursor = self.conn.cursor()
+        query = "update food set price = %s, expdate = %s, ftype = %s, fname = %s where rid = %s;"
+        cursor.execute(query, (price, expdate, ftype, fname, rid,))
+        self.conn.commit()
+        return rid
+

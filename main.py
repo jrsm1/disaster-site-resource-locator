@@ -502,7 +502,7 @@ def getFoodById(rid):
     if request.method == 'GET':
         return FoodHandler().getFoodById(rid)
     elif request.method == 'PUT':
-        pass
+        return FoodHandler().updateFood(rid, request.form)
     elif request.method == 'DELETE':
         pass
     else:
