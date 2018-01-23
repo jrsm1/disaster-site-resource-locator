@@ -172,8 +172,8 @@ class GeneratorDAO:
 
     def update(self, rid, price, brand, fueltype, powerrating):
         cursor = self.conn.cursor()
-        query = "update generator set price = %s, brand = %s, fueltype = %s where rid = %s;"
-        cursor.execute(query, (price, brand, fueltype, rid,))
+        query = "update generator set price = %s, brand = %s, fueltype = %s, powerrating = %s where rid = %s;"
+        cursor.execute(query, (price, brand, fueltype, powerrating, rid,))
         self.conn.commit()
         return rid
 
