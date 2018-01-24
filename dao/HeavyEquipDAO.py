@@ -36,6 +36,27 @@ class HeavyEquipDAO:
             result.append(row)
         return result
 
+
+    def getEquipByLessThanPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from HeavyEquip where price < %s order by function;"
+        cursor.execute(query, (price,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+    def getEquipByGreaterThanPrice(self, price):
+        cursor = self.conn.cursor()
+        query = "select * from HeavyEquip where price > %s order by function;"
+        cursor.execute(query, (price,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+
     def getEquipByMake(self, make):
         cursor = self.conn.cursor()
         query = "select * from HeavyEquip where make = %s order by function;"
@@ -169,6 +190,15 @@ class HeavyEquipDAO:
         rid = cursor.fetchone()[0]
         self.conn.commit()
         return rid
+
+
+    def update(self, rid, price, make, condition, equipfunction):
+        cursor = self.conn.cursor()
+        query = "update HeavyEquip set price = %s, make = %s, condition = %s, equipfunction = %s where rid = %s;"
+        cursor.execute(query, (price, make, condition, equipfunction, rid,))
+        self.conn.commit()
+        return rid
+
 
     def getEquipSuppliers(self):
         cursor = self.conn.cursor()

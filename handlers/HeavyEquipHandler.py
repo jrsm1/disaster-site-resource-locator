@@ -81,6 +81,35 @@ class HeavyEquipHandler:
                 result_list.append(result)
         return jsonify(HeavyEquip=result_list)
 
+
+    def getEquipByLessThanPrice(self, price):
+
+        dao = HeavyEquipDAO()
+        price_list = dao.getEquipByLessThanPrice(price)
+        if not price_list:
+            return jsonify(Error = "No Equipment found"), 404
+        else:
+            result_list = []
+            for row in price_list:
+                result = self.build_equip_dict(row)
+                result_list.append(result)
+        return jsonify(HeavyEquip=result_list)
+
+
+    def getEquipByGreaterThanPrice(self, price):
+
+        dao = HeavyEquipDAO()
+        price_list = dao.getEquipByGreaterThanPrice(price)
+        if not price_list:
+            return jsonify(Error = "No Equipment found"), 404
+        else:
+            result_list = []
+            for row in price_list:
+                result = self.build_equip_dict(row)
+                result_list.append(result)
+        return jsonify(HeavyEquip=result_list)
+
+
     def getEquipByMake(self, make):
         dao = HeavyEquipDAO()
         make_list = dao.getEquipByMake(make)
@@ -240,6 +269,28 @@ class HeavyEquipHandler:
                 return jsonify(HeavyEquip=result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
+
+
+    def updateEquip(self, rid, form):
+        dao = HeavyEquipDAO()
+        if not dao.getEquipById(rid):
+            return jsonify(Error = "HeavyEquipment not found."), 404
+        else:
+            if len(form) != 3:
+                return jsonify(Error="Malformed update request"), 400
+            else:
+                price = form['price']
+                make = form['make']
+                condition = form['condition']
+                equipfunction = form['function']
+
+                if price and make and condition and equipfunction:
+                    dao.update(rid, price, make, condition, equipfunction)
+                    result = self.build_equip_attributes(rid, price, make, condition, equipfunction)
+                    return jsonify(Water=result), 200
+                else:
+                    return jsonify(Error="Unexpected attributes in update request"), 400
+
 
 
     def getEquipSuppliers(self):

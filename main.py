@@ -835,7 +835,7 @@ def getAidRequests():
 ##############################################
 #	Routes for HeavyEquipment Queries
 ##############################################
-@app.route('/heavyequipment', methods=['GET', 'POST'])
+@app.route('/heavyequip', methods=['GET', 'POST'])
 def getAllEquip():
     if request.method == 'POST':
         return HeavyEquipHandler().insertEquip(request.form)
@@ -846,14 +846,32 @@ def getAllEquip():
             return HeavyEquipHandler().searchEquip(request.args)
 
 
-@app.route('/heavyequip/<int:rid>')
+@app.route('/heavyequip/rid/<int:rid>', methods=['GET','PUT','DELETE'])
 def getEquipById(rid):
-    return HeavyEquipHandler().getEquipById(rid)
+    if request.method == 'GET':
+        return HeavyEquipHandler().getEquipById(rid)
+    elif request.method == 'PUT':
+        return HeavyEquipHandler().updateEquip(rid, request.form)
+    elif request.method == 'DELETE':
+        pass
+    else:
+        return jsonify(Error="Method not allowed."), 405
+
 
 
 @app.route("/heavyequip/price/<float:price>")
 def getEquipByPrice(price):
     return HeavyEquipHandler().getEquipByPrice(price)
+
+
+@app.route("/heavyequip/price/less/<float:price>")
+def getEquipByLessThanPrice(price):
+    return HeavyEquipHandler().getEquipByLessThanPrice(price)
+
+
+@app.route("/heavyequip/price/greater/<float:price>")
+def getEquipByGreaterThanPrice(price):
+    return HeavyEquipHandler().getEquipByGreaterThanPrice(price)
 
 
 @app.route("/heavyequip/make/<string:make>")
