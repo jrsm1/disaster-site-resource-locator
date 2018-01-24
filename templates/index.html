@@ -37,17 +37,55 @@ li a:hover:not(.active) {
 </head>
 <body>
 
-<ul>
-  <li><a class="active" href="/">Home</a></li>
-  <li><a href="/supplier">Suppliers</a></li>
-  <li><a href="/resources">Resources</a></li>
-  <li><a href="/purchase">Purchase</a></li>
+<ul id="ulLink">
+  <li><a class="li active" href="/">Home</a></li>
+  <li><a class="li" href="#" onClick="SupplierPost()">Suppliers</a></li>
+  <li><a class="li" href="/resources">Resources</a></li>
+  <li><a class="li" href="/purchase">Purchase</a></li>
 </ul>
 
-<div style="margin-left:25%;padding:1px 16px;height:1000px;">
-  <h2>Resources App</h2>
-  <h3>Welcome!</h3>
+<div id="DisplayScreen" style="margin-left:25%;padding:1px 16px;height:1000px;">
+  <h2 id="header">Resources App</h2>
+  <h3><p id="screen">Welcome!</p></h3>
+	<form id=SupplierForm action="/suppliers"  method="post" name="SupplierForm" style="display: none;">
+  Supplier Name:<br>
+  <input type="text" name="name" value=""><br>
+  Password:<br>
+  <input type="password" name="password" value=""><br><br>
+  Address:<br>
+  <input type="text" name="address" value=""><br>
+  Phone:<br>
+  <input type="text" name="phone" value=""><br><br>
+  Region:<br>
+  <input type="text" name="region" value=""><br><br>
+  <input type="submit" value="Submit">
+</form>	
 </div>
-
+	
+	
+<script>
+	function SupplierPost() 
+	{ 
+    	document.getElementById("SupplierForm").style.display="block";
+		document.getElementById("screen").style.display="none";
+		document.getElementById("header").innerHTML="Insert Supplier";
+	//document.getElementById("Supplier").className="active";
+	//document.getElementById("home").className="";
+	}
+</script>
+	
+	<script>
+// Add active class to the current link (highlight it)
+var header = document.getElementById("ulLink");
+var lis = header.getElementsByClassName("li");
+for (var i = 0; i < lis.length; i++) {
+  lis[i].addEventListener("click", function() {
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+  });
+}
+</script>
+	
 </body>
 </html>
