@@ -153,3 +153,10 @@ class FuelDAO:
         for row in cursor:
             result.append(row)
         return result
+
+    def update(self, rid, ftype, price, csize, brand):
+        cursor = self.conn.cursor()
+        query = "update fuel set price = %s, csize = %s, ftype = %s, brand = %s where rid = %s;"
+        cursor.execute(query, (price, csize, ftype, brand, rid,))
+        self.conn.commit()
+        return rid

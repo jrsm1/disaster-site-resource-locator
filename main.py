@@ -442,7 +442,7 @@ def getFuelById(rid):
     if request.method == 'GET':
         return FuelHandler().getFuelById(rid)
     elif request.method == 'PUT':
-        pass
+        return FuelHandler().updateFuel(rid, request.form)
     elif request.method == 'DELETE':
         pass
     else:

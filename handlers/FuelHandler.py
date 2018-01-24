@@ -240,3 +240,22 @@ class FuelHandler:
                 result_list.append(result)
             return jsonify(Fuel = result_list)
 
+    def updateFuel(self, rid, form):
+        dao = FuelDAO()
+        if not dao.getFuelById(rid):
+            return jsonify(Error = "Food not found."), 404
+        else:
+            if len(form) != 4:
+                return jsonify(Error="Malformed update request"), 400
+            else:
+                ftype = form['ftype']
+                price = form['price']
+                csize = form['csize']
+                brand = form['brand']
+                if price and ftype and csize and brand:
+                    dao.update(rid,ftype, price, csize, brand)
+                    result = self.build_fuel_attributes(rid, ftype, price, csize, brand)
+                    return jsonify(Food=result), 200
+                else:
+                    return jsonify(Error="Unexpected attributes in update request"), 400
+
