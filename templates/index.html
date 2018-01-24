@@ -39,15 +39,18 @@ li a:hover:not(.active) {
 
 <ul id="ulLink">
   <li><a class="li active" href="/">Home</a></li>
-  <li><a class="li" href="#" onClick="SupplierPost()">Suppliers</a></li>
+	<li><a class="li" onClick="showSupplierOptions()">Suppliers</a></li>
   <li><a class="li" href="/resources">Resources</a></li>
   <li><a class="li" href="/purchase">Purchase</a></li>
 </ul>
 
-<div id="DisplayScreen" style="margin-left:25%;padding:1px 16px;height:1000px;">
+<div id="DisplayScreen" style="margin-left:25%;padding:1px 16px;height:auto;">
   <h2 id="header">Resources App</h2>
   <h3><p id="screen">Welcome!</p></h3>
-	<form id=SupplierForm action="/suppliers"  method="post" name="SupplierForm" style="display: none;">
+	<button class="supplierB" id="getSupplierB" style="display: none;">Get Supplier</button>
+	<button class="supplierB" id="postSupplierB" style="display: none; margin-top:-1.8%; margin-left: 10%" onClick="SupplierPost()">Insert Supplier</button>
+	
+	<form id="SupplierForm" action="/suppliers"  method="post" name="SupplierForm" style="display: none;">
   Supplier Name:<br>
   <input type="text" name="name" value=""><br>
   Password:<br>
@@ -69,9 +72,19 @@ li a:hover:not(.active) {
     	document.getElementById("SupplierForm").style.display="block";
 		document.getElementById("screen").style.display="none";
 		document.getElementById("header").innerHTML="Insert Supplier";
-	//document.getElementById("Supplier").className="active";
-	//document.getElementById("home").className="";
+		document.getElementById("getSupplierB").style.display="none";
+		document.getElementById("postSupplierB").style.display="none";
 	}
+	function showSupplierOptions(){
+		document.getElementById("getSupplierB").style.display="block";
+		document.getElementById("postSupplierB").style.display="block";
+		document.getElementById("screen").innerHTML="Get or Insert?"
+		document.getElementById("header").innerHTML="Supplier";
+		document.getElementById("getSupplierB").onclick = function () {
+        location.href = "/suppliers";
+    };
+	}
+	
 </script>
 	
 	<script>
