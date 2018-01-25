@@ -173,7 +173,10 @@ table th {
   <input type="submit" value="Submit">
 </form>
 </div>
+	<div class="mainDisplay" id="TableScreen">
 	
+	
+	</div>
 	
 <script>
 	function SupplierPost() 
@@ -192,20 +195,20 @@ table th {
 		document.getElementById("screen").innerHTML="Get or Insert?"
 		document.getElementById("header").innerHTML="Supplier";
 		document.getElementById("getSupplierB").onclick = function () {
-        //location.href = "/suppliers";
 		var xhttp, x,arr, txt = "";
 		xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
     	if (this.readyState == 4 && this.status == 200) {
 		arr = JSON.parse(this.responseText);
-		        txt += "<table border='1'>"
+		        txt += "<table id=SupplierTable border='1'>"
 			    txt+="<tr><th>SID</th><th>Name</th> <th>Password</th><th>Region</th><th>Phone</th><th>Address</th></tr>"
         for (x in arr) {
             txt += "<tr>"+"<td>" + arr[x].sid + "</td>"+"<td>" + arr[x].sname + "</td>"+"<td>" + arr[x].spassword
 				+ "</td>"+"<td>" + arr[x].sregion + "</td>"+"<td>" + arr[x].sphone + "</td>"+"<td>" + arr[x].saddress + "</td>"+"</tr>";
         }
         txt += "</table>" 
-        document.getElementById("DisplayScreen").innerHTML = txt;//arr[0].sname;
+        document.getElementById("TableScreen").innerHTML = txt; 
+		displays("TableScreen");
     }
   };
   xhttp.open("GET", "/suppliers", true);
