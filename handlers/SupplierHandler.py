@@ -47,7 +47,7 @@ class SupplierHandler:
         for row in suppliers_list:
             result = self.build_supplier_dict(row)
             result_list.append(result)
-        return jsonify(Suppliers=result_list)
+        return jsonify(result_list)
 
     def searchSuppliers(self, args):
             if len(args) > 4:

@@ -33,24 +33,133 @@ li a:hover:not(.active) {
     background-color: #555;
     color: white;
 }
+	input, select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+	
+	button[class=Buttons] {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+	border-radius: 12px
+}
+	button[class=Buttons]:hover{background-color: #3e8e41;}
+	input[type=submit]:hover {
+    background-color: #45a049;
+}
+	div[class=mainDisplay]{
+		margin-left:25%;
+		padding:1px 16px;
+		height:auto;
+	}
+	
+	.dropdown {
+    position: relative;
+    display: inline-block;
+	background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+	font-size: 16px;
+	border-radius: 12px
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+	color: black;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+	.dropdown-content:hover {background-color: #f1f1f1}
+	.dropdown:hover {background-color: #3e8e41;}
+
+	input[id=search] {
+    width: 230px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('searchicon.png');
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+input[id=search]:focus {
+    width: 100%;
+}
+	table {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table td, table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+table tr:nth-child(even){background-color: #f2f2f2;}
+
+table tr:hover {background-color: #ddd;}
+
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
 </style>
 </head>
 <body>
 
 <ul id="ulLink">
   <li><a class="li active" href="/">Home</a></li>
-	<li><a class="li" onClick="showSupplierOptions()">Suppliers</a></li>
-  <li><a class="li" href="/resources">Resources</a></li>
+  <li><a class="li" onClick="showSupplierOptions()">Suppliers</a></li>
+  <li><a class="li" onClick="showResourcesOptions()">Resources</a></li>
   <li><a class="li" href="/purchase">Purchase</a></li>
 </ul>
 
-<div id="DisplayScreen" style="margin-left:25%;padding:1px 16px;height:auto;">
+<div class="mainDisplay" id="DisplayScreen">
   <h2 id="header">Resources App</h2>
   <h3><p id="screen">Welcome!</p></h3>
-	<button class="supplierB" id="getSupplierB" style="display: none;">Get Supplier</button>
-	<button class="supplierB" id="postSupplierB" style="display: none; margin-top:-1.8%; margin-left: 10%" onClick="SupplierPost()">Insert Supplier</button>
-	
-	<form id="SupplierForm" action="/suppliers"  method="post" name="SupplierForm" style="display: none;">
+	<button class="Buttons" id="getSupplierB" style="display: none;">Get Supplier</button>
+	<button class="Buttons" id="postSupplierB" style="display: none;" onClick="SupplierPost();"> Insert Supplier</button>
+	<form id="SupplierForm" action="/suppliers"  method="post" name="SupplierForm" style="display: none; border-radius: 5px;background-color: #f2f2f2;padding: 20px;">
   Supplier Name:<br>
   <input type="text" name="name" value=""><br>
   Password:<br>
@@ -62,7 +171,7 @@ li a:hover:not(.active) {
   Region:<br>
   <input type="text" name="region" value=""><br><br>
   <input type="submit" value="Submit">
-</form>	
+</form>
 </div>
 	
 	
@@ -76,12 +185,32 @@ li a:hover:not(.active) {
 		document.getElementById("postSupplierB").style.display="none";
 	}
 	function showSupplierOptions(){
-		document.getElementById("getSupplierB").style.display="block";
-		document.getElementById("postSupplierB").style.display="block";
+		displays("DisplayScreen");
+		document.getElementById("SupplierForm").style.display="none";
+		document.getElementById("getSupplierB").style.display="inline";
+		document.getElementById("postSupplierB").style.display="inline";
 		document.getElementById("screen").innerHTML="Get or Insert?"
 		document.getElementById("header").innerHTML="Supplier";
 		document.getElementById("getSupplierB").onclick = function () {
-        location.href = "/suppliers";
+        //location.href = "/suppliers";
+		var xhttp, x,arr, txt = "";
+		xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+    	if (this.readyState == 4 && this.status == 200) {
+		arr = JSON.parse(this.responseText);
+		        txt += "<table border='1'>"
+			    txt+="<tr><th>SID</th><th>Name</th> <th>Password</th><th>Region</th><th>Phone</th><th>Address</th></tr>"
+        for (x in arr) {
+            txt += "<tr>"+"<td>" + arr[x].sid + "</td>"+"<td>" + arr[x].sname + "</td>"+"<td>" + arr[x].spassword
+				+ "</td>"+"<td>" + arr[x].sregion + "</td>"+"<td>" + arr[x].sphone + "</td>"+"<td>" + arr[x].saddress + "</td>"+"</tr>";
+        }
+        txt += "</table>" 
+        document.getElementById("DisplayScreen").innerHTML = txt;//arr[0].sname;
+    }
+  };
+  xhttp.open("GET", "/suppliers", true);
+  xhttp.send();
+			
     };
 	}
 	
@@ -100,5 +229,73 @@ for (var i = 0; i < lis.length; i++) {
 }
 </script>
 	
+<!-------------------------------------
+-------------Resources ----------------
+--------------------------------------->
+	<script>
+	//Hide main display and show resources display
+		function displays(namescreen){
+			var displays =document.getElementsByClassName("mainDisplay");
+			for(i=0;i<displays.length;i++)
+				document.getElementsByClassName("mainDisplay")[i].style.display="none";
+		document.getElementById(namescreen).style.display="block";
+		}
+		function showResourcesOptions(){
+			displays("ResourcesScreen");
+			document.getElementById("error").style.display="none";
+			document.getElementById("search").value="";
+			document.getElementById("getAllResourcesB").onclick = function () {
+        	location.href = "/resources";
+    	};
+		}
+		function searchv(value){
+			if(value.match("water"))
+				showWater();
+			else
+			document.getElementById("error").style.display="block";
+		}
+		function showWater(){
+		displays("waterScreen");
+		document.getElementById("getWaterB").style.display="inline";
+		document.getElementById("postWaterB").style.display="inline";
+		document.getElementById("WaterForm").style.display="none";
+		document.getElementById("getWaterB").onclick = function p() {
+        location.href = "/water";
+		};
+		}
+			function WaterPost() 
+	{ 
+    	document.getElementById("WaterForm").style.display="block";
+		document.getElementById("getWaterB").style.display="none";
+		document.getElementById("postWaterB").style.display="none";
+	}
+	</script>
+	
+<div class="mainDisplay" id="ResourcesScreen" style="display: none">
+	  <h2>Resources</h2>
+  <button class="Buttons" id="getAllResourcesB" style="display: inline;">Get All Resources</button>
+  <input id="search" type="text" value="" placeholder="Search by Resources" onChange="searchv(value)">
+	<font id="error" size="7" color="red">Not Found</font>
+</div>
+	
+<div class="mainDisplay" id="waterScreen" style="display: none">
+  <h2>Water</h2>
+  <button class="Buttons" id="getWaterB" style="display: none;">Get Water</button>
+  <button class="Buttons" id="postWaterB" style="display: none;" onClick="WaterPost();"> Insert Water</button>
+	<form id="WaterForm" action="/water"  method="post" name="WaterForm" style="display: none; border-radius: 5px;background-color: #f2f2f2;padding: 20px;">
+  Supplier id:<br>
+  <input type="number" name="sid" value="" min="0"><br>
+  Quantity:<br>
+  <input type="number" name="qty" value="" min="1"><br><br>
+  Price:<br>
+  <input type="text" name="price" value=""><br>
+  Size:<br>
+  <input type="text" name="bsize" value=""><br><br>
+  Brand:<br>
+  <input type="text" name="brand" value=""><br><br>
+  <input type="submit" value="Submit">
+</form>
+</div>
+
 </body>
 </html>
