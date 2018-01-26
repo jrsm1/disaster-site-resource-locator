@@ -8,6 +8,7 @@ class ResourceHandler:
         result['rid'] = row[0]
         result['sid'] = row[1]
         result['qty'] = row[2]
+        result['price'] = row[3]
         return result
 
     def build_supplier_dict(self, row):
@@ -21,11 +22,12 @@ class ResourceHandler:
         return result
 
 
-    def build_resource_attributes(self, rid, sid, qty):
+    def build_resource_attributes(self, rid, sid, qty, price):
         result = {}
         result['rid'] = rid
         result['sid'] = sid
         result['qty'] = qty
+        result['price'] = qty
         return result
 
     def getAllResources(self):
@@ -119,16 +121,17 @@ class ResourceHandler:
 
 
     def insertResources(self, form):
-        if len(form) != 2:
+        if len(form) != 3:
             return jsonify(Error = "Malformed POST request"), 400
         else:
             
             sid = form['sid']
             qty = form['qty']
+            price = form['price']
             if sid and qty:
                 dao = ResourcesDAO()
-                rid = dao.insert(sid, qty)
-                result = self.build_resource_attributes(rid, sid, qty)
+                rid = dao.insert(sid, qty, price)
+                result = self.build_resource_attributes(rid, sid, qty, price)
                 return jsonify(Resources=result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400

@@ -75,10 +75,10 @@ class ResourcesDAO:
         return result
 
 
-    def insert(self, sid, qty):
+    def insert(self, sid, qty, price):
         cursor = self.conn.cursor()
-        query = "insert into resources(sid, qty) values (%s, %s) returning rid;"
-        cursor.execute(query, (sid, qty,))
+        query = "insert into resources(sid, qty, price) values (%s, %s, %s) returning rid;"
+        cursor.execute(query, (sid, qty, price,))
         rid = cursor.fetchone()[0]
         self.conn.commit()
         return rid
@@ -89,4 +89,13 @@ class ResourcesDAO:
         cursor.execute(query, (qty, rid,))
         self.conn.commit()
         return rid
+
+
+    def updatePrice(self, rid, price):
+        cursor = self.conn.cursor()
+        query = "update resources set price = %s where rid = %s;"
+        cursor.execute(query, (price, rid,))
+        self.conn.commit()
+        return rid
+
 
