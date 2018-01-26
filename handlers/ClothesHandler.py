@@ -276,6 +276,8 @@ class ClothesHandler:
                 piece = form['piece']
 
                 if price and color and size and gender and piece:
+                    rdao = ResourcesDAO()
+                    rdao.updatePrice(rid, price)
                     dao.update(rid, price, color, size, gender, piece)
                     result = self.build_clothes_attributes(rid, price, color, size, gender, piece)
                     return jsonify(Clothes=result), 200

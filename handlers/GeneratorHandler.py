@@ -228,6 +228,8 @@ class GeneratorHandler:
                 powerrating = form['powerrating']
 
                 if price and brand and fueltype and powerrating:
+                    rdao = ResourcesDAO()
+                    rdao.updatePrice(rid, price)
                     dao.update(rid, price, brand, fueltype, powerrating)
                     result = self.build_generator_attributes(rid, price, brand, fueltype, powerrating)
                     return jsonify(Generator=result), 200

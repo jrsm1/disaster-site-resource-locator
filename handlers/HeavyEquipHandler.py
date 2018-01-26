@@ -285,6 +285,8 @@ class HeavyEquipHandler:
                 equipfunction = form['function']
 
                 if price and make and condition and equipfunction:
+                    rdao = ResourcesDAO()
+                    rdao.updatePrice(rid, price)
                     dao.update(rid, price, make, condition, equipfunction)
                     result = self.build_equip_attributes(rid, price, make, condition, equipfunction)
                     return jsonify(Water=result), 200

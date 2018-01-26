@@ -235,6 +235,8 @@ class BatteryHandler:
                 btype = form['btype']
 
                 if price and voltage and btype:
+                    rdao = ResourcesDAO()
+                    rdao.updatePrice(rid, price)
                     dao.update(rid, price, voltage, btype)
                     result = self.build_battery_attributes(rid, price, voltage, btype)
                     return jsonify(Battery=result), 200

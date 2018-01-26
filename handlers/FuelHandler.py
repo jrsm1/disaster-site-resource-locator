@@ -253,6 +253,8 @@ class FuelHandler:
                 csize = form['csize']
                 brand = form['brand']
                 if price and ftype and csize and brand:
+                    rdao = ResourcesDAO()
+                    rdao.updatePrice(rid, price)
                     dao.update(rid,ftype, price, csize, brand)
                     result = self.build_fuel_attributes(rid, ftype, price, csize, brand)
                     return jsonify(Food=result), 200

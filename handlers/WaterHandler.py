@@ -237,6 +237,8 @@ class WaterHandler:
                 brand = form['brand']
 
                 if price and bsize and brand:
+                    rdao = ResourcesDAO()
+                    rdao.updatePrice(rid, price)
                     dao.update(rid, price, bsize, brand)
                     result = self.build_water_attributes(rid, price, bsize, brand)
                     return jsonify(Water=result), 200

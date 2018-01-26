@@ -322,6 +322,8 @@ class FoodHandler:
                 fname = form['fname']
 
                 if price and ftype and expdate and fname:
+                    rdao = ResourcesDAO()
+                    rdao.updatePrice(rid, price)
                     dao.update(rid, price, ftype, expdate, fname)
                     result = self.build_food_attributes(rid, price, ftype, expdate, fname)
                     return jsonify(Food=result), 200
