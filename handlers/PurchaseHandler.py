@@ -191,7 +191,7 @@ class PurchaseHandler:
                 elif(int(currentSid) != int(sid)):
                     return jsonify(Error = "Invalid Purchase request"), 400
                 else:
-                    total = currentPrice*currentPrice
+                    total = currentPrice*qty
                     srdao.update(sid, total)
                     rdao.updateQuantity(rid, qty)
                     pid = pdao.insert(cid, sid, rid, qty,total,ccnum)

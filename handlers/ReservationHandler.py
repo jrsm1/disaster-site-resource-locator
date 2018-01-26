@@ -90,12 +90,14 @@ class ReservationHandler:
             qty = form['qty']
             if cid and sid and rid and qty:
                 dao = ReservationDAO()
-                resourcedao = ResourcesDAO()
-                currentQty = resourceDAO().getResourceQuantity(rid)
-                resourcePrice = resourceDAO().getResourcePrice(rid)
+                currentQty = ResourcesDAO().getResourceQuantity(rid)
+                resourcePrice = ResourcesDAO().getResourcePrice(rid)
+                currentSid = ResourcesDAO().getResourceSupplierId(rid)
                 if(int(currentQty) - int(qty) < 0):
                     return jsonify(Error = "Invalid Reservation request"), 400
                 elif(int(resourcePrice) != 0):
+                    return jsonify(Error = "Invalid Reservation request"), 400
+                elif(int(currentSid) != int(sid)):
                     return jsonify(Error = "Invalid Reservation request"), 400
                 else:
                     reservationid = dao.insert(cid, sid, rid, qty)
