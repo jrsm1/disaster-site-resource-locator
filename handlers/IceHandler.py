@@ -184,7 +184,7 @@ class IceHandler:
             price = form['price']
             bsize = form['bsize']
             if sid and qty and price and bsize:
-                rid = ResourcesDAO().insert(sid, qty)
+                rid = ResourcesDAO().insert(sid, qty, price)
                 dao = IceDAO()
                 dao.insert(rid, price, bsize)
                 result = self.build_ice_attributes(rid, price, bsize)

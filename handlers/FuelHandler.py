@@ -167,7 +167,7 @@ class FuelHandler:
             csize = form['csize']
             brand = form['brand']
             if sid and qty and ftype and price and csize and brand:
-                rid = ResourcesDAO().insert(sid, qty)
+                rid = ResourcesDAO().insert(sid, qty, price)
                 dao = FuelDAO()
                 dao.insert(rid, ftype, price, csize, brand)
                 result = self.build_fuel_attributes(rid, ftype, price, csize, brand)

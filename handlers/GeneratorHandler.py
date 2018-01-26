@@ -207,7 +207,7 @@ class GeneratorHandler:
             powerrating = form["powerrating"]
             if sid and quantity and price and brand and fueltype and powerrating:
                 dao = GeneratorDAO()
-                rid = ResourcesDAO().insert(sid, quantity)
+                rid = ResourcesDAO().insert(sid, quantity,price)
                 rid = dao.insert(rid, price, brand, fueltype, powerrating)
                 result = self.build_generator_attributes(rid, price, brand, fueltype, powerrating)
                 return jsonify(Generator=result), 201

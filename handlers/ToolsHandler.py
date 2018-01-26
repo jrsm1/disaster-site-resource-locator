@@ -207,7 +207,7 @@ class ToolsHandler:
             brand = form['brand']
             price = form['price']
             if sid and qty and name and brand and price:
-                rid = ResourcesDAO().insert(sid, qty)
+                rid = ResourcesDAO().insert(sid, qty,price)
                 dao = ToolsDAO()
                 dao.insert(rid, name, brand, price)
                 result = self.build_tools_attributes(rid, name, brand, price)

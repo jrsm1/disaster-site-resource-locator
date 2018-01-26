@@ -263,7 +263,7 @@ class HeavyEquipHandler:
             equipfunction = form["function"]
             if sid and quantity and price and make and condition and equipfunction:
                 dao = HeavyEquipDAO()
-                rid = ResourcesDAO().insert(sid, quantity)
+                rid = ResourcesDAO().insert(sid, quantity,price)
                 rid = dao.insert(rid, price, make, condition, equipfunction)
                 result = self.build_equip_attributes(rid, price, make, condition, equipfunction)
                 return jsonify(HeavyEquip=result), 201

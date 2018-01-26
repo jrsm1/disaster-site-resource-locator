@@ -198,7 +198,7 @@ class FoodHandler:
             expdate = form['expdate']
             fname = form['fname']
             if sid and qty and price and ftype and expdate and fname:
-                rid = ResourcesDAO().insert(sid,qty)
+                rid = ResourcesDAO().insert(sid,qty, price)
                 dao = FoodDAO()
                 dao.insert(rid, price, ftype, expdate, fname)
                 result = self.build_food_attributes(rid, price, ftype, expdate, fname)

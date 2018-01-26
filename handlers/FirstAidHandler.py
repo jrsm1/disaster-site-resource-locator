@@ -205,7 +205,7 @@ class FirstAidHandler:
             medcondition = form['condition']
             if sid and quantity and price and brand and medcondition:
                 dao = FirstAidDAO()
-                rid = ResourcesDAO().insert(sid, quantity)
+                rid = ResourcesDAO().insert(sid, quantity, price)
                 rid = dao.insert(rid, price, brand, medcondition)
                 result = self.build_aid_attributes(rid, price, brand, medcondition)
                 return jsonify(FirstAid=result), 201

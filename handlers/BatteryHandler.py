@@ -214,7 +214,7 @@ class BatteryHandler:
             btype = form['type']
             if sid and quantity and price and voltage and btype:
                 dao = BatteryDAO()
-                rid = ResourcesDAO().insert(sid, quantity)
+                rid = ResourcesDAO().insert(sid, quantity, price)
                 rid = dao.insert(rid, price, voltage, btype)
                 result = self.build_battery_attributes(rid, price, voltage, btype)
                 return jsonify(Battery = result), 201

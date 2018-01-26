@@ -215,7 +215,7 @@ class WaterHandler:
             bsize = form['bsize']
             brand = form['brand']
             if sid and qty and price and bsize and brand:
-                rid = ResourcesDAO().insert(sid, qty)
+                rid = ResourcesDAO().insert(sid, qty,price)
                 dao = WaterDAO()
                 dao.insert(rid, price, bsize, brand)
                 result = self.build_water_attributes(rid, price, bsize, brand)
