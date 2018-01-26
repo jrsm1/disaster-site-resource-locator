@@ -65,3 +65,12 @@ class SalesRecordDAO:
         rid = cursor.fetchone()[0]
         self.conn.commit()
         return sid
+
+
+    def update(self, sid, total):
+        cursor = self.conn.cursor()
+        query = "update salesrecord set sales = sales + 1, earnings = earnings + %s where sid = %s;"
+        cursor.execute(query, (total, sid,))
+        self.conn.commit()
+        return sid
+

@@ -194,7 +194,7 @@ class HeavyEquipDAO:
 
     def update(self, rid, price, make, condition, equipfunction):
         cursor = self.conn.cursor()
-        query = "update HeavyEquip set price = %s, make = %s, condition = %s, equipfunction = %s where rid = %s;"
+        query = "update HeavyEquip set price = %s, make = %s, condition = %s, function = %s where rid = %s;"
         cursor.execute(query, (price, make, condition, equipfunction, rid,))
         self.conn.commit()
         return rid

@@ -141,3 +141,4 @@ class PurchaseDAO:
         pid = cursor.fetchone()[0]
         self.conn.commit()
         return pid
+

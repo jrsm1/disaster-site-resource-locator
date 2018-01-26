@@ -1,5 +1,6 @@
 from flask import jsonify
 from dao.PurchaseDAO import PurchaseDAO
+from dao.SalesRecordDAO import SalesRecordDAO
 
 
 class PurchaseHandler:
@@ -179,8 +180,10 @@ class PurchaseHandler:
             total = form['total']
             ccnum = form['ccnum']
             if cid and sid and rid and qty and total and ccnum:
-                dao = PurchaseDAO()
-                pid = dao.insert(cid, sid, rid, qty,total,ccnum)
+                pdao = PurchaseDAO()
+                srdao = SalesRecordDAO()
+                srdao.update(sid, total)
+                pid = pdao.insert(cid, sid, rid, qty,total,ccnum)
                 result = self.build_purchase_attributes(pid, cid, sid, rid, qty, total, ccnum)
                 return jsonify(Purchase=result), 201
             else:

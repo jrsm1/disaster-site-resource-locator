@@ -276,7 +276,7 @@ class HeavyEquipHandler:
         if not dao.getEquipById(rid):
             return jsonify(Error = "HeavyEquipment not found."), 404
         else:
-            if len(form) != 3:
+            if len(form) != 4:
                 return jsonify(Error="Malformed update request"), 400
             else:
                 price = form['price']
