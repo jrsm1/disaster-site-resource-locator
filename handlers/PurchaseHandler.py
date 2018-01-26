@@ -171,19 +171,19 @@ class PurchaseHandler:
 
 
     def insertPurchase(self, form):
-        if len(form) != 6:
+        if len(form) != 5:
             return jsonify(Error = "Malformed POST request"), 400
         else:
             cid = form['cid']
             sid = form['sid']
             rid = form['rid']
             qty = form['qty']
-            total = form['total']
             ccnum = form['ccnum']
-            if cid and sid and rid and qty and total and ccnum:
+            if cid and sid and rid and qty and ccnum:
                 pdao = PurchaseDAO()
                 srdao = SalesRecordDAO()
                 rdao = ResourcesDAO()
+                currentPrice = rdao.getResourcePrice(rid)
                 currentQty = rdao.getResourceQuantity(rid)
                 currentSid = rdao.getResourceSupplierId(rid)
                 if(int(currentQty) - int(qty) < 0):
@@ -191,6 +191,7 @@ class PurchaseHandler:
                 elif(int(currentSid) != int(sid)):
                     return jsonify(Error = "Invalid Purchase request"), 400
                 else:
+                    total = currentPrice*currentPrice
                     srdao.update(sid, total)
                     rdao.updateQuantity(rid, qty)
                     pid = pdao.insert(cid, sid, rid, qty,total,ccnum)
