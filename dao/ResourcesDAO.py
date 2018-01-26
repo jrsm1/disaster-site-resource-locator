@@ -59,9 +59,9 @@ class ResourcesDAO:
         cursor = self.conn.cursor()
         query = "select price from resources where rid = %s;"
         cursor.execute(query, (rid,))
-        qty = cursor.fetchone()[0]
+        price = cursor.fetchone()[0]
         self.conn.commit()
-        return qty
+        return price
 
     def getResourceSupplierId(self, rid):
         cursor = self.conn.cursor()
