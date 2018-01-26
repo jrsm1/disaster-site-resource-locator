@@ -1,6 +1,7 @@
 from flask import jsonify
 from dao.PurchaseDAO import PurchaseDAO
 from dao.SalesRecordDAO import SalesRecordDAO
+from dao.ResourcesDAO import ResourcesDAO
 
 
 class PurchaseHandler:
@@ -182,9 +183,18 @@ class PurchaseHandler:
             if cid and sid and rid and qty and total and ccnum:
                 pdao = PurchaseDAO()
                 srdao = SalesRecordDAO()
-                srdao.update(sid, total)
-                pid = pdao.insert(cid, sid, rid, qty,total,ccnum)
-                result = self.build_purchase_attributes(pid, cid, sid, rid, qty, total, ccnum)
+                rdao = ResourcesDAO()
+                currentQty = rdao.getResourceQuantity(rid)
+                currentSid = rdao.getResourceSupplierId(rid)
+                if(int(currentQty) - int(qty) < 0):
+                    return jsonify(Error = "Invalid Purchase request"), 400
+                elif(int(currentSid) != int(sid)):
+                    return jsonify(Error = "Invalid Purchase request"), 400
+                else:
+                    srdao.update(sid, total)
+                    rdao.updateQuantity(rid, qty)
+                    pid = pdao.insert(cid, sid, rid, qty,total,ccnum)
+                    result = self.build_purchase_attributes(pid, cid, sid, rid, qty, total, ccnum)
                 return jsonify(Purchase=result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400

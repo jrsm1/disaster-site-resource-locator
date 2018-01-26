@@ -47,6 +47,23 @@ class ResourcesDAO:
             result.append(row)
         return result
 
+    def getResourceQuantity(self, rid):
+        cursor = self.conn.cursor()
+        query = "select qty from resources where rid = %s;"
+        cursor.execute(query, (rid,))
+        qty = cursor.fetchone()[0]
+        self.conn.commit()
+        return qty
+
+
+    def getResourceSupplierId(self, rid):
+        cursor = self.conn.cursor()
+        query = "select sid from resources where rid = %s;"
+        cursor.execute(query, (rid,))
+        sid = cursor.fetchone()[0]
+        self.conn.commit()
+        return sid
+
 
     def getSupplierByResourcesId(self, rid):
         cursor = self.conn.cursor()
@@ -65,3 +82,11 @@ class ResourcesDAO:
         rid = cursor.fetchone()[0]
         self.conn.commit()
         return rid
+
+    def updateQuantity(self, rid, qty):
+        cursor = self.conn.cursor()
+        query = "update resources set qty = qty - %s where rid = %s;"
+        cursor.execute(query, (qty, rid,))
+        self.conn.commit()
+        return rid
+
