@@ -229,6 +229,8 @@ class ToolsHandler:
                 price = form['price']
 
                 if name and brand and price:
+                    rdao = ResourcesDAO()
+                    rdao.updatePrice(rid, price)
                     dao.update(rid, name, brand, price)
                     result = self.build_tools_attributes(rid, name, brand, price)
                     return jsonify(Tools=result), 200

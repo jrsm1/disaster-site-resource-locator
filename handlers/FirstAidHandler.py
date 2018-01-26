@@ -20,7 +20,7 @@ class FirstAidHandler:
         result['medconditon'] = medcondition
         return result
 
-    def build_supplieraid_dict(self, row):
+    def build_requestaid_dict(self, row):
         result = {}
         result['requestid'] = row[0]
         result['cid'] = row[1]
@@ -29,6 +29,16 @@ class FirstAidHandler:
         result['price'] = row[4]
         result['brand'] = row[5]
         result['medcondition'] = row[6]
+        return result
+
+    def build_supplieraid_dict(self, row):
+        result = {}
+        result['rid'] = row[0]
+        result['sid'] = row[1]
+        result['sname'] = row[2]
+        result['saddress'] = row[3]
+        result['sphone'] = row[4]
+        result['sregion'] = row[5]
         return result
 
     def getAllAid(self):
@@ -263,6 +273,8 @@ class FirstAidHandler:
                 medcondition= form['medcondition']
 
                 if price and brand and medcondition:
+                    rdao = ResourcesDAO()
+                    rdao.updatePrice(rid, price)
                     dao.update(rid, price, brand, medcondition)
                     result = self.build_aid_attributes(rid, price, brand, medcondition)
                     return jsonify(FirstAid=result), 200

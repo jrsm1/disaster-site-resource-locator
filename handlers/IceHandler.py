@@ -282,6 +282,8 @@ class IceHandler:
                 bagsize = form['bagsize']
 
                 if price and bagsize:
+                    rdao = ResourcesDAO()
+                    rdao.updatePrice(rid, price)
                     dao.update(rid, price, bagsize)
                     result = self.build_ice_attributes(rid, price, bagsize)
                     return jsonify(Ice=result), 200
