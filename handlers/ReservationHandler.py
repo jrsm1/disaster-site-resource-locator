@@ -1,6 +1,6 @@
 from flask import jsonify
 from dao.ReservationDAO import ReservationDAO
-
+from dao.ResourcesDAO import ResourcesDAO
 
 class ReservationHandler:
 
@@ -90,9 +90,17 @@ class ReservationHandler:
             qty = form['qty']
             if cid and sid and rid and qty:
                 dao = ReservationDAO()
-                reservationid = dao.insert(cid, sid, rid, qty)
-                result = self.build_reservation_attributes(reservationid, cid, sid, rid, qty)
-                return jsonify(Reservation=result), 201
+                resourcedao = ResourcesDAO()
+                currentQty = resourceDAO().getResourceQuantity(rid)
+                resourcePrice = resourceDAO().getResourcePrice(rid)
+                if(int(currentQty) - int(qty) < 0):
+                    return jsonify(Error = "Invalid Reservation request"), 400
+                elif(int(resourcePrice) != 0)
+                    return jsonify(Error = "Invalid Reservation request"), 400
+                else:
+                    reservationid = dao.insert(cid, sid, rid, qty)
+                    result = self.build_reservation_attributes(reservationid, cid, sid, rid, qty)
+                    return jsonify(Reservation=result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
 
