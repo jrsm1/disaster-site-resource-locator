@@ -80,10 +80,7 @@ class ResourceHandler:
 
     def getSupplierByResourcesId(self, rid):
         dao = ResourcesDAO()
-        resources_list = dao.getSupplierByResourcesId(rid)
-
-        suppliers_list = []
-
+        suppliers_list = dao.getSupplierByResourcesId(rid)
         if not suppliers_list:
             return jsonify(Error="Suppliers Not Found"), 404
         else:
