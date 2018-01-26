@@ -17,11 +17,11 @@ def greeting():
 ###############################################
 
 
-@app.route('/resources', methods=['GET', 'POST'])
+@app.route('/resources', methods=['GET'])
 def getAllResources():
-    if request.method == 'POST':
-        return ResourceHandler().insertResources(request.form)
-    else:
+    #if request.method == 'POST':
+       # return ResourceHandler().insertResources(request.form)
+   # else:
         if not request.args:
             return ResourceHandler().getAllResources()
         else:
