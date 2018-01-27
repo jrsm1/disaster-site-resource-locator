@@ -181,8 +181,8 @@ class CreditCardHandler:
                 cvv = form['cvv']
 
                 if ccnum and expdate and climit and cvv:
-                    dao.update(ccnum, expdate, climit, cvv)
-                    result = self.build_card_atttributes(ccnum, expdate, climit, cvv)
+                    dao.update(cid, ccnum, expdate, climit, cvv)
+                    result = self.build_card_atttributes(cid, ccnum, expdate, climit, cvv)
                     return jsonify(CreditCard=result), 200
                 else:
                     return jsonify(Error="Unexpected attributes in update request"), 400
