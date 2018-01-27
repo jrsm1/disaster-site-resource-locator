@@ -107,6 +107,6 @@ class SupplierDAO:
         cursor = self.conn.cursor()
         query = "select sid from supplier where sid = %s;"
         cursor.execute(query, (sid,))
-        vsid = cursor.fetchone()[0]
+        vsid = cursor.fetchone()
         self.conn.commit()
         return vsid

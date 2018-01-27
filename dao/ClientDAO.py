@@ -88,7 +88,7 @@ class ClientDAO:
        cursor = self.conn.cursor()
        query = "select cid from client where cid = %s;"
        cursor.execute(query, (cid,))
-       vcid = cursor.fetchone()[0]
+       vcid = cursor.fetchone()
        self.conn.commit()
        return vcid
 

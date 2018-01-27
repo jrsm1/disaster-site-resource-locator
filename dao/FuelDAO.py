@@ -79,7 +79,7 @@ class FuelDAO:
 
     def insert(self, rid, ftype, price, csize, brand):
         cursor = self.conn.cursor()
-        query = "insert into fuel values (%s, %s, %s, %s, brand) returning rid;"
+        query = "insert into fuel values (%s, %s, %s, %s, %s) returning rid;"
         cursor.execute(query, (rid, ftype, price, csize, brand,))
         rid = cursor.fetchone()[0]
         self.conn.commit()

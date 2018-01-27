@@ -114,7 +114,7 @@ def getAdminByName(aname):
 #########################################
 
 
-@app.route('/salesrecords', methods=['GET', 'POST'])
+@app.route('/salesrecords', methods=['GET'])
 def getAllSalesRecords():
     if request.method == 'POST':
         return SalesRecordHandler().insertSalesRecord(request.form)
@@ -125,12 +125,10 @@ def getAllSalesRecords():
             return SalesRecordHandler().searchSalesRecords(request.args)
 
 
-@app.route('/salesrecords/sid/<int:sid>', methods=['GET', 'PUT', 'DELETE'])
+@app.route('/salesrecords/sid/<int:sid>', methods=['GET','DELETE'])
 def getSalesRecordBySuppierIds(sid):
     if request.method == 'GET':
         return SalesRecordHandler().getSalesRecordById(sid)
-    elif request.method == 'PUT':
-        pass
     elif request.method == 'DELETE':
         pass
     else:
