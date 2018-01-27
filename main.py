@@ -944,7 +944,7 @@ def getReserveById(resid):
 #	Routes for Credit Card
 ###############################################
 
-@app.route('/creditcard', methods=['GET', 'POST'])
+@app.route('/creditcard/', methods=['GET', 'POST'])
 def getAllCards():
     if request.method == 'POST':
         return CreditCardHandler().insertCard(request.form)
