@@ -146,7 +146,7 @@ class CreditCardHandler:
                 return jsonify(Error="Malformed query string"), 400
             result_list = []
             for row in card_list:
-                result = self.build_aid_dict(row)
+                result = self.build_card_dict(row)
                 result_list.append(result)
             return jsonify(CreditCard=result_list)
 
@@ -162,14 +162,14 @@ class CreditCardHandler:
             if cid and ccnum and expdate and climit and cvv:
                 dao = CreditCardDAO()
                 dao.insert(cid, ccnum, expdate, climit, cvv)
-                result = self.build_card_attributes(cid, ccnum, expdate, climit, cvv)
+                result = self.build_card_atttributes(cid, ccnum, expdate, climit, cvv)
                 return jsonify(CreditCard=result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
 
     def updateCard(self, cid, form):
         dao = CreditCardDAO()
-        if not dao.getCreditCardById(cid):
+        if not dao.getCardByClientId(cid):
             return jsonify(Error="Credit card not found."), 404
         else:
             if len(form) != 4:
@@ -182,7 +182,7 @@ class CreditCardHandler:
 
                 if ccnum and expdate and climit and cvv:
                     dao.update(ccnum, expdate, climit, cvv)
-                    result = self.build_card_atttributes(ccnum,expdate,climit,cvv)
+                    result = self.build_card_atttributes(ccnum, expdate, climit, cvv)
                     return jsonify(CreditCard=result), 200
                 else:
                     return jsonify(Error="Unexpected attributes in update request"), 400

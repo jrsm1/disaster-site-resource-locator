@@ -84,7 +84,7 @@ class CreditCardDAO:
 
     def getCardByClientAndLimit(self, cid, limit) :
         cursor = self.conn.cursor()
-        query = "select * from CreditCard where cid = %s and limit = %s;"
+        query = "select * from CreditCard where cid = %s and climit = %s;"
         cursor.execute(query, (cid, limit,))
         result = []
         for row in cursor:
@@ -109,7 +109,7 @@ class CreditCardDAO:
 
     def getCardByCardNumberAndLimit(self, ccnum, limit):
         cursor = self.conn.cursor()
-        query = "select * from CreditCard where ccnum = %s and limit = %s;"
+        query = "select * from CreditCard where ccnum = %s and climit = %s;"
         cursor.execute(query, (ccnum, limit,))
         result = cursor.fetchone()
         return result
@@ -124,7 +124,7 @@ class CreditCardDAO:
 
     def getCardByExpirationDateAndLimit(self, expdate, limit):
         cursor = self.conn.cursor()
-        query = "select * from CreditCard where expdate = %s and limit = %s;"
+        query = "select * from CreditCard where expdate = %s and climit = %s;"
         cursor.execute(query, (expdate, limit,))
         result = []
         for row in cursor:
@@ -142,7 +142,7 @@ class CreditCardDAO:
 
     def getCardByLimitAndCardVerificationValue(self, limit, cvv):
         cursor = self.conn.cursor()
-        query = "select * from CreditCard where limit = %s and cvv = %s;"
+        query = "select * from CreditCard where climit = %s and cvv = %s;"
         cursor.execute(query, (limit, cvv,))
         result = []
         for row in cursor:
@@ -160,13 +160,13 @@ class CreditCardDAO:
 
     def insert(self, cid, ccnum, expdate, limit, cvv):
         cursor = self.conn.cursor()
-        query = "insert into CreditCard(cid, ccnum, expdate, limit, cvv) values (%s, %s, %s, %s, %s);"
+        query = "insert into CreditCard(cid, ccnum, expdate, climit, cvv) values (%s, %s, %s, %s, %s);"
         cursor.execute(query, (cid, ccnum, expdate, limit, cvv))
         self.conn.commit()
 
     def update(self, cid, ccnum, expdate, limit, cvv):
         cursor = self.conn.cursor()
-        query = "update CreditCard set ccnum = %s, expdate = %s, limit = %s, cvv = %s where cid = %s;"
+        query = "update CreditCard set ccnum = %s, expdate = %s, climit = %s, cvv = %s where cid = %s;"
         cursor.execute(query, (ccnum, expdate, limit, cvv, cid,))
         self.conn.commit()
         return cid

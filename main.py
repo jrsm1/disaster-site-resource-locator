@@ -926,7 +926,7 @@ def getRequestById(reqid):
     return RequestHandler().getRequestById(reqid)
 
 ##############################################
-#	Routes for Request Queries
+#	Routes for Reservation Queries
 ##############################################
 @app.route("/reservation", methods=['GET', 'POST'])
 def getReserveAll():
@@ -940,8 +940,8 @@ def getReserveAll():
 
 
 @app.route("/reserve/<int:resid>")
-def getReserveById(reqid):
-    return ReservationHandler().getReservationById(reqid)
+def getReserveById(resid):
+    return ReservationHandler().getReservationById(resid)
 ################################################
 #	Routes for Credit Card
 ###############################################
@@ -949,7 +949,7 @@ def getReserveById(reqid):
 @app.route('/creditcard', methods=['GET', 'POST'])
 def getAllCards():
     if request.method == 'POST':
-        return CreditCardHandler().insertCreditCard(request.form)
+        return CreditCardHandler().insertCard(request.form)
     else:
         if not request.args:
             return CreditCardHandler().getAllCreditCards()
