@@ -101,3 +101,12 @@ class SupplierDAO:
         for row in cursor:
             result.append(row)
         return result
+
+
+    def verifySupplierId(self, sid):
+        cursor = self.conn.cursor()
+        query = "select sid from supplier where sid = %s;"
+        cursor.execute(query, (sid,))
+        vsid = cursor.fetchone()[0]
+        self.conn.commit()
+        return vsid

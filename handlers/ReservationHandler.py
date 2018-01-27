@@ -1,6 +1,10 @@
 from flask import jsonify
 from dao.ReservationDAO import ReservationDAO
 from dao.ResourcesDAO import ResourcesDAO
+from dao.ClientDAO import ClientDAO
+from dao.SupplierDAO import SupplierDAO
+
+
 
 class ReservationHandler:
 
@@ -90,19 +94,28 @@ class ReservationHandler:
             qty = form['qty']
             if cid and sid and rid and qty:
                 dao = ReservationDAO()
-                currentQty = ResourcesDAO().getResourceQuantity(rid)
-                resourcePrice = ResourcesDAO().getResourcePrice(rid)
-                currentSid = ResourcesDAO().getResourceSupplierId(rid)
-                if(int(currentQty) - int(qty) < 0):
-                    return jsonify(Error = "Invalid Reservation request"), 400
-                elif(int(resourcePrice) != 0):
-                    return jsonify(Error = "Invalid Reservation request"), 400
-                elif(int(currentSid) != int(sid)):
-                    return jsonify(Error = "Invalid Reservation request"), 400
+                cdao = ClientDAO()
+                sdao = SupplierDAO()
+                if not cdao.verifyClientId(cid):
+                    return jsonify(Error = "Client not found"), 404
+                elif not ResourcesDAO().verifyResourceId(rid):
+                    return jsonify(Error = "Resource not Found"), 404
+                elif not sdao.verifySupplierId(sid):
+                   return jsonify(Error = "Supplier not found"), 404
                 else:
-                    reservationid = dao.insert(cid, sid, rid, qty)
-                    result = self.build_reservation_attributes(reservationid, cid, sid, rid, qty)
-                    return jsonify(Reservation=result), 201
+                    currentQty = ResourcesDAO().getResourceQuantity(rid)
+                    resourcePrice = ResourcesDAO().getResourcePrice(rid)
+                    currentSid = ResourcesDAO().getResourceSupplierId(rid)
+                    if(int(currentQty) - int(qty) < 0):
+                        return jsonify(Error = "Invalid Reservation request"), 400
+                    elif(int(resourcePrice) != 0):
+                        return jsonify(Error = "Invalid Reservation request"), 400
+                    elif(int(currentSid) != int(sid)):
+                        return jsonify(Error = "Invalid Reservation request"), 400
+                    else:
+                        reservationid = dao.insert(cid, sid, rid, qty)
+                        result = self.build_reservation_attributes(reservationid, cid, sid, rid, qty)
+                        return jsonify(Reservation=result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
 

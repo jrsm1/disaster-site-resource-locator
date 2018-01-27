@@ -2,6 +2,8 @@ from flask import jsonify
 from dao.PurchaseDAO import PurchaseDAO
 from dao.SalesRecordDAO import SalesRecordDAO
 from dao.ResourcesDAO import ResourcesDAO
+from dao.ClientDAO import ClientDAO
+from dao.SupplierDAO import SupplierDAO
 
 
 class PurchaseHandler:
@@ -182,21 +184,31 @@ class PurchaseHandler:
             if cid and sid and rid and qty and ccnum:
                 pdao = PurchaseDAO()
                 srdao = SalesRecordDAO()
+                cdao = ClientDAO()
                 rdao = ResourcesDAO()
-                currentPrice = rdao.getResourcePrice(rid)
-                currentQty = rdao.getResourceQuantity(rid)
-                currentSid = rdao.getResourceSupplierId(rid)
-                if(int(currentQty) - int(qty) < 0):
-                    return jsonify(Error = "Invalid Purchase request"), 400
-                elif(int(currentSid) != int(sid)):
-                    return jsonify(Error = "Invalid Purchase request"), 400
+                sdao = SupplierDAO()
+                if not cdao.verifyClientId(cid):
+                    return jsonify(Error = "Client not found"), 404
+                elif not rdao.verifyResourceId(rid):
+                    return jsonify(Error = "Resource not Found"), 404
+                elif not sdao.verifySupplierId(sid):
+                   return jsonify(Error = "Supplier not found"), 404
                 else:
-                    total = currentPrice*qty
-                    srdao.update(sid, total)
-                    rdao.updateQuantity(rid, qty)
-                    pid = pdao.insert(cid, sid, rid, qty,total,ccnum)
-                    result = self.build_purchase_attributes(pid, cid, sid, rid, qty, total, ccnum)
-                return jsonify(Purchase=result), 201
+
+                    currentPrice = rdao.getResourcePrice(rid)
+                    currentQty = rdao.getResourceQuantity(rid)
+                    currentSid = rdao.getResourceSupplierId(rid)
+                    if(int(currentQty) - int(qty) < 0):
+                        return jsonify(Error = "Invalid Purchase request"), 400
+                    elif(int(currentSid) != int(sid)):
+                        return jsonify(Error = "Invalid Purchase request"), 400
+                    else:
+                        total = currentPrice*qty
+                        srdao.update(sid, total)
+                        rdao.updateQuantity(rid, qty)
+                        pid = pdao.insert(cid, sid, rid, qty,total,ccnum)
+                        result = self.build_purchase_attributes(pid, cid, sid, rid, qty, total, ccnum)
+                        return jsonify(Purchase=result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
 

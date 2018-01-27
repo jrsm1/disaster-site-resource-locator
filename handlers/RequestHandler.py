@@ -1,5 +1,7 @@
 from flask import jsonify
 from dao.RequestDAO import RequestDAO
+from dao.ClientDAO import ClientDAO
+from dao.ResourcesDAO import ResourcesDAO
 
 
 class RequestHandler:
@@ -84,9 +86,15 @@ class RequestHandler:
             qty = form['qty']
             if cid and rid and qty:
                 dao = RequestDAO()
-                requestid = dao.insert(cid, rid, qty)
-                result = self.build_request_attributes(requestid, cid, rid, qty)
-                return jsonify(Request=result), 201
+                cdao = ClientDAO()
+                if not cdao.verifyClientId(cid):
+                    return jsonify(Error = "Client not found"), 404
+                elif not ResourcesDAO().verifyResourceId(rid):
+                    return jsonify(Error = "Resource not Found"), 404
+                else:
+                    requestid = dao.insert(cid, rid, qty)
+                    result = self.build_request_attributes(requestid, cid, rid, qty)
+                    return jsonify(Request=result), 201
             else:
                 return jsonify(Error="Unexpected attributes in POST request"), 400
 

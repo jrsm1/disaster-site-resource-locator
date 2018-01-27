@@ -105,5 +105,11 @@ class ResourcesDAO:
         self.conn.commit()
         return rid
 
-
+    def verifyResourceId(self, rid):
+        cursor = self.conn.cursor()
+        query = "select rid from resources where rid = %s;"
+        cursor.execute(query, (rid,))
+        vrid = cursor.fetchone()[0]
+        self.conn.commit()
+        return vrid
 

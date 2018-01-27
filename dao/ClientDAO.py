@@ -84,6 +84,15 @@ class ClientDAO:
             result.append(row)
         return result
 
+    def verifyClientId(self, cid):
+       cursor = self.conn.cursor()
+       query = "select cid from client where cid = %s;"
+       cursor.execute(query, (cid,))
+       vcid = cursor.fetchone()[0]
+       self.conn.commit()
+       return vcid
+
+
     def getCCByCID(self, cid):
         cursor = self.conn.cursor()
         query = "select * from creditcard where cid = %s;"
